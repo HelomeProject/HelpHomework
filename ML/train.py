@@ -59,3 +59,9 @@ val_gen = image_gen.flow_from_directory(
     target_size=IMG_SIZE,
     subset='validation'
 )
+
+classes = train_gen.class_indices
+classes = list(classes.keys())
+
+with open('classes.pkl', 'wb') as f:
+    pickle.dump(classes, f)
