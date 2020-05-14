@@ -65,3 +65,25 @@ classes = list(classes.keys())
 
 with open('classes.pkl', 'wb') as f:
     pickle.dump(classes, f)
+
+# X 는 이미지, Y 는 실제 값
+# X_train, X_test, y_train, y_test = train_test_split(X, y, test_size= 0.2, random_state=1234)
+
+# print(train_gen.class_indices)
+# print(train_gen.classes)
+# print(dir(train_gen))
+
+
+checkpoint = ModelCheckpoint(filepath='test.h5',
+                             monitor='loss',
+                             mode='min',
+                             save_best_only=True
+                             )
+
+model.summary()
+history = model.fit_generator(
+    train_gen,
+    epochs=epochs,
+    validation_data=val_gen,
+    callbacks=[checkpoint]
+)
