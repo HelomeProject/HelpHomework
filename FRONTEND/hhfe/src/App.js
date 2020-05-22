@@ -1,6 +1,6 @@
 import React from 'react';
 
-import MyAppBar from './mainpage/MyAppBar'
+import MyAppBar from './components/mainpage/MyAppBar'
 
 const App = () => {
   return (
