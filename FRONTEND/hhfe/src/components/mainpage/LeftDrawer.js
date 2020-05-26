@@ -13,6 +13,7 @@ import List from '@material-ui/core/List';
 import HomeworkContent from './HomeworkContent'
 import useStyles from './LeftDrawerCSS'
 
+import Notification from './notification/Notification'
 
 const LeftDrawer = (props) => {
     const classes = useStyles();
@@ -23,7 +24,7 @@ const LeftDrawer = (props) => {
     const ContentControl = () => {
         switch (tap) {
             case 0:
-                return <div />
+                return <Notification />
             case 1:
                 return <HomeworkContent />
             default:
