@@ -8,7 +8,7 @@
 	<insert id="insertMember" parameterType="map">
 		insert into
 		membertb(username, school, email, password, grade)
-		values(#{username}, #{school}, #{email}, SHA2(#{password}, 256),#{grade})
+		values(#{username}, #{school}, #{email}, SHA2(#{password}, 256), #{grade})
 	</insert>
 </mapper>
  

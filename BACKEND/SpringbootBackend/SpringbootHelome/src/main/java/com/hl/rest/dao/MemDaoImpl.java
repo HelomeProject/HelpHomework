@@ -14,13 +14,13 @@ public class MemDaoImpl implements IMemDao {
 	SqlSession session;
 
 	@Override
-	public void registerMem(String username, String school, String eamil, String password, String grade) {
+	public void registerMem(String username, String school, String email, String password, String grade) {
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("username", username);
 		map.put("school", school);
-		map.put("eamil", eamil);
+		map.put("email", email);
 		map.put("password", password);
-		map.put("grade", grade);
+		map.put("grade", Integer.parseInt(grade));
 		session.insert("member.insertMember", map);
 	}
 	
