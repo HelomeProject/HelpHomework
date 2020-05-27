@@ -51,8 +51,16 @@ public class MemberController {
 				System.out.println(e.getMessage());
 			}
 		}
-		
 		return res;
 	}
+	
+	/** 회원조회(admin) */
+	/** 회원조회(teacher) */
+	/** 회원조회(self) */
+	
+	/** 회원수정(admin) */
+	/** 회원수정(self) */
+	
+	/** 회원탈퇴 */
 	
 }
