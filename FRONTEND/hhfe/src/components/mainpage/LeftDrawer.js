@@ -10,7 +10,7 @@ import clsx from 'clsx';
 import Divider from '@material-ui/core/Divider';
 import List from '@material-ui/core/List';
 
-import HomeworkContent from './HomeworkContent'
+import HomeworkContent from './homework/HomeworkContent'
 import useStyles from './LeftDrawerCSS'
 
 import Notification from './notification/Notification'
@@ -28,7 +28,7 @@ const LeftDrawer = (props) => {
             case 1:
                 return <HomeworkContent />
             default:
-                return <div />
+                return <Notification />
         }
     }
     return (
