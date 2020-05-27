@@ -3,6 +3,7 @@ package com.hl.rest.controller;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.hl.rest.key.GetKEY;
+import com.hl.rest.service.IAuthService;
 import com.hl.rest.vo.Member;
 
 import io.jsonwebtoken.Jwts;
@@ -23,6 +25,9 @@ import io.swagger.annotations.ApiOperation;
 @RestController
 @RequestMapping("/api")
 public class AuthController {
+	
+	@Autowired
+	private IAuthService ser;
 	
 	@ExceptionHandler(Exception.class)
 	public void ExceptionMethod(Exception e) {
@@ -60,11 +65,18 @@ public class AuthController {
 			return new ResponseEntity<Map<String, Object>>(msg, HttpStatus.BAD_REQUEST);
 		}
 		try {
-			//pw가 맞는지 확인하기
-			
-			
+			if(login.getPassword().equals(ser.getPassword(login.getUsername()))) {
+				String jwt = createToken(login.getUsername());
+				msg.put("username", login.getUsername());
+				msg.put("token", jwt);
+				res = new ResponseEntity<Map<String, Object>>(msg, HttpStatus.OK);
+			} else {
+				return new ResponseEntity<Map<String, Object>>(msg, HttpStatus.UNAUTHORIZED);
+			}
 		} catch(Exception e) {
-			
+			msg.put("resmsg", e.getMessage());
+			System.out.println(e.getMessage());
+			return new ResponseEntity<Map<String, Object>>(msg, HttpStatus.NOT_FOUND);
 		}
 		return res;
 	}
