@@ -1,5 +1,7 @@
 package com.hl.rest.controller;
 
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -53,6 +55,18 @@ public class AuthController {
 			System.out.println(e.getMessage());
 		}
 		return jwt;
+	}
+	
+	/** SHA-256 generator 
+	 * @throws NoSuchAlgorithmException */
+	public static String createSHA256(String str) throws NoSuchAlgorithmException {
+		MessageDigest md = MessageDigest.getInstance("SHA-256");
+	    md.update(str.getBytes());
+	    StringBuilder sb = new StringBuilder();
+	    for(byte b : md.digest()) {
+	    	sb.append(String.format("%02x", b));
+	    }
+	    return sb.toString();
 	}
 	
 	@PostMapping("/auth/login")
