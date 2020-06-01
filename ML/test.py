@@ -145,7 +145,7 @@ def load_image(image_path):
         plt.imshow(ii)
         plt.show()
 
-        # pre(new_model, img_arr)
+        pre(new_model, img_arr)
     
 
 def define_classes():
@@ -159,7 +159,48 @@ def define_classes():
     return classes
 
 
+def pre(new_model, img_arr):
+    global classes, predict_nums, predict_res
 
+    output = new_model.predict(img_arr[None, :, :, :])
+    # output = new_model.predict_classes(img_arr)
+    np.set_printoptions(formatter={'float': lambda x: "{0:0.5f}".format(x)})
+    predict_num = classes[np.argmax(output)]
+
+
+    if predict_num == 'minus':
+        predict_num = '-'
+    elif predict_num == 'plus':
+        predict_num = '+'
+    elif predict_num == 'times':
+        predict_num = '*'
+    elif predict_num == 'div':
+        predict_num = '/'
+    elif predict_num == 'open':
+        predict_num = '('
+    elif predict_num == 'close':
+        predict_num = ')'
+    elif predict_num == 'equ':
+        predict_num = '='
+    else:
+        pass
+    
+    print('predict: {}'.format(predict_num))
+
+    jud = False
+    if jud == True:
+        predict_res += predict_num
+    else:
+        predict_nums += predict_num
+        if predict_num == '-' and predict_nums[-2] == '-':
+            jud = True
+
+    # print()
+    # print('predict: ', classes[np.argmax(output)])
+    # print()
+    # for i in range(len(classes)):
+    #     print('{}: {} %'.format(classes[i], round(output[0][i]*100,4)))
+    # print()
 
 
 size = 45
@@ -178,3 +219,9 @@ load_image(testimage)
 # predict_nums = predict_nums[:-2] + '='
 # print('predict: ', predict_nums)
 
+# 계산
+def calculate(predict_nums):
+    result = eval(predict_nums[:-1])
+    return result
+
+print('계산 결과: ', calculate(predict_nums))
