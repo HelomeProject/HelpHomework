@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from 'react';
 import { Route } from "react-router-dom";
 import { withCookies, useCookies } from 'react-cookie';
@@ -5,8 +6,6 @@ import { withCookies, useCookies } from 'react-cookie';
 import MyAppBar from './components/mainpage/MyAppBar'
 import Login from './components/account/Login'
 import Register from './components/account/Register'
-
-
 const App = () => {
 
   const [cookies, removeCookie] = useCookies(['user']);

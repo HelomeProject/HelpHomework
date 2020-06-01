@@ -343,4 +343,8 @@ $RECYCLE.BIN/
 # Windows shortcuts
 *.lnk
 
+#haeun backend config
+./HelpHomework.git
+*.git
+
 # End of https://www.gitignore.io/api/node,java,react,django,python,windows,visualstudiocode
