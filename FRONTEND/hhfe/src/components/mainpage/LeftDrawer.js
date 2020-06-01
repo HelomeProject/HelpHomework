@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import Drawer from '@material-ui/core/Drawer';
-import CssBaseline from '@material-ui/core/CssBaseline';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
@@ -15,30 +14,54 @@ import useStyles from './LeftDrawerCSS'
 
 import Notification from './notification/Notification'
 
-const LeftDrawer = (props) => {
+const LeftDrawer = ({ open, mode }) => {
     const classes = useStyles();
     const [tap, setTap] = useState(0);
     const handleTap = (tap) => {
         setTap(tap);
     };
+    // 0 : 학생, 1: 선생님
+    const listTitle = [
+        ['공지', '공지'],
+        ['숙제제출', '제출현황'],
+        ['학생', '학생목록']
+    ]
+
+    const listIcon = [
+        [<DateRangeIcon />, <DateRangeIcon />],
+        [<DoneIcon />, <DoneIcon />],
+        [<DoneIcon />, <DoneIcon />]
+    ]
+
+    const drawerListItem = listTitle.map((val, idx) => {
+        return (
+            <ListItem button onClick={() => { handleTap(idx) }} key={idx}>
+                <ListItemIcon>{listIcon[idx][0]}</ListItemIcon>
+                <ListItemText>{val[0]}</ListItemText>
+            </ListItem>
+        )
+
+    })
+
     const ContentControl = () => {
         switch (tap) {
             case 0:
-                return <Notification />
+                return <Notification mode={mode} />
             case 1:
-                return <HomeworkContent />
+                return <HomeworkContent mode={mode} />
+            case 2:
+                return <div />
             default:
                 return <Notification />
         }
     }
     return (
         <div className={classes.root}>
-            <CssBaseline />
             <Drawer
                 className={classes.drawer}
                 variant="persistent"
                 anchor="left"
-                open={props.open}
+                open={open}
                 classes={{
                     paper: classes.drawerPaper,
                 }}
@@ -48,19 +71,13 @@ const LeftDrawer = (props) => {
                 </div>
                 <Divider />
                 <List>
-                    <ListItem button onClick={() => { handleTap(0) }}>
-                        <ListItemIcon><DateRangeIcon /></ListItemIcon>
-                        <ListItemText>학사일정</ListItemText>
-                    </ListItem>
-                    <ListItem button onClick={() => { handleTap(1) }}>
-                        <ListItemIcon><DoneIcon /></ListItemIcon>
-                        <ListItemText>과제</ListItemText>
-                    </ListItem>
+                    {drawerListItem}
                 </List>
+
             </Drawer>
             <main
                 className={clsx(classes.content, {
-                    [classes.contentShift]: props.open,
+                    [classes.contentShift]: open,
                 })}
             >
                 <ContentControl />
@@ -68,4 +85,10 @@ const LeftDrawer = (props) => {
         </div >
     );
 }
+
+LeftDrawer.defaultProps = {
+    open: true,
+    mode: "1"
+}
+
 export default LeftDrawer
