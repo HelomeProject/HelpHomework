@@ -45,3 +45,22 @@ val_gen = image_gen.flow_from_directory(
     target_size=img_size,
     subset='validation'
 )
+
+classes = train_gen.class_indices
+import pickle
+with open('classes_45.pkl', 'wb') as f:
+    pickle.dump(classes, f)
+
+checkpoint = ModelCheckpoint(filepath='test_452.hdf5', # 학습된 것 저장할 파일명
+                             monitor='loss',
+                             mode='min',
+                             save_best_only=True
+                             )
+
+model.summary()
+history = model.fit_generator(
+    train_gen,
+    epochs=epochs,
+    validation_data=val_gen,
+    callbacks=[checkpoint]
+)
