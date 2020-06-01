@@ -10,3 +10,21 @@ nb_classes = 17
 img_size = (45,45)
 
 image_path = './data_45/'
+
+image_gen = ImageDataGenerator(rescale=1./255, validation_split=0.2)
+
+train_gen = image_gen.flow_from_directory(
+    batch_size=batch_size,
+    color_mode='grayscale',
+    directory=image_path,
+    target_size=img_size,
+    subset='training'
+)
+
+val_gen = image_gen.flow_from_directory(
+    batch_size=batch_size,
+    color_mode='grayscale',
+    directory=image_path,
+    target_size=img_size,
+    subset='validation'
+)
