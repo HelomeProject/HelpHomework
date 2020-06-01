@@ -1,10 +1,7 @@
 import React, { useState } from 'react';
 import Drawer from '@material-ui/core/Drawer';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemIcon from '@material-ui/core/ListItemIcon';
-import ListItemText from '@material-ui/core/ListItemText';
-import DateRangeIcon from '@material-ui/icons/DateRange';
-import DoneIcon from '@material-ui/icons/Done';
+import { Face, Done, DateRange, PeopleAlt } from '@material-ui/icons';
+import { ListItem, ListItemIcon, ListItemText } from '@material-ui/core';
 import clsx from 'clsx';
 import Divider from '@material-ui/core/Divider';
 import List from '@material-ui/core/List';
@@ -24,13 +21,13 @@ const LeftDrawer = ({ open, mode }) => {
     const listTitle = [
         ['공지', '공지'],
         ['숙제제출', '제출현황'],
-        ['학생', '학생목록']
+        ['마이페이지', '학생목록']
     ]
 
     const listIcon = [
-        [<DateRangeIcon />, <DateRangeIcon />],
-        [<DoneIcon />, <DoneIcon />],
-        [<DoneIcon />, <DoneIcon />]
+        [<DateRange />, <DateRange />],
+        [<Done />, <Done />],
+        [<Face />, <PeopleAlt />]
     ]
 
     const drawerListItem = listTitle.map((val, idx) => {
