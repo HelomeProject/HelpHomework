@@ -5,7 +5,7 @@ import Paper from '@material-ui/core/Paper';
 import useStyles from './HomeworkContentCSS'
 
 
-const HomeworkContent = () => {
+const HomeworkContent = ({ mode }) => {
     const classes = useStyles();
     return (
         <div>
@@ -15,6 +15,9 @@ const HomeworkContent = () => {
             <ScoreTable />
         </div >
     )
+}
+HomeworkContent.defaultPorps = {
+    mode: "1"
 }
 
 export default HomeworkContent

@@ -1,15 +1,13 @@
 import { makeStyles } from '@material-ui/core/styles';
 
 const useStyles = makeStyles((theme) => ({
-
-    paper: {
-        minHeight: '100%',
-    },
     title: {
-        textAlign: 'center',
+        justifyContent: 'center',
+        margin: '0.75rem'
     },
-    button: {
-        visibility: 'hidden',
+    listitem: {
+        justifyContent: 'flex-start',
+        width: '100%',
     }
 }));
 

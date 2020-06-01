@@ -25,6 +25,10 @@ const rows = [
 
 const ScoreTable = () => {
     const classes = useStyles();
+    const tableheadname = [
+        ['No.', '숙제 제출일', '점수', '이미지'],
+        ['No.', '이름', '점수', '파일']
+    ]
     const [url, seturl] = useState(rows[0].url)
 
     const viewImg = (url) => {
