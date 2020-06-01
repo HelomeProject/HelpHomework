@@ -9,7 +9,7 @@ import useStyles from './MyAppBarCSS'
 import LeftDrawer from './LeftDrawer'
 import clsx from 'clsx';
 
-const MyAppBar = () => {
+const MyAppBar = ({ mode }) => {
     const classes = useStyles();
     const [open, setOpen] = useState(true);
 
@@ -37,8 +37,13 @@ const MyAppBar = () => {
                     <Button color="inherit">Login</Button>
                 </Toolbar>
             </AppBar>
-            <LeftDrawer open={open} />
+            <LeftDrawer open={open} mode={mode} />
         </div>
     );
 }
+
+MyAppBar.defaultProps = {
+    mode: "1"
+}
+
 export default MyAppBar
