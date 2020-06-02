@@ -1,12 +1,13 @@
 package com.hl.rest.vo;
 
 public class Member {
-	private String username, school, email, password, isteacher, grade, classnum;
-	
+	private String memberIdx, username, school, email, password, isteacher, grade, classnum;
+
 	public Member() {}
-	public Member(String username, String school, String email, String password, String isteacher, String grade,
-			String classnum) {
-		super();
+
+	public Member(String memberIdx, String username, String school, String email, String password, String isteacher,
+			String grade, String classnum) {
+		this.memberIdx = memberIdx;
 		this.username = username;
 		this.school = school;
 		this.email = email;
@@ -15,7 +16,12 @@ public class Member {
 		this.grade = grade;
 		this.classnum = classnum;
 	}
-
+	public String getMemberIdx() {
+		return memberIdx;
+	}
+	public void setMemberIdx(String memberIdx) {
+		this.memberIdx = memberIdx;
+	}
 	public String getIsteacher() {
 		return isteacher;
 	}
@@ -70,8 +76,9 @@ public class Member {
 
 	@Override
 	public String toString() {
-		return "Member [username=" + username + ", school=" + school + ", email=" + email + ", password=" + password
-				+ ", grade=" + grade + "]";
+		return "Member [memberIdx=" + memberIdx + ", username=" + username + ", school=" + school + ", email=" + email
+				+ ", password=" + password + ", isteacher=" + isteacher + ", grade=" + grade + ", classnum=" + classnum
+				+ "]";
 	}
 		
 }

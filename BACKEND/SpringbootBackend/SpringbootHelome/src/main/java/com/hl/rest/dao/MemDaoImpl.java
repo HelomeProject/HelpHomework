@@ -1,6 +1,7 @@
 package com.hl.rest.dao;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
@@ -37,5 +38,20 @@ public class MemDaoImpl implements IMemDao {
 	public int getMemListSize() {
 		return session.selectOne("member.getMemberListSize");
 	}
-	
+
+	@Override
+	public List<Member> getMemStudentList(int startlist, int listsize, String grade, String classnum) {
+		Map<String, Integer> map = new HashMap<>();
+		map.put("startlist", startlist);
+		map.put("listisze", listsize);
+		map.put("grade", Integer.parseInt(grade));
+		map.put("classnum", Integer.parseInt(classnum));
+		return session.selectList("member.getMemStudentList", map);
+	}
+
+	@Override
+	public Member getMem(int memberIdx) {
+		return session.selectOne("member.getMemberIdx", memberIdx);
+	}
+
 }

@@ -16,8 +16,17 @@
 	<select id="getMember" resultType="member" parameterType="String">
 		select * from membertb where email=#{email}
 	</select>
+	<select id="getMemberIdx" resultType="member" parameterType="int">
+		select idx as memberIdx, username, school, email, isteacher, grade, classnum from membertb where idx=#{memberIdx}
+	</select>
 	<select id="getMemberListSize" resultType="int">
 		select count(*) as cnt from membertb
 	</select>
+	<select id="getMemStudentList" resultType="member" parameterType="map">
+		select * from membertb 
+		where grade = #{grade} and classnum=#{classnum} and isteacher=0
+		limit #{startlist}, #{listisze}
+	</select>
+	
 </mapper>
  
