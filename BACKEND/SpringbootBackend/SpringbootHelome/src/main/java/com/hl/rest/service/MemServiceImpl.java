@@ -14,7 +14,12 @@ public class MemServiceImpl implements IMemService {
 	
 	@Override
 	public void registerMem(Member mem) {
-		repo.registerMem(mem.getUsername(), mem.getSchool(), mem.getEmail(), mem.getPassword(), mem.getGrade());
+		repo.registerMem(mem.getEmail(), mem.getPassword(), mem.getUsername(), mem.getSchool(), mem.getIsteacher(), mem.getGrade(), mem.getClassnum());
+	}
+
+	@Override
+	public Member getMem(String email) {
+		return repo.getMem(email);
 	}
 	
 }

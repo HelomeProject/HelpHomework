@@ -7,12 +7,14 @@
 <mapper namespace="member">
 	<insert id="insertMember" parameterType="map">
 		insert into
-		membertb(username, school, email, password, grade)
-		values(#{username}, #{school}, #{email}, SHA2(#{password}, 256), #{grade})
+		membertb(username, school, email, password, isteacher, grade, classnum)
+		values(#{username}, #{school}, #{email}, SHA2(#{password}, 256), #{isteacher}, #{grade}, #{classnum})
 	</insert>
 	<select id="getPassword" resultType="String" parameterType="String">
 		select password from membertb where email=#{email}
 	</select>
-	
+	<select id="getMember" resultType="member" parameterType="String">
+		select * from membertb where email=#{email}
+	</select>
 </mapper>
  

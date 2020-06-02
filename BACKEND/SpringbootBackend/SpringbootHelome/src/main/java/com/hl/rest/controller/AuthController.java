@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.hl.rest.key.GetKEY;
 import com.hl.rest.service.IAuthService;
+import com.hl.rest.service.IMemService;
 import com.hl.rest.vo.Member;
 import com.hl.rest.vo.MemberLogin;
 
@@ -31,6 +32,8 @@ public class AuthController {
 	
 	@Autowired
 	private IAuthService ser;
+	@Autowired
+	private IMemService memser;
 	
 	@ExceptionHandler(Exception.class)
 	public void ExceptionMethod(Exception e) {
@@ -82,7 +85,13 @@ public class AuthController {
 		try {
 			if(login.getPassword().equals(ser.getPassword(login.getEmail()))) {
 				String jwt = createToken(login.getEmail());
-				msg.put("username", login.getEmail());
+				Member member = memser.getMem(login.getEmail());
+				msg.put("email", login.getEmail());
+				msg.put("username", member.getUsername());
+				msg.put("school", member.getSchool());
+				msg.put("isteacher", member.getIsteacher());
+				msg.put("grade", member.getGrade());
+				msg.put("classnum", member.getClassnum());
 				msg.put("token", jwt);
 				res = new ResponseEntity<Map<String, Object>>(msg, HttpStatus.OK);
 			} else {

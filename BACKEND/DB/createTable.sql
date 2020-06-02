@@ -10,11 +10,13 @@ use helome;
 -- member table
 CREATE TABLE IF NOT EXISTS `membertb` (
 	 idx int auto_increment primary key,
-     username varchar(20) unique,
+     username varchar(20),
      password varchar(100),
-     email varchar(50),
+     email varchar(50) unique,
      school varchar(20),
-     grade int default 0
+     grade int,
+     classnum int,
+     isteacher int
 );
 desc membertb;
 
