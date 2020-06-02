@@ -21,6 +21,7 @@ import com.hl.rest.service.IMemService;
 import com.hl.rest.vo.Member;
 import com.hl.rest.vo.MemberLogin;
 
+import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.swagger.annotations.ApiOperation;
@@ -41,7 +42,7 @@ public class AuthController {
 	}
 	
 	/** 토큰 생성 */
-	public static String createToken(String username) {
+	public static String createToken(String email, String isteacher) {
 		String jwt = "";
 		try {
 			String key = GetKEY.getKey();
@@ -50,7 +51,8 @@ public class AuthController {
 			headers.put("alg", "HS256");
 
 			Map<String, Object> payloads = new HashMap<>();
-			payloads.put("username", username);
+			payloads.put("email", email);
+			payloads.put("isteacher", isteacher);
 			jwt = Jwts.builder()
 					.setHeader(headers)
 					.setClaims(payloads)
@@ -84,8 +86,9 @@ public class AuthController {
 		}
 		try {
 			if(login.getPassword().equals(ser.getPassword(login.getEmail()))) {
-				String jwt = createToken(login.getEmail());
 				Member member = memser.getMem(login.getEmail());
+				String jwt = createToken(login.getEmail(), member.getIsteacher());
+				
 				msg.put("email", login.getEmail());
 				msg.put("username", member.getUsername());
 				msg.put("school", member.getSchool());
@@ -103,5 +106,19 @@ public class AuthController {
 			return new ResponseEntity<Map<String, Object>>(msg, HttpStatus.NOT_FOUND);
 		}
 		return res;
+	}
+	
+	/** Claims 객체 */
+	public static Claims verification(String token) {
+		Claims c = null;
+		try {
+			c = Jwts.parser()
+				.setSigningKey(GetKEY.getKey().getBytes())
+				.parseClaimsJws(token)
+				.getBody();
+		} catch(Exception e) {
+			System.out.println("claims error");
+		}
+		return c;
 	}
 }

@@ -12,8 +12,8 @@ public class AuthServiceImpl implements IAuthService {
 	IAuthDao repo;
 	
 	@Override
-	public String getPassword(String email) {
-		return repo.getPassword(email);
+	public String getPassword(String username) {
+		return repo.getPassword(username);
 	}
 	
 }
