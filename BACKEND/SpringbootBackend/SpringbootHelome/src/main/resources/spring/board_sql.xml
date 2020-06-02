@@ -10,6 +10,22 @@
 		homeworktb(homeworkTitle, startDate, endDate, homeworkDetail, memberIdx)
 		values(#{homeworkTitle}, #{startDate}, #{endDate}, #{homeworkDetail}, #{memberIdx})
 	</insert>
+	<select id="getHomeworkListSize" resultType="int" parameterType="map">
+		select count(*) from homeworktb
+		where memberIdx in (select idx from membertb where grade=#{grade} and classnum=#{classnum})
+	</select>
+	<select id="getHomeworkSize" resultType="int" parameterType="int">
+		select count(*) from homeworktb where memberIdx = #{memberIdx}
+	</select>
+	<select id="getHomeworkList" resultType="homework" parameterType="map">
+		select * from homeworktb 
+		where memberIdx in (select idx from membertb where grade=#{grade} and classnum=#{classnum})
+	</select>
+	<select id="getMyHomeworkList" resultType="homework" parameterType="map">
+		select idx as homeworkIdx, homeworkTitle, startDate, endDate,homeworkDetail, memberIdx from homeworktb 
+		where memberIdx = #{memberIdx}
+	</select>
+	
 	
 </mapper>
  

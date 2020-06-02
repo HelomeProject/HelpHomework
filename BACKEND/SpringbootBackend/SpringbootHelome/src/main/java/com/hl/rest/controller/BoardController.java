@@ -1,6 +1,7 @@
 package com.hl.rest.controller;
 
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -21,6 +23,7 @@ import com.hl.rest.service.IBoardService;
 import com.hl.rest.service.IMemService;
 import com.hl.rest.vo.Homework;
 import com.hl.rest.vo.Member;
+import com.hl.rest.vo.Pagination;
 
 import io.jsonwebtoken.Claims;
 import io.swagger.annotations.ApiOperation;
@@ -53,8 +56,8 @@ public class BoardController {
 			Claims de = AuthController.verification(token);
 			String email = (String) de.get("email");
 			Member member = memser.getMem(email);
-			
-			homework.setMemberIdx(member.getMemberIdx());
+			homework.setMemberIdx(member.getMemberIdx()+"");
+						
 			ser.insertHomework(homework);
 			msg.put("Homework", homework);
 			res = new ResponseEntity<Map<String, Object>>(msg, HttpStatus.OK);
@@ -69,7 +72,9 @@ public class BoardController {
 	@GetMapping("/board/homework")
 	@ApiOperation(value = "숙제 정보 전체 조회", response = List.class)
 	public @ResponseBody ResponseEntity<Map<String, Object>> GetHomeworkList(
-			@RequestHeader(value = "Authorization") String token){
+			@RequestHeader(value = "Authorization") String token,
+			@RequestParam(required = false, defaultValue = "0") int page,
+			@RequestParam(required = false, defaultValue = "1") int range){
 		ResponseEntity<Map<String, Object>> res = null;
 		Map<String, Object> msg = new HashMap<String, Object>();
 		
@@ -77,15 +82,32 @@ public class BoardController {
 			Claims de = AuthController.verification(token);
 			String email = (String) de.get("email");
 			String isteacher = (String) de.get("isteacher");
+			Member member = memser.getMem(email);
 			
-			//선생님 -> 학생들 것
-			
-			
-			//학생 -> 자기것
+			if(isteacher.equals("1")) {
+				List<Homework> list = new LinkedList<>();
+				int homeworklistsize = ser.getHomeListSize(member.getGrade(), member.getClassnum());
+				Pagination pagination = new Pagination();
+				pagination.pageInfo(page, range, homeworklistsize);
+				
+				list = ser.getHomeworkList(pagination.getStartList(), pagination.getListSize(), member.getGrade(), member.getClassnum());
+				msg.put("HomeworkList", list);
+				res = new ResponseEntity<Map<String, Object>>(msg, HttpStatus.OK);
+				
+			} else {
+				List<Homework> list = new LinkedList<>();
+				int homeworklistsize = ser.getHomeListSize(member.getMemberIdx());
+				Pagination pagination = new Pagination();
+				pagination.pageInfo(page, range, homeworklistsize);
+				
+				list = ser.getHomeworkList(pagination.getStartList(), pagination.getListSize(), member.getMemberIdx());
+				msg.put("HomeworkList", list);
+				res = new ResponseEntity<Map<String, Object>>(msg, HttpStatus.OK);
+			}
 			
 		} catch(Exception e) {
 			msg.put("error", e.getMessage());
-			res = new ResponseEntity<Map<String, Object>>(msg, HttpStatus.OK);
+			res = new ResponseEntity<Map<String, Object>>(msg, HttpStatus.BAD_REQUEST);
 		}
 		
 		return res;
