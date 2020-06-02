@@ -16,5 +16,8 @@
 	<select id="getMember" resultType="member" parameterType="String">
 		select * from membertb where email=#{email}
 	</select>
+	<select id="getMemberListSize" resultType="int">
+		select count(*) as cnt from membertb
+	</select>
 </mapper>
  

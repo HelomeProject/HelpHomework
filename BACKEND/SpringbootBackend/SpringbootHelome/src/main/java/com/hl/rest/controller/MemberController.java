@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.hl.rest.service.IMemService;
 import com.hl.rest.vo.Member;
 
+import io.jsonwebtoken.Claims;
 import io.swagger.annotations.ApiOperation;
 
 @CrossOrigin
@@ -65,11 +66,22 @@ public class MemberController {
 		ResponseEntity<Map<String, Object>> res = null;
 		Map<String, Object> msg = new HashMap<String, Object>();
 		
-		if(token=="" || token==null) return new ResponseEntity<Map<String, Object>>(msg, HttpStatus.UNAUTHORIZED);
 		try {
+			Claims de = AuthController.verification(token);
+			String email = (String) de.get("email");
+			String isteacher = (String) de.get("isteacher");
+			
+			if(isteacher.equals("1")) {
+				//총 member 수 확인
+				int memlistsize = ser.getMemListSize();
+				System.out.println(memlistsize);
+				
+			} else {
+				res = new ResponseEntity<Map<String, Object>>(msg, HttpStatus.FORBIDDEN);
+			}
 			
 		} catch (Exception e) {
-			
+			res = new ResponseEntity<Map<String, Object>>(msg, HttpStatus.BAD_REQUEST);
 		}
 		
 		return res;

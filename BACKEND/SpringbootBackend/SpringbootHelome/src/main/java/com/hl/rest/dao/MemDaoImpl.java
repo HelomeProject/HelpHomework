@@ -32,5 +32,10 @@ public class MemDaoImpl implements IMemDao {
 	public Member getMem(String email) {
 		return session.selectOne("member.getMember", email);
 	}
+
+	@Override
+	public int getMemListSize() {
+		return session.selectOne("member.getMemberListSize");
+	}
 	
 }

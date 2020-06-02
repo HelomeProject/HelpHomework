@@ -6,4 +6,5 @@ public interface IMemService {
 	/** member CRUD */
 	public void registerMem(Member mem);
 	public Member getMem(String email);
+	public int getMemListSize();
 }

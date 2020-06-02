@@ -21,5 +21,10 @@ public class MemServiceImpl implements IMemService {
 	public Member getMem(String email) {
 		return repo.getMem(email);
 	}
+
+	@Override
+	public int getMemListSize() {
+		return repo.getMemListSize();
+	}
 	
 }
