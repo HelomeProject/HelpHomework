@@ -14,7 +14,7 @@
 		select password from membertb where email=#{email}
 	</select>
 	<select id="getMember" resultType="member" parameterType="String">
-		select * from membertb where email=#{email}
+		select idx as memberIdx, username, school, email, isteacher, grade, classnum from membertb where email=#{email}
 	</select>
 	<select id="getMemberIdx" resultType="member" parameterType="int">
 		select idx as memberIdx, username, school, email, isteacher, grade, classnum from membertb where idx=#{memberIdx}
