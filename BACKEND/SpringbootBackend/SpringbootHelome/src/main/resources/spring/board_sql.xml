@@ -7,8 +7,8 @@
 <mapper namespace="board">
 	<insert id="insertHomework" parameterType="homework">
 		insert into
-		homeworktb(homeworkTitle, startDate, endDate, homeworkDetail)
-		values(#{homeworkTitle}, #{startDate}, #{endDate}, #{homeworkDetail})
+		homeworktb(homeworkTitle, startDate, endDate, homeworkDetail, memberIdx)
+		values(#{homeworkTitle}, #{startDate}, #{endDate}, #{homeworkDetail}, #{memberIdx})
 	</insert>
 	
 </mapper>

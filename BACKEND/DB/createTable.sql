@@ -40,10 +40,12 @@ desc subjecttb;
 -- 과제 table
 CREATE TABLE IF NOT EXISTS `homeworktb`(
 	idx int auto_increment primary key,
+    memberIdx int,
     homeworkTitle varchar(100),
     startDate date,
     endDate date,
-    homeworkDetail varchar(200)
+    homeworkDetail varchar(200),
+    foreign key (memberIdx) references membertb(idx)
 );
 desc homeworktb;
 
