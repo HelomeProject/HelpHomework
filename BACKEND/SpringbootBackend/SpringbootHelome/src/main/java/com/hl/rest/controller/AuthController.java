@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.hl.rest.key.GetKEY;
 import com.hl.rest.service.IAuthService;
 import com.hl.rest.vo.Member;
+import com.hl.rest.vo.MemberLogin;
 
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
@@ -71,17 +72,17 @@ public class AuthController {
 	
 	@PostMapping("/auth/login")
 	@ApiOperation(value = "로그인 ")
-	public ResponseEntity<Map<String, Object>> memlogin(@RequestBody Member login) {
+	public ResponseEntity<Map<String, Object>> LoginMember(@RequestBody MemberLogin login) {
 		ResponseEntity<Map<String, Object>> res = null;
 		Map<String, Object> msg = new HashMap<String, Object>();
 		
-		if(login.getUsername()=="" || login.getPassword()=="") {
+		if(login.getEmail()=="" || login.getPassword()=="") {
 			return new ResponseEntity<Map<String, Object>>(msg, HttpStatus.BAD_REQUEST);
 		}
 		try {
-			if(login.getPassword().equals(ser.getPassword(login.getUsername()))) {
-				String jwt = createToken(login.getUsername());
-				msg.put("username", login.getUsername());
+			if(login.getPassword().equals(ser.getPassword(login.getEmail()))) {
+				String jwt = createToken(login.getEmail());
+				msg.put("username", login.getEmail());
 				msg.put("token", jwt);
 				res = new ResponseEntity<Map<String, Object>>(msg, HttpStatus.OK);
 			} else {

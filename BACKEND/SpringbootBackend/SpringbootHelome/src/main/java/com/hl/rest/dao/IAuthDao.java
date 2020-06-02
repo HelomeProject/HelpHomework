@@ -1,6 +1,6 @@
 package com.hl.rest.dao;
 
 public interface IAuthDao {
-	public String getPassword(String username);
+	public String getPassword(String email);
 
 }

@@ -11,7 +11,7 @@
 		values(#{username}, #{school}, #{email}, SHA2(#{password}, 256), #{grade})
 	</insert>
 	<select id="getPassword" resultType="String" parameterType="String">
-		select password from membertb where username=#{username}
+		select password from membertb where email=#{email}
 	</select>
 	
 </mapper>
