@@ -44,19 +44,19 @@
 
 ### /board
 
-| Method      | URI                      | Description         | Name            |
-| ----------- | ------------------------ | ------------------- | --------------- |
-| GET         | /notice/:id              | 공지사항 조회(one)  | GetNotice       |
-| GET         | /notice/:grade/:classnum | 공지사항 반별조회   | GetNoticeFilter |
-| GET         | /notices                 | 공지사항 조회(list) | GetNoticeList   |
-| POST        | /notice                  | 공지사항 입력       | CreateNotice    |
-| PUT         | /notice/:id              | 공지사항 수정       | UpdateNotice    |
-| DELETE      | /notice/:id              | 공지사항 삭제       | DeleteNotice    |
-| ----------- | -----------              | -----------         | -----------     |
-| GET         | /homework/:id            | 숙제조회(one)       | GetHomework     |
-| GET         | /homeworks               | 숙제조회(list)      | GetHomeworkList |
-| POST        | /homework                | 숙제입력            | CreateHomework  |
-| DELETE      | /homework                | 숙제삭제            | DeleteHomework  |
+| Method      | URI                      | Description             | Name            |
+| ----------- | ------------------------ | ----------------------- | --------------- |
+| GET         | /notice/:id              | 공지사항 조회(one)      | GetNotice       |
+| GET         | /notice/:grade/:classnum | 공지사항 반별조회(list) | GetNoticeFilter |
+| GET         | /notices                 | 공지사항 조회(list)     | GetNoticeList   |
+| POST        | /notice                  | 공지사항 입력           | CreateNotice    |
+| PUT         | /notice/:id              | 공지사항 수정           | UpdateNotice    |
+| DELETE      | /notice/:id              | 공지사항 삭제           | DeleteNotice    |
+| ----------- | -----------              | -----------             | -----------     |
+| GET         | /homework/:id            | 숙제조회(one)           | GetHomework     |
+| GET         | /homeworks               | 숙제조회(list)          | GetHomeworkList |
+| POST        | /homework                | 숙제입력                | CreateHomework  |
+| DELETE      | /homework                | 숙제삭제                | DeleteHomework  |
 
 
 

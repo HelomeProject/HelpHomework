@@ -14,4 +14,5 @@ public interface IBoardDao {
 	public List<Homework> getHomeworkList(int startlist, int listsize, String memberIdx);
 
 	public Notice getNotice(String noticeIdx);
+	public void createNotice(Notice notice);
 }

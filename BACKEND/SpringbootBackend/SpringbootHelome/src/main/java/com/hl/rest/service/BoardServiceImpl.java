@@ -46,4 +46,9 @@ public class BoardServiceImpl implements IBoardService {
 		return repo.getNotice(noticeIdx);
 	}
 
+	@Override
+	public void createNotice(Notice notice) {
+		repo.createNotice(notice);
+	}
+
 }
