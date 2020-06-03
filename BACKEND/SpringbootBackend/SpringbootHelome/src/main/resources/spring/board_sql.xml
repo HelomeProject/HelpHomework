@@ -36,7 +36,9 @@
 		noticetb(noticeTitle, noticeImgUrl, memberIdx, memberGrade, memberClassNum)
 		values(#{noticeTitle}, #{noticeImgUrl}, #{memberIdx}, #{memberGrade}, #{memberClassNum})
 	</insert>
-	
-	
+	<select id="getNoticeList" resultType="notice">
+		select idx, noticeTitle, noticeImgUrl, memberIdx, memberGrade, memberClassNum from noticetb
+	</select>
+
 </mapper>
  

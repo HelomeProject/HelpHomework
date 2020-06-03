@@ -62,6 +62,11 @@ public class BoardDaoImpl implements IBoardDao {
 	public void createNotice(Notice notice) {
 		session.insert("board.createNotice", notice);
 	}
+
+	@Override
+	public List<Notice> getNoticeList() {
+		return session.selectList("board.getNoticeList");
+	}
 	
 	
 }

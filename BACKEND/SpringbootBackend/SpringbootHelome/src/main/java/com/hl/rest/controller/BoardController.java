@@ -183,4 +183,23 @@ public class BoardController {
 	}
 	
 	
+	@GetMapping("/notices")
+	@ApiOperation(value = "공지사항 목록 조회(list)", response = List.class)
+	public @ResponseBody ResponseEntity<Map<String, Object>> GetNoticeList(
+			@RequestHeader(value = "Authorization") String token) {
+		ResponseEntity<Map<String, Object>> res = null;
+		Map<String, Object> msg = new HashMap<String, Object>();
+		
+		try {
+			Claims de = AuthController.verification(token);
+			List<Notice> list = ser.getNoticeList();
+			msg.put("NoticeList", list);
+			res = new ResponseEntity<Map<String, Object>>(msg, HttpStatus.OK);
+		} catch(Exception e) {
+			msg.put("error", e.getMessage());
+			res = new ResponseEntity<Map<String, Object>>(msg, HttpStatus.BAD_REQUEST);
+		}
+		return res;
+	}
+	
 }
