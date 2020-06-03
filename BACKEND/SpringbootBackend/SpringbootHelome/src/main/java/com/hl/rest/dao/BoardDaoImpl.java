@@ -55,7 +55,7 @@ public class BoardDaoImpl implements IBoardDao {
 
 	@Override
 	public Notice getNotice(String noticeIdx) {
-		return session.selectOne("board.getNotice", noticeIdx);
+		return session.selectOne("board.getNotice", Integer.parseInt(noticeIdx));
 	}
 	
 	

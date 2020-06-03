@@ -131,6 +131,13 @@ public class BoardController {
 			
 			//권한이 있는지?
 			Notice notice = ser.getNotice(noticeIdx);
+			if(member.getGrade().equals(notice.getMemberGrade()) && member.getClassnum().equals(notice.getMemberClassNum())) {
+				msg.put("Notice", notice);
+				res = new ResponseEntity<Map<String, Object>>(msg, HttpStatus.OK);
+			} else {
+				msg.put("error", "권한 없음");
+				res = new ResponseEntity<Map<String, Object>>(msg, HttpStatus.FORBIDDEN);
+			}
 			
 		} catch(Exception e) {
 			msg.put("error", e.getMessage());
