@@ -1,10 +1,6 @@
 import React, { useState } from 'react';
-import Table from '@material-ui/core/Table';
-import TableBody from '@material-ui/core/TableBody';
-import TableCell from '@material-ui/core/TableCell';
-import TableContainer from '@material-ui/core/TableContainer';
-import TableHead from '@material-ui/core/TableHead';
-import TableRow from '@material-ui/core/TableRow';
+import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from '@material-ui/core';
+
 import useStyles from './ScoreTableCSS'
 import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
@@ -23,7 +19,7 @@ const rows = [
     createData(5, 356, 16.0, 49),
 ];
 
-const ScoreTable = () => {
+const ScoreTable = ({ mode }) => {
     const classes = useStyles();
     const tableheadname = [
         ['No.', '숙제 제출일', '점수', '이미지'],
@@ -43,10 +39,10 @@ const ScoreTable = () => {
                         <Table className={classes.table} aria-label="simple table">
                             <TableHead>
                                 <TableRow>
-                                    <TableCell className={classes.tableCellNo} >NO.</TableCell>
-                                    <TableCell className={classes.tableCellDate} align="right">과제 제출일</TableCell>
-                                    <TableCell className={classes.tableCellScore} align="right">점수</TableCell>
-                                    <TableCell className={classes.tableCellImage} align="right">이미지</TableCell>
+                                    <TableCell className={classes.tableCellNo} >{tableheadname[mode][0]}</TableCell>
+                                    <TableCell className={classes.tableCellDate} align="right">{tableheadname[mode][1]}</TableCell>
+                                    <TableCell className={classes.tableCellScore} align="right">{tableheadname[mode][2]}</TableCell>
+                                    <TableCell className={classes.tableCellImage} align="right">{tableheadname[mode][3]}</TableCell>
                                 </TableRow>
                             </TableHead>
                             <TableBody>
@@ -59,7 +55,6 @@ const ScoreTable = () => {
                                         <TableCell align="right">{row.score}</TableCell>
                                         <TableCell align="right" onClick={() => { viewImg(row.url) }} >
                                             <IconButton> <CropOriginalIcon /> </IconButton>
-
                                         </TableCell>
                                     </TableRow>
                                 ))}
