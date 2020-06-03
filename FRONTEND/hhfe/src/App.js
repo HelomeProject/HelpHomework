@@ -24,7 +24,7 @@ const App = () => {
   }
   return (
     <>
-      {!hasCookie ? <Redirect to="/" /> : <Redirect to='/main' />}
+      {/* {!hasCookie ? <Redirect to="/" /> : <Redirect to='/main' />} */}
       <Switch>
         <Route
           exact path="/"
@@ -32,6 +32,7 @@ const App = () => {
             return (
               <Login
                 {...routerProps}
+                hasCookie={hasCookie}
                 setHasCookie={setHasCookie}
                 setMode={setMode}
               />
