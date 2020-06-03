@@ -5,6 +5,8 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -35,18 +37,13 @@ public class MemberController {
 	@Autowired
 	private IMemService ser;
 	
-	@ExceptionHandler(Exception.class)
-	public void ExceptionMethod(Exception e) {
-
-	}
-	
 	/** 회원가입 */
 	@PostMapping("/member/user")
 	@ApiOperation(value = "회원가입 ")
-	public ResponseEntity<Map<String, Object>> CreateMember(@RequestBody Member mem) {
+	public ResponseEntity<Map<String, Object>> CreateMember(@RequestBody @Valid Member mem) {
 		ResponseEntity<Map<String, Object>> res = null;
 		Map<String, Object> msg = new HashMap<String, Object>();
-		
+			
 		try {
 			ser.registerMem(mem);
 			msg.put("member", mem);
@@ -56,7 +53,10 @@ public class MemberController {
 				res = new ResponseEntity<Map<String, Object>>(msg, HttpStatus.CONFLICT);
 				System.out.println(e.getMessage());
 			} else {
-				res = new ResponseEntity<Map<String, Object>>(msg, HttpStatus.INTERNAL_SERVER_ERROR);
+				msg.put("Input Data", mem);
+				msg.put("SAY", "Error msg를 참고하여 Input Data을 다시 한 번 확인해보세요.");
+				msg.put("Error msg", e.getMessage());
+				res = new ResponseEntity<Map<String, Object>>(msg, HttpStatus.BAD_REQUEST);
 				System.out.println(e.getMessage());
 			}
 		}
@@ -67,7 +67,7 @@ public class MemberController {
 	@GetMapping("/member/users")
 	@ApiOperation(value = "멤버 정보 전체 조회", response = List.class)
 	public @ResponseBody ResponseEntity<Map<String, Object>> listMem(
-			@RequestHeader(value = "Authorization") String token,
+			@RequestHeader(value = "Authorization") @Valid String token,
 			@RequestParam(required = false, defaultValue = "1") int page,
 			@RequestParam(required = false, defaultValue = "1") int range) {
 		ResponseEntity<Map<String, Object>> res = null;
@@ -91,11 +91,17 @@ public class MemberController {
 				res = new ResponseEntity<Map<String, Object>>(msg, HttpStatus.OK);
 				
 			} else {
+				msg.put("Error msg", "권한이 없습니다.");
 				res = new ResponseEntity<Map<String, Object>>(msg, HttpStatus.FORBIDDEN);
 			}
 			
 		} catch (Exception e) {
+			String[] input = {token, page+"", range+""};
+			msg.put("Input Data", input);
+			msg.put("SAY", "Error msg를 참고하여 Input Data을 다시 한 번 확인해보세요.");
+			msg.put("Error msg", e.getMessage());
 			res = new ResponseEntity<Map<String, Object>>(msg, HttpStatus.BAD_REQUEST);
+			System.out.println(e.getMessage());
 		}
 		
 		return res;
@@ -105,16 +111,30 @@ public class MemberController {
 	@GetMapping("/member/users/{memberIdx}")
 	@ApiOperation(value = "멤버 정보 조회", response = List.class)
 	public @ResponseBody ResponseEntity<Map<String, Object>> listMem(
+			@RequestHeader(value = "Authorization") @Valid String token,
 			@PathVariable("memberIdx") String memberIdx) {
 		ResponseEntity<Map<String, Object>> res = null;
 		Map<String, Object> msg = new HashMap<String, Object>();
 		try {
-			Member member = ser.getMem(Integer.parseInt(memberIdx));
-			System.out.println(member);
-			msg.put("Member", member);
-			res = new ResponseEntity<Map<String, Object>>(msg, HttpStatus.OK);
+			Claims de = AuthController.verification(token);
+			String email = (String) de.get("email");
+			String isteacher = (String) de.get("isteacher");
+			Member user = ser.getMem(email);
+			if(isteacher.equals("1") || user.getMemberIdx().equals(memberIdx)) {
+				Member member = ser.getMem(Integer.parseInt(memberIdx));
+				msg.put("Member", member);
+				res = new ResponseEntity<Map<String, Object>>(msg, HttpStatus.OK);
+			} else {
+				msg.put("err", "자신의 개인정보 혹은 선생님만 접근 가능합니다.");
+				res = new ResponseEntity<Map<String, Object>>(msg, HttpStatus.FORBIDDEN);
+			}
 		}catch(Exception e) {
+			String[] input = {token, memberIdx};
+			msg.put("Input Data", input);
+			msg.put("SAY", "Error msg를 참고하여 Input Data을 다시 한 번 확인해보세요.");
+			msg.put("Error msg", e.getMessage());
 			res = new ResponseEntity<Map<String, Object>>(msg, HttpStatus.BAD_REQUEST);
+			System.out.println(e.getMessage());
 		}
 		return res;
 	}

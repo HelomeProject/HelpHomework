@@ -58,6 +58,8 @@ public class AuthController {
 					.setClaims(payloads)
 					.signWith(SignatureAlgorithm.HS256, key.getBytes()).compact();
 		}catch(Exception e) {
+			String[] input = {email, isteacher};
+			System.out.println("input => "+input);
 			System.out.println(e.getMessage());
 		}
 		return jwt;
@@ -101,9 +103,11 @@ public class AuthController {
 				return new ResponseEntity<Map<String, Object>>(msg, HttpStatus.UNAUTHORIZED);
 			}
 		} catch(Exception e) {
-			msg.put("resmsg", e.getMessage());
+			msg.put("Input Data", login);
+			msg.put("SAY", "Error msg를 참고하여 Input Data을 다시 한 번 확인해보세요.");
+			msg.put("Error msg", e.getMessage());
+			res = new ResponseEntity<Map<String, Object>>(msg, HttpStatus.BAD_REQUEST);
 			System.out.println(e.getMessage());
-			return new ResponseEntity<Map<String, Object>>(msg, HttpStatus.NOT_FOUND);
 		}
 		return res;
 	}
@@ -117,7 +121,7 @@ public class AuthController {
 				.parseClaimsJws(token)
 				.getBody();
 		} catch(Exception e) {
-			System.out.println("claims error");
+			System.out.println("claims error : 아마 키가 없을걸?");
 		}
 		return c;
 	}

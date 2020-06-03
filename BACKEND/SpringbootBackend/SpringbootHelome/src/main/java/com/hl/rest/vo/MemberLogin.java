@@ -1,7 +1,11 @@
 package com.hl.rest.vo;
 
+import javax.validation.constraints.NotNull;
+
 public class MemberLogin {
-	private String email, password;
+
+	@NotNull private String email;
+	@NotNull private String password;
 	
 	public MemberLogin(){}
 	public MemberLogin(String email, String password) {

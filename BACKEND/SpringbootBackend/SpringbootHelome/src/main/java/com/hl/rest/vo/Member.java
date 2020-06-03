@@ -1,10 +1,18 @@
 package com.hl.rest.vo;
 
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotNull;
+
+
 public class Member {
-	private String memberIdx, username, school, email, password, isteacher, grade, classnum;
-
+	private String memberIdx, school, grade, classnum;
+	
+	@NotNull private String username;
+	@NotNull private String password;
+	@NotNull private String isteacher;
+	@Email private String email;
+	
 	public Member() {}
-
 	public Member(String memberIdx, String username, String school, String email, String password, String isteacher,
 			String grade, String classnum) {
 		this.memberIdx = memberIdx;
