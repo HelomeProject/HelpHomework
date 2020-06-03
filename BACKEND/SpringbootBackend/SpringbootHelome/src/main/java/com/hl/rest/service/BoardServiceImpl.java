@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.hl.rest.dao.IBoardDao;
 import com.hl.rest.vo.Homework;
+import com.hl.rest.vo.Notice;
 
 
 @Service
@@ -38,6 +39,11 @@ public class BoardServiceImpl implements IBoardService {
 	@Override
 	public List<Homework> getHomeworkList(int startlist, int listsize, String memberIdx) {
 		return repo.getHomeworkList(startlist, listsize, memberIdx);
+	}
+
+	@Override
+	public Notice getNotice(String noticeIdx) {
+		return repo.getNotice(noticeIdx);
 	}
 
 }

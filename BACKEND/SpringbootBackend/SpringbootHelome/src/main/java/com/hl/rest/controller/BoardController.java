@@ -11,6 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
@@ -23,6 +24,7 @@ import com.hl.rest.service.IBoardService;
 import com.hl.rest.service.IMemService;
 import com.hl.rest.vo.Homework;
 import com.hl.rest.vo.Member;
+import com.hl.rest.vo.Notice;
 import com.hl.rest.vo.Pagination;
 
 import io.jsonwebtoken.Claims;
@@ -109,9 +111,35 @@ public class BoardController {
 			msg.put("error", e.getMessage());
 			res = new ResponseEntity<Map<String, Object>>(msg, HttpStatus.BAD_REQUEST);
 		}
+		return res;	
+	}
+	
+	
+	/** 공지사항 조회(one) */
+	@GetMapping("/board/notice/{noticeIdx}")
+	@ApiOperation(value = "공지사항 조회(one)", response = List.class)
+	public @ResponseBody ResponseEntity<Map<String, Object>> GetNotice(
+			@RequestHeader(value = "Authorization") String token,
+			@PathVariable("noticeIdx") String noticeIdx) {
+		ResponseEntity<Map<String, Object>> res = null;
+		Map<String, Object> msg = new HashMap<String, Object>();
+		
+		try {
+			Claims de = AuthController.verification(token);
+			String email = (String) de.get("email");
+			Member member = memser.getMem(email);
+			
+			//권한이 있는지?
+			Notice notice = ser.getNotice(noticeIdx);
+			
+		} catch(Exception e) {
+			msg.put("error", e.getMessage());
+			res = new ResponseEntity<Map<String, Object>>(msg, HttpStatus.BAD_REQUEST);
+		}
+		
 		
 		return res;
-		
 	}
+	
 	
 }

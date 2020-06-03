@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.hl.rest.vo.Homework;
+import com.hl.rest.vo.Notice;
 
 @Repository
 public class BoardDaoImpl implements IBoardDao {
@@ -50,6 +51,11 @@ public class BoardDaoImpl implements IBoardDao {
 		map.put("listsize", listsize);
 		map.put("memberIdx", Integer.parseInt(memberIdx));
 		return session.selectList("board.getMyHomeworkList", map);
+	}
+
+	@Override
+	public Notice getNotice(String noticeIdx) {
+		return session.selectOne("board.getNotice", noticeIdx);
 	}
 	
 	

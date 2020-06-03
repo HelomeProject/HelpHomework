@@ -27,5 +27,11 @@
 	</select>
 	
 	
+	<select id="getNotice" resultType="notice" parameterType="String">
+		select idx, noticeTitle, noticeImgUrl, memberIdx, memberGrade, memberClassNum from noticetb 
+	</select>
+	
+	
+	
 </mapper>
  

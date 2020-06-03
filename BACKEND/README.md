@@ -44,18 +44,19 @@
 
 ### /board
 
-| Method      | URI         | Description         | Name            |
-| ----------- | ----------- | ------------------- | --------------- |
-| GET         | /notice     | 공지사항 조회(one)  | GetNotice       |
-| GET         | /notices    | 공지사항 조회(list) | GetNoticeList   |
-| POST        | /notice     | 공지사항 입력       | CreateNotice    |
-| PUT         | /notice/:id | 공지사항 수정       | UpdateNotice    |
-| DELETE      | /notice/:id | 공지사항 삭제       | DeleteNotice    |
-| ----------- | ----------- | -----------         | -----------     |
-| GET         | /homework   | 숙제조회(one)       | GetHomework     |
-| GET         | /homeworks  | 숙제조회(list)      | GetHomeworkList |
-| POST        | /homework   | 숙제입력            | CreateHomework  |
-| DELETE      | /homework   | 숙제삭제            | DeleteHomework  |
+| Method      | URI                      | Description         | Name            |
+| ----------- | ------------------------ | ------------------- | --------------- |
+| GET         | /notice/:id              | 공지사항 조회(one)  | GetNotice       |
+| GET         | /notice/:grade/:classnum | 공지사항 반별조회   | GetNoticeFilter |
+| GET         | /notices                 | 공지사항 조회(list) | GetNoticeList   |
+| POST        | /notice                  | 공지사항 입력       | CreateNotice    |
+| PUT         | /notice/:id              | 공지사항 수정       | UpdateNotice    |
+| DELETE      | /notice/:id              | 공지사항 삭제       | DeleteNotice    |
+| ----------- | -----------              | -----------         | -----------     |
+| GET         | /homework/:id            | 숙제조회(one)       | GetHomework     |
+| GET         | /homeworks               | 숙제조회(list)      | GetHomeworkList |
+| POST        | /homework                | 숙제입력            | CreateHomework  |
+| DELETE      | /homework                | 숙제삭제            | DeleteHomework  |
 
 
 
@@ -103,10 +104,12 @@
 
 ### noticetb
 
-| Field        | Type         | Null | Key     | Default | Extra          |
-| ------------ | ------------ | ---- | ------- | ------- | -------------- |
-| idx          | int          | NO   | PRI     |         | auto_increment |
-| noticeTitle  | varchar(50)  | NO   |         |         |                |
-| noticeImgUrl | varchar(100) | YES  |         |         |                |
-| memberIdx    | int          | NO   | MUL(FK) |         |                |
+| Field          | Type         | Null | Key     | Default | Extra          |
+| -------------- | ------------ | ---- | ------- | ------- | -------------- |
+| idx            | int          | NO   | PRI     |         | auto_increment |
+| noticeTitle    | varchar(50)  | NO   |         |         |                |
+| noticeImgUrl   | varchar(100) | YES  |         |         |                |
+| memberIdx      | int          | NO   | MUL(FK) |         |                |
+| memberGrade    | int          | NO   |         |         |                |
+| memberClassNum | int          | NO   |         |         |                |
 
