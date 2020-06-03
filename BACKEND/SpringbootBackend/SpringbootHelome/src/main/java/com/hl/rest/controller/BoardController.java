@@ -64,8 +64,12 @@ public class BoardController {
 			msg.put("Homework", homework);
 			res = new ResponseEntity<Map<String, Object>>(msg, HttpStatus.OK);
 		} catch(Exception e) {
-			msg.put("error", e.getMessage());
+			Object[] input = {token, homework};
+			msg.put("Input Data", input);
+			msg.put("SAY", "Error msg를 참고하여 Input Data을 다시 한 번 확인해보세요.");
+			msg.put("Error msg", e.getMessage());
 			res = new ResponseEntity<Map<String, Object>>(msg, HttpStatus.BAD_REQUEST);
+			System.out.println(e.getMessage());
 		}
 		return res;
 	}
@@ -108,8 +112,12 @@ public class BoardController {
 			}
 			
 		} catch(Exception e) {
-			msg.put("error", e.getMessage());
+			String[] input = {token, page+"", range+""};
+			msg.put("Input Data", input);
+			msg.put("SAY", "Error msg를 참고하여 Input Data을 다시 한 번 확인해보세요.");
+			msg.put("Error msg", e.getMessage());
 			res = new ResponseEntity<Map<String, Object>>(msg, HttpStatus.BAD_REQUEST);
+			System.out.println(e.getMessage());
 		}
 		return res;	
 	}
@@ -145,8 +153,12 @@ public class BoardController {
 			}
 
 		} catch(Exception e) {
-			msg.put("error", e.getMessage());
+			Object[] input = {token, notice};
+			msg.put("Input Data", input);
+			msg.put("SAY", "Error msg를 참고하여 Input Data을 다시 한 번 확인해보세요.");
+			msg.put("Error msg", e.getMessage());
 			res = new ResponseEntity<Map<String, Object>>(msg, HttpStatus.BAD_REQUEST);
+			System.out.println(e.getMessage());
 		}
 		return res;
 	}
@@ -176,8 +188,12 @@ public class BoardController {
 			}
 			
 		} catch(Exception e) {
-			msg.put("error", e.getMessage());
+			String[] input = {token, noticeIdx};
+			msg.put("Input Data", input);
+			msg.put("SAY", "Error msg를 참고하여 Input Data을 다시 한 번 확인해보세요.");
+			msg.put("Error msg", e.getMessage());
 			res = new ResponseEntity<Map<String, Object>>(msg, HttpStatus.BAD_REQUEST);
+			System.out.println(e.getMessage());
 		}
 		return res;
 	}
@@ -196,8 +212,11 @@ public class BoardController {
 			msg.put("NoticeList", list);
 			res = new ResponseEntity<Map<String, Object>>(msg, HttpStatus.OK);
 		} catch(Exception e) {
-			msg.put("error", e.getMessage());
+			msg.put("Input Data", token);
+			msg.put("SAY", "Error msg를 참고하여 Input Data을 다시 한 번 확인해보세요.");
+			msg.put("Error msg", e.getMessage());
 			res = new ResponseEntity<Map<String, Object>>(msg, HttpStatus.BAD_REQUEST);
+			System.out.println(e.getMessage());
 		}
 		return res;
 	}

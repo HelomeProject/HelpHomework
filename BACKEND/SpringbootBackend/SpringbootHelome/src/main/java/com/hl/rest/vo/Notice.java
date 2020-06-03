@@ -1,7 +1,11 @@
 package com.hl.rest.vo;
 
+import javax.validation.constraints.NotNull;
+
 public class Notice {
-	private String idx, noticeTitle, noticeImgUrl, memberIdx, memberGrade, memberClassNum;
+	private String idx, noticeImgUrl, memberIdx, memberGrade, memberClassNum;
+	@NotNull private String noticeTitle;
+	
 	public Notice(){}
 	public Notice(String idx, String noticeTitle, String noticeImgUrl, String memberIdx, String memberGrade,
 			String memberClassNum) {

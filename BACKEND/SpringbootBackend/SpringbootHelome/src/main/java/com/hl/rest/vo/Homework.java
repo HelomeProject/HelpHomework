@@ -1,7 +1,13 @@
 package com.hl.rest.vo;
 
+import javax.validation.constraints.FutureOrPresent;
+
 public class Homework {
-	String homeworkIdx, homeworkTitle, startDate, endDate, homeworkDetail, memberIdx;
+	String homeworkIdx, homeworkTitle, homeworkDetail, memberIdx;
+	
+	@FutureOrPresent String startDate;
+	@FutureOrPresent String endDate;
+	
 	public Homework() {}
 	public Homework(String homeworkIdx, String homeworkTitle, String startDate, String endDate, String homeworkDetail,
 			String memberIdx) {
