@@ -9,13 +9,13 @@ import { BrowserRouter as Router } from 'react-router-dom';
 
 
 ReactDOM.render(
-  <React.StrictMode>
+  <React.Fragment>
     <Router>
       <CookiesProvider>
         <App />
       </CookiesProvider>
     </Router>
-  </React.StrictMode>,
+  </React.Fragment>,
   document.getElementById('root')
 );
 
