@@ -192,7 +192,7 @@ new_model = load_model('test_453.hdf5')
 # 경로 설정 및 이미지 변환
 testimage = input("파일명 입력(XX.jpg): ")
 
-# 예측
+# 이미지 수정, 예측
 res_predict, mid_points = load_and_test(testimage, classes)
 
 # 점수
