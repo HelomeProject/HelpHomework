@@ -31,17 +31,17 @@ const Register = () => {
   const [registerInfo, setRegisterInfo] = useState({
     "email": "",
     "password": "",
-    "name": "",
+    "username": "",
     "school": "",
     "grade": "",
     "classnum": "",
-    "teacher": 0,
+    "isteacher": 0,
 
   })
 
   const handleChange = (e) => {
     const { value, name, checked } = e.target
-    if (e.target.name === "teacher") {
+    if (e.target.name === "isteacher") {
       if (checked) {
         setRegisterInfo({
           ...registerInfo,
@@ -63,11 +63,11 @@ const Register = () => {
   };
 
   const createUserApi = (user) => {
-    // const url = "http://k02c1101.p.ssafy.io:9090/api/member/register"
-    const url = ""
+    const url = "http://k02c1101.p.ssafy.io:9090/api/member/user"
     console.log(user)
     return axios.post(url, user)
       .then((res) => {
+        console.log(res)
         return res
       })
       .catch((error) => { console.log(error) })
@@ -134,7 +134,7 @@ const Register = () => {
               <Grid item xs={12} >
                 <TextField
                   autoComplete="fname"
-                  name="name"
+                  name="username"
                   variant="outlined"
                   required
                   fullWidth
@@ -159,7 +159,7 @@ const Register = () => {
                 <Grid item xs={1} />
                 <Grid container item xs={5} justify="center">
                   <FormControlLabel
-                    control={<Checkbox color="primary" onChange={handleChange} name="teacher" />}
+                    control={<Checkbox color="primary" onChange={handleChange} name="isteacher" />}
                     label="교사인가요?"
                   />
                 </Grid>
