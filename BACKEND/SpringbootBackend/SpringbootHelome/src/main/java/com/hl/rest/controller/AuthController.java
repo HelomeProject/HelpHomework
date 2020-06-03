@@ -17,8 +17,11 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.hl.rest.key.GetKEY;
 import com.hl.rest.service.IAuthService;
+import com.hl.rest.service.IMemService;
 import com.hl.rest.vo.Member;
+import com.hl.rest.vo.MemberLogin;
 
+import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.swagger.annotations.ApiOperation;
@@ -30,6 +33,8 @@ public class AuthController {
 	
 	@Autowired
 	private IAuthService ser;
+	@Autowired
+	private IMemService memser;
 	
 	@ExceptionHandler(Exception.class)
 	public void ExceptionMethod(Exception e) {
@@ -37,7 +42,7 @@ public class AuthController {
 	}
 	
 	/** 토큰 생성 */
-	public static String createToken(String username) {
+	public static String createToken(String email, String isteacher) {
 		String jwt = "";
 		try {
 			String key = GetKEY.getKey();
@@ -46,7 +51,8 @@ public class AuthController {
 			headers.put("alg", "HS256");
 
 			Map<String, Object> payloads = new HashMap<>();
-			payloads.put("username", username);
+			payloads.put("email", email);
+			payloads.put("isteacher", isteacher);
 			jwt = Jwts.builder()
 					.setHeader(headers)
 					.setClaims(payloads)
@@ -71,17 +77,24 @@ public class AuthController {
 	
 	@PostMapping("/auth/login")
 	@ApiOperation(value = "로그인 ")
-	public ResponseEntity<Map<String, Object>> memlogin(@RequestBody Member login) {
+	public ResponseEntity<Map<String, Object>> LoginMember(@RequestBody MemberLogin login) {
 		ResponseEntity<Map<String, Object>> res = null;
 		Map<String, Object> msg = new HashMap<String, Object>();
 		
-		if(login.getUsername()=="" || login.getPassword()=="") {
+		if(login.getEmail()=="" || login.getPassword()=="") {
 			return new ResponseEntity<Map<String, Object>>(msg, HttpStatus.BAD_REQUEST);
 		}
 		try {
-			if(login.getPassword().equals(ser.getPassword(login.getUsername()))) {
-				String jwt = createToken(login.getUsername());
-				msg.put("username", login.getUsername());
+			if(login.getPassword().equals(ser.getPassword(login.getEmail()))) {
+				Member member = memser.getMem(login.getEmail());
+				String jwt = createToken(login.getEmail(), member.getIsteacher());
+				
+				msg.put("email", login.getEmail());
+				msg.put("username", member.getUsername());
+				msg.put("school", member.getSchool());
+				msg.put("isteacher", member.getIsteacher());
+				msg.put("grade", member.getGrade());
+				msg.put("classnum", member.getClassnum());
 				msg.put("token", jwt);
 				res = new ResponseEntity<Map<String, Object>>(msg, HttpStatus.OK);
 			} else {
@@ -93,5 +106,19 @@ public class AuthController {
 			return new ResponseEntity<Map<String, Object>>(msg, HttpStatus.NOT_FOUND);
 		}
 		return res;
+	}
+	
+	/** Claims 객체 */
+	public static Claims verification(String token) {
+		Claims c = null;
+		try {
+			c = Jwts.parser()
+				.setSigningKey(GetKEY.getKey().getBytes())
+				.parseClaimsJws(token)
+				.getBody();
+		} catch(Exception e) {
+			System.out.println("claims error");
+		}
+		return c;
 	}
 }

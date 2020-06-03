@@ -7,11 +7,25 @@
 <mapper namespace="member">
 	<insert id="insertMember" parameterType="map">
 		insert into
-		membertb(username, school, email, password, grade)
-		values(#{username}, #{school}, #{email}, SHA2(#{password}, 256), #{grade})
+		membertb(username, school, email, password, isteacher, grade, classnum)
+		values(#{username}, #{school}, #{email}, SHA2(#{password}, 256), #{isteacher}, #{grade}, #{classnum})
 	</insert>
 	<select id="getPassword" resultType="String" parameterType="String">
-		select password from membertb where username=#{username}
+		select password from membertb where email=#{email}
+	</select>
+	<select id="getMember" resultType="member" parameterType="String">
+		select idx as memberIdx, username, school, email, isteacher, grade, classnum from membertb where email=#{email}
+	</select>
+	<select id="getMemberIdx" resultType="member" parameterType="int">
+		select idx as memberIdx, username, school, email, isteacher, grade, classnum from membertb where idx=#{memberIdx}
+	</select>
+	<select id="getMemberListSize" resultType="int">
+		select count(*) as cnt from membertb
+	</select>
+	<select id="getMemStudentList" resultType="member" parameterType="map">
+		select * from membertb 
+		where grade = #{grade} and classnum=#{classnum} and isteacher=0
+		limit #{startlist}, #{listisze}
 	</select>
 	
 </mapper>

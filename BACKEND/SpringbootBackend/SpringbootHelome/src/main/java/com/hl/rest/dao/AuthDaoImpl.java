@@ -10,7 +10,7 @@ public class AuthDaoImpl implements IAuthDao{
 	SqlSession session;
 
 	@Override
-	public String getPassword(String username) {
-		return session.selectOne("member.getPassword", username);
+	public String getPassword(String email) {
+		return session.selectOne("member.getPassword", email);
 	}
 }

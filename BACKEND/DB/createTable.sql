@@ -8,13 +8,16 @@ use helome;
 #[성실 테이블] idx | 회원idx | 과제idx | 점수
 
 -- member table
+drop table membertb;
 CREATE TABLE IF NOT EXISTS `membertb` (
 	 idx int auto_increment primary key,
-     username varchar(20) unique,
+     username varchar(20),
      password varchar(100),
-     email varchar(50),
+     email varchar(50) unique,
      school varchar(20),
-     grade int default 0
+     grade int,
+     classnum int,
+     isteacher int
 );
 desc membertb;
 
@@ -37,10 +40,12 @@ desc subjecttb;
 -- 과제 table
 CREATE TABLE IF NOT EXISTS `homeworktb`(
 	idx int auto_increment primary key,
-    subidx int,
-    name varchar(100),
-    foreign key (subidx) references subjecttb(idx)
-    on delete cascade
+    memberIdx int,
+    homeworkTitle varchar(100),
+    startDate date,
+    endDate date,
+    homeworkDetail varchar(200),
+    foreign key (memberIdx) references membertb(idx)
 );
 desc homeworktb;
 

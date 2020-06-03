@@ -33,11 +33,10 @@ const LeftDrawer = ({ open, mode }) => {
     const drawerListItem = listTitle.map((val, idx) => {
         return (
             <ListItem button onClick={() => { handleTap(idx) }} key={idx}>
-                <ListItemIcon>{listIcon[idx][0]}</ListItemIcon>
-                <ListItemText>{val[0]}</ListItemText>
+                <ListItemIcon>{listIcon[idx][mode]}</ListItemIcon>
+                <ListItemText>{val[mode]}</ListItemText>
             </ListItem>
         )
-
     })
 
     const ContentControl = () => {
@@ -85,7 +84,7 @@ const LeftDrawer = ({ open, mode }) => {
 
 LeftDrawer.defaultProps = {
     open: true,
-    mode: "1"
+    mode: 1
 }
 
 export default LeftDrawer
