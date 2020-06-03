@@ -27,5 +27,18 @@
 	</select>
 	
 	
+	<select id="getNotice" resultType="notice" parameterType="String">
+		select idx, noticeTitle, noticeImgUrl, memberIdx, memberGrade, memberClassNum from noticetb
+		where idx = memberIdx
+	</select>
+	<insert id="createNotice" parameterType="notice">
+		insert into
+		noticetb(noticeTitle, noticeImgUrl, memberIdx, memberGrade, memberClassNum)
+		values(#{noticeTitle}, #{noticeImgUrl}, #{memberIdx}, #{memberGrade}, #{memberClassNum})
+	</insert>
+	<select id="getNoticeList" resultType="notice">
+		select idx, noticeTitle, noticeImgUrl, memberIdx, memberGrade, memberClassNum from noticetb
+	</select>
+
 </mapper>
  

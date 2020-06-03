@@ -70,3 +70,16 @@ CREATE TABLE IF NOT EXISTS `score2tb` (
     foreign key (homeidx) references homeworktb(idx)
 );
 desc score2tb;
+
+-- 공지사항 테이블
+drop table noticetb;
+CREATE TABLE IF NOT EXISTS `noticetb` (
+	idx int auto_increment primary key,
+	memberIdx int,
+    memberGrade int,
+    memberClassNum int,
+    noticeTitle varchar(50),
+    noticeImgUrl varchar(100),
+    foreign key (memberIdx) references membertb(idx)
+);
+desc noticetb;
