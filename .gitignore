@@ -2,6 +2,12 @@
 # Created by https://www.gitignore.io/api/node,java,react,django,python,windows,visualstudiocode
 # Edit at https://www.gitignore.io/?templates=node,java,react,django,python,windows,visualstudiocode
 
+### user custom   ###
+### Deep Learning ###
+
+*.pkl
+*.hdf5
+
 ### Django ###
 *.log
 *.pot
