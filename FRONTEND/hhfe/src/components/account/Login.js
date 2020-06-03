@@ -24,7 +24,7 @@ function Copyright() {
   );
 }
 
-const Login = ({ setMode, setHasCookie }) => {
+const Login = ({ setMode, hasCookie, setHasCookie }) => {
   const classes = useStyles();
   const [loginInfo, setLoginInfo] = useState({
     username: "",
@@ -46,7 +46,10 @@ const Login = ({ setMode, setHasCookie }) => {
       password: sha256(user.password)
     }
     return axios.post("http://k02c1101.p.ssafy.io:9090/api/auth/login", pushuser)
-      .then((res) => { return res })
+      .then((res) => {
+        console.log(res)
+        return res
+      })
       .catch((error) => { console.log(error) })
   };
 
@@ -76,7 +79,7 @@ const Login = ({ setMode, setHasCookie }) => {
 
   return (
     <>
-      {/* {hasCookie && (<Redirect to="/main" mode={0} />)} */}
+      {hasCookie && (<Redirect to="/main" mode={0} />)}
       <Grid container component="main" className={classes.root}>
         <CssBaseline />
         <Grid item xs={false} sm={4} md={7} className={classes.image} />
