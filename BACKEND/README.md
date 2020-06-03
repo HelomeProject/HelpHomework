@@ -1,4 +1,4 @@
-# API 명명 규칙
+# API 문서
 
 ## HTTP Req Method
 
@@ -21,6 +21,14 @@
 
 
 
+### /auth
+
+| Method | URI    | Description | Name        |
+| ------ | ------ | ----------- | ----------- |
+| POST   | /login | 로그인      | LoginMember |
+
+
+
 ### /member
 
 | Method | URI       | description    | Name            |
@@ -31,14 +39,6 @@
 | PUT    | /user/:id | 회원수정(one)  | UpdateMember    |
 | DELETE | /user/:id | 회원삭제(one)  | DeleteMember    |
 | DELETE | /users    | 회원삭제(list) | DeleteMemberAll |
-
-
-
-### /auth
-
-| Method | URI    | Description | Name        |
-| ------ | ------ | ----------- | ----------- |
-| POST   | /login | 로그인      | LoginMember |
 
 
 
@@ -58,4 +58,55 @@
 | DELETE      | /homework   | 숙제삭제            | DeleteHomework  |
 
 
+
+----
+
+
+
+## DATABASE TABLE
+
+| Name       | Description |
+| ---------- | ----------- |
+| membertb   | 회원 테이블 |
+| homeworktb | 과제 테이블 |
+| noticetb   | 공지 테이블 |
+
+
+
+### membertb
+
+| Field     | Type         | Null | Key  | Default | Extra          |
+| --------- | ------------ | ---- | ---- | ------- | -------------- |
+| idx       | int          | NO   | PRI  |         | auto_increment |
+| username  | vharchar(20) | YES  |      |         |                |
+| password  | varchar(100) | YES  |      |         |                |
+| email     | varchar(50)  | YES  | UNI  |         |                |
+| school    | varchar(20)  | YES  |      |         |                |
+| grade     | int          | YES  |      |         |                |
+| classnum  | int          | YES  |      |         |                |
+| isteacher | int          | YES  |      |         |                |
+
+
+
+### homeworktb
+
+| Field          | Type         | Null | Key     | Default | Extra          |
+| -------------- | ------------ | ---- | ------- | ------- | -------------- |
+| idx            | int          | NO   | PRI     |         | auto_increment |
+| memberIdx      | int          | YES  | MUL(FK) |         |                |
+| homeworkTitle  | varchar(100) | YES  |         |         |                |
+| startDate      | date         | YES  |         |         |                |
+| endDate        | date         | YES  |         |         |                |
+| homeworkDetail | varchar(200) | YES  |         |         |                |
+
+
+
+### noticetb
+
+| Field        | Type         | Null | Key     | Default | Extra          |
+| ------------ | ------------ | ---- | ------- | ------- | -------------- |
+| idx          | int          | NO   | PRI     |         | auto_increment |
+| noticeTitle  | varchar(50)  | NO   |         |         |                |
+| noticeImgUrl | varchar(100) | YES  |         |         |                |
+| memberIdx    | int          | NO   | MUL(FK) |         |                |
 
