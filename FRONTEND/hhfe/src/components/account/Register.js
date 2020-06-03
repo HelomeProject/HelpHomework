@@ -29,22 +29,44 @@ const Register = () => {
   const classes = useStyles();
   const [isJoinSuccess, setJoinSuccess] = useState(false);
   const [registerInfo, setRegisterInfo] = useState({
-    "password": "",
-    "username": "",
     "email": "",
-    "grade": "0",
+    "password": "",
+    "name": "",
     "school": "",
+    "grade": "",
+    "classnum": "",
+    "teacher": 0,
+
   })
 
   const handleChange = (e) => {
-    const { value, name } = e.target
-    setRegisterInfo({
-      ...registerInfo,
-      [name]: value
-    })
+    const { value, name, checked } = e.target
+    if (e.target.name === "teacher") {
+      if (checked) {
+        setRegisterInfo({
+          ...registerInfo,
+          [name]: 1
+        })
+      } else {
+        setRegisterInfo({
+          ...registerInfo,
+          [name]: 0
+        })
+      }
+
+    } else {
+      setRegisterInfo({
+        ...registerInfo,
+        [name]: value
+      })
+    }
   };
+
   const createUserApi = (user) => {
-    return axios.post("http://k02c1101.p.ssafy.io:9090/api/member/register", user)
+    // const url = "http://k02c1101.p.ssafy.io:9090/api/member/register"
+    const url = ""
+    console.log(user)
+    return axios.post(url, user)
       .then((res) => {
         return res
       })
@@ -74,31 +96,16 @@ const Register = () => {
           </Avatar>
           <Typography component="h1" variant="h5">
             회원가입
-  </Typography>
+          </Typography>
           <form className={classes.form} method="POST" onSubmit={handleSubmit}>
             <Grid container spacing={2}>
-              <Grid item xs={12} >
-                <TextField
-                  autoComplete="fname"
-                  name="username"
-                  variant="outlined"
-                  required
-                  fullWidth
-                  id="Name"
-                  label="이름"
-                  autoFocus
-                  onChange={handleChange}
-                />
-              </Grid>
               <Grid item xs={12}>
                 <TextField
                   variant="outlined"
                   required
                   fullWidth
-                  id="email"
                   label="이메일 주소"
                   name="email"
-                  autoComplete="email"
                   onChange={handleChange}
                 />
               </Grid>
@@ -110,7 +117,6 @@ const Register = () => {
                   name="password"
                   label="비밀번호"
                   type="password"
-                  id="password"
                   onChange={handleChange}
                 />
               </Grid>
@@ -119,13 +125,65 @@ const Register = () => {
                   variant="outlined"
                   required
                   fullWidth
-                  name="school"
-                  label="학교"
-                  type="School"
-                  id="School"
-                  autoComplete="School"
+                  name="passwordCheck"
+                  label="비밀번호 확인"
+                  type="password"
                   onChange={handleChange}
                 />
+              </Grid>
+              <Grid item xs={12} >
+                <TextField
+                  autoComplete="fname"
+                  name="name"
+                  variant="outlined"
+                  required
+                  fullWidth
+                  id="Name"
+                  label="이름"
+                  autoFocus
+                  onChange={handleChange}
+                />
+              </Grid>
+              <Grid container item xs={12}>
+                <Grid item xs={6}>
+                  <TextField
+                    variant="outlined"
+                    required
+                    fullWidth
+                    name="school"
+                    label="학교"
+                    onChange={handleChange}
+
+                  />
+                </Grid>
+                <Grid item xs={1} />
+                <Grid container item xs={5} justify="center">
+                  <FormControlLabel
+                    control={<Checkbox color="primary" onChange={handleChange} name="teacher" />}
+                    label="교사인가요?"
+                  />
+                </Grid>
+              </Grid>
+              <Grid container item xs={12} justify="flex-start">
+                <Grid item xs={5}>
+                  <TextField
+                    variant="outlined"
+                    required
+                    name="grade"
+                    label="학년"
+                    onChange={handleChange}
+                  />
+                </Grid>
+                <Grid item xs={1} />
+                <Grid item xs={6}>
+                  <TextField
+                    variant="outlined"
+                    required
+                    name="classnum"
+                    label="반"
+                    onChange={handleChange}
+                  />
+                </Grid>
               </Grid>
               <Grid item xs={12}>
                 <FormControlLabel
