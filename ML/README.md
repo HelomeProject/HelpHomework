@@ -45,3 +45,17 @@
 [예측된 수식과 결과]
 
 ![결과캡처](README.assets/결과캡처.PNG)
+
+
+
+
+
+![adaIMG](README.assets/adaIMG.JPG)
+
+[인식]
+
+![Figure_1](README.assets/Figure_1.jpeg)
+
+[정답 표시]
+
+![res](README.assets/res.JPG)
