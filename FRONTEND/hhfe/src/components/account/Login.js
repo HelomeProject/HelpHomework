@@ -24,7 +24,7 @@ function Copyright() {
   );
 }
 
-const Login = ({ hasCookie, setHasCookie }) => {
+const Login = ({ setMode, setHasCookie }) => {
   const classes = useStyles();
   const [loginInfo, setLoginInfo] = useState({
     username: "",
@@ -45,7 +45,6 @@ const Login = ({ hasCookie, setHasCookie }) => {
       username: user.username,
       password: sha256(user.password)
     }
-    console.log(pushuser)
     return axios.post("http://k02c1101.p.ssafy.io:9090/api/auth/login", pushuser)
       .then((res) => { return res })
       .catch((error) => { console.log(error) })
@@ -60,6 +59,7 @@ const Login = ({ hasCookie, setHasCookie }) => {
       const response = await loginApi(loginInfo);
       console.log(response)
       if (response.status === 200) {
+        setMode(1)
         setHasCookie(true);
       } else {
         throw new Error(response.error);
@@ -76,8 +76,8 @@ const Login = ({ hasCookie, setHasCookie }) => {
 
   return (
     <>
-      {hasCookie && (<Redirect to="/main" />)}
-      {!hasCookie && (<Grid container component="main" className={classes.root}>
+      {/* {hasCookie && (<Redirect to="/main" mode={0} />)} */}
+      <Grid container component="main" className={classes.root}>
         <CssBaseline />
         <Grid item xs={false} sm={4} md={7} className={classes.image} />
         <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square>
@@ -117,10 +117,7 @@ const Login = ({ hasCookie, setHasCookie }) => {
                 control={<Checkbox value="remember" color="primary" />}
                 label="회원정보 기억하기"
               />
-              <FormControlLabel
-                control={<Checkbox color="primary" />}
-                label="교사인가요?"
-              />
+
               <Button
                 type="submit"
                 fullWidth
@@ -131,11 +128,6 @@ const Login = ({ hasCookie, setHasCookie }) => {
                 로그인
             </Button>
               <Grid container>
-                <Grid item xs>
-                  <Link href="#" variant="body2">
-                    비밀번호를 잊으셨나요??
-                </Link>
-                </Grid>
                 <Grid item>
                   <Link href="/register" variant="body2">
                     {"아직회원이 아니세요??"}
@@ -149,7 +141,8 @@ const Login = ({ hasCookie, setHasCookie }) => {
           </div>
         </Grid>
       </Grid>
-      )}
+  )
+}
     </>
   );
 }
