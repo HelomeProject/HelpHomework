@@ -1,47 +1,44 @@
 import React, { useState } from 'react';
-import useStyles from './FileUploadCSS'
 import Button from '@material-ui/core/Button';
+import IconButton from '@material-ui/core/IconButton';
+import PhotoCamera from '@material-ui/icons/PhotoCamera';
 import axios from 'axios'
+import TextField from '@material-ui/core/TextField';
 
 axios.defaults.xsrfCookieName = 'csrftoken';
 axios.defaults.xsrfHeaderName = 'X-CSRFTOKEN';
 
 const FileUpload = () => {
     const [img, setImage] = useState(null);
-    const classes = useStyles();
+    const [imgname, setImgname] = useState("")
 
     const onChange = (e) => {
         setImage(e.target.files[0])
-
-        console.log(typeof e.target.files[0])
-        console.log(e.target.files[0])
+        setImgname(e.target.files[0].name)
     }
 
     const onClick = () => {
-        console.log(img)
         const formData = new FormData();
         formData.append('file', img);
-        console.log(formData)
-        console.log(img)
 
         return axios.post("http://127.0.0.1:8000/api/v1/calc/", formData)
             .then(res => {
-                console.log(res)
-                alert('성공')
             })
             .catch(err => {
-                alert('실패')
             })
     }
 
 
     return (
         <div>
-            <label htmlFor="fileupload" >업로드</label>
-            <input type="file" id="fileupload" name="file" onChange={onChange} readOnly style={{ display: 'none' }} />
-            <input className={classes.uploadbox} readOnly value="파일선택" />
-
-            <Button type="button" variant="contained" color="primary" onClick={onClick}> submit </Button>
+            <input accept="image/*" style={{display:'none'}} onChange={onChange} id="icon-button-file" type="file" />
+            <TextField label="사진" value={imgname} disabled/>
+            <label htmlFor="icon-button-file">
+                <IconButton color="primary" aria-label="upload picture" component="span">
+                    <PhotoCamera style={{ fontSize: 40 }}/>
+                </IconButton>
+            </label>
+            <Button type="button" variant="contained" color="primary" onClick={onClick}> 숙제 내기 </Button>
 
         </div>
     )
