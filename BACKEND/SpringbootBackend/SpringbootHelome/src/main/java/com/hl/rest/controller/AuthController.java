@@ -32,6 +32,7 @@ import io.jsonwebtoken.JwtBuilder;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.swagger.annotations.ApiOperation;
+import java.security.*;
 
 @CrossOrigin
 @RestController
@@ -55,13 +56,16 @@ public class AuthController {
 		//String key = GetKEY.getKey();
 		//System.out.println("key 가지러 왔어요 => " + key);
 		String key = "ghafjs110!!)";
-
-        String builder = Jwts.builder()
-                .setSubject("ghafjs110!!0")
-                .signWith(SignatureAlgorithm.HS256, key).compact();
+		
+		jwt = Jwts.builder()
+				  .setSubject("users/TzMUocMF4p")
+				  .setExpiration(new Date(1300819380))
+				  .claim("name", "Robert Token Man")
+				  .claim("scope", "self groups/admins")
+				  .signWith(SignatureAlgorithm.HS256, key.getBytes()).compact();
 
         System.out.println("토큰 생성 완료-_-");
-        return builder;
+        return jwt;
 	}
 	
 	public static String createToken(String username) {
