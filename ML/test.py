@@ -45,54 +45,68 @@ def calculate(predict_nums):
     result = eval(predict_nums)
     return result
 
+
+def sort_rects(rects):
+    mid_points = []
+    arrs = []
+    arr = [(rects[0][0], rects[0][1], rects[0][2], rects[0][3])]
+    for i in range(1, len(rects)):
+        x, y, w, h = rects[i][0], rects[i][1], rects[i][2], rects[i][3]
+        x_, y_, w_, h_ = rects[i-1][0], rects[i-1][1], rects[i-1][2], rects[i-1][3]
+        if (y+(h//2)) - (y_+(h_//2)) > 20:
+            arr.sort()
+            mid_points.append(arr[0])
+            arrs.append(arr)
+            arr = []
+        
+        arr.append((x,y,w,h))
+    arr.sort()
+    mid_points.append(arr[0])
+    arrs.append(arr)
+
+    for i in range(len(arrs)):
+        for j in range(len(arrs[i])):
+            if arrs[i][j+1][3] - arrs[i][j][3] > 5:
+                arrs[i] = arrs[i][j+1:]
+                break
+
+    return arrs, mid_points
+
+
 def load_and_test(image_path, classes):
 
-    res_predict = dict()
-    mid_points = []
+    res_predict = []
 
     img = cv2.imread(image_path)
     img_gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
     img_blur = cv2.GaussianBlur(img_gray, (5, 5), 0)
 
-    thr1 = cv2.adaptiveThreshold(img_blur, 255, cv2.ADAPTIVE_THRESH_GAUSSIAN_C, cv2.THRESH_BINARY_INV, 3, 2)
+    img_th = cv2.adaptiveThreshold(img_blur, 255, cv2.ADAPTIVE_THRESH_GAUSSIAN_C, cv2.THRESH_BINARY_INV, 5, 2)
+    # cv2.imshow('abc',img_th)
+    # cv2.waitKey(0)
+    # cv2.destroyAllWindows()
+    images, contours, hierachy= cv2.findContours(img_th.copy(), cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE) # 오류 생기면 images를 지우세요
+
+    rects = [cv2.boundingRect(each) for each in contours]
+    rects_ = [(x,y,w,h) for (x,y,w,h) in rects if (w*h>29)]
+    rects = sorted(rects_, key=lambda x:x[1])
     
-    images, contours, hierachy= cv2.findContours(thr1.copy(), cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
-    rects_ = [cv2.boundingRect(each) for each in contours]
-
-    # rects_ = [(x+6,y+8,w-10,h-11) if w*h > 1100 else (x,y,w,h) for (x,y,w,h) in rects_ ]
-    rects_ = [(x,y,w,h) for (x,y,w,h) in rects_ if (w*h>30)]
-
-    rects_1 = [(x,y,w,h) for (x,y,w,h) in rects_ if ((w*h>30) and 10 < y < 120)]
-    rects_1.sort()
-    mid_points.append(rects_1[0])
-    rects_2 = [(x,y,w,h) for (x,y,w,h) in rects_ if ((w*h>30) and 135 < y < 240)]
-    rects_2.sort()
-    mid_points.append(rects_2[0])
-    rects_3 = [(x,y,w,h) for (x,y,w,h) in rects_ if ((w*h>30) and 260 < y < 367)]
-    rects_3.sort()
-    mid_points.append(rects_3[0])
-    rects_4 = [(x,y,w,h) for (x,y,w,h) in rects_ if ((w*h>30) and 377< y < 500)]
-    rects_4.sort()
-    mid_points.append(rects_4[0])
-    rects_5 = [(x,y,w,h) for (x,y,w,h) in rects_ if ((w*h>30) and 505 < y < 620)]
-    rects_5.sort()
-    mid_points.append(rects_5[0])
-
-    RECTS = [rects_1[3:], rects_2[3:], rects_3[3:], rects_4[3:], rects_5[3:]]
-
+    # 정렬 ㅡㅡ...;; 후.
+    RECTS, mid_points = sort_rects(rects)
 
     for rect in rects_:
-        cv2.rectangle(img, (rect[0]-5, rect[1]-10), (rect[0] + rect[2] + 2, rect[1] + rect[3] + 10), (0, 255, 0), 2)
+        cv2.rectangle(img, (rect[0] - 3, rect[1] - 3), (rect[0] + rect[2] + 4, rect[1] + rect[3] + 4), (0, 255, 0), 2)
 
     plt.imshow(img)
     plt.show()
+    # raise
 
     for rects in RECTS:
         predict_nums = ''
         predict_res = ''
         jud = False
         for rect in rects: # [y : y+h, x : x+w]
-            new_img = img_gray[rect[1]-1 : rect[1]+rect[3]+1, rect[0] : rect[0]+rect[2]+1]
+            new_img = img_gray[rect[1]-1 : rect[1]+rect[3]+1, rect[0] : rect[0]+rect[2]]
         
             squared_img = fillSquare(new_img)
             resize_img = cv2.resize(squared_img, (45, 45))
@@ -104,22 +118,29 @@ def load_and_test(image_path, classes):
             img_arr = img_arr.astype('float32') / 255
 
             img_arr = nomalization(img_arr)
+            # ii = image.array_to_img(img_arr)
+            # plt.imshow(ii)
+            # plt.show()
             predict_nums, predict_res, jud = pre(new_model, img_arr, jud, predict_nums, predict_res, classes)
 
         predict_nums = predict_nums[:-2]
+        if predict_nums[0] == ')':
+            predict_nums = predict_nums[1:]
+        
+        print(predict_nums)
         cal = calculate(predict_nums)
-        res_predict[predict_res] = cal
+        res_predict.append([predict_res, cal])
+        
     
     return res_predict, mid_points
     
-
 
 def pre(new_model, img_arr, jud, predict_nums, predict_res, classes):
 
     output = new_model.predict(img_arr[None, :, :, :])
     np.set_printoptions(formatter={'float': lambda x: "{0:0.5f}".format(x)})
     predict_num = classes[np.argmax(output)]
-
+    
     if predict_num == 'minus':
         predict_num = '-'
     elif predict_num == 'plus':
@@ -136,14 +157,16 @@ def pre(new_model, img_arr, jud, predict_nums, predict_res, classes):
         predict_num = '='
     else:
         pass
-
+    
     if jud == True:
+        if predict_num == '+':
+            predict_num = '4'
         predict_res += predict_num
     else:
         predict_nums += predict_num
         if predict_num == '-' and predict_nums[-2] == '-':
             jud = True
-    
+
     return predict_nums, predict_res, jud
 
     
@@ -159,27 +182,31 @@ def define_classes():
 def ox(res_predict, mid_points, testimage):
     c = 0
     correct, wrong = [], []
-    for key, value in res_predict.items():
+    len_correct, len_wrong = 0, 0
+    for key, value in res_predict:
         if key == str(value):
             correct.append(c)
+            len_correct += 1
         else:
             wrong.append(c)
+            len_wrong += 1
         c += 1
     
     img = cv2.imread(testimage)
     for i in correct:
         x, y, w, h = mid_points[i][0], mid_points[i][1], mid_points[i][2], mid_points[i][3]
-        img = cv2.circle(img, (x+9,y+9), 14, (0,0,255), 2)
+        img = cv2.circle(img, (x+(h//2),y+(h//2)), 18, (0,0,255), 2)
     for j in wrong:
         x, y, w, h = mid_points[j][0], mid_points[j][1], mid_points[j][2], mid_points[j][3]
-        img = cv2.line(img, (x,y), (x+18, y+18), (0,0,255), 2)
-        img = cv2.line(img, (x+18,y), (x, y+18), (0,0,255), 2)
+        img = cv2.line(img, (x-3,y-3), (x+22, y+22), (0,0,255), 2)
+        img = cv2.line(img, (x+22,y-3), (x-3, y+22), (0,0,255), 2)
     
-    cv2.imshow('img',img)
+    img_re = cv2.resize(img, (400, 600))
+    cv2.imshow('img',img_re)
     cv2.waitKey(0)
     cv2.destroyAllWindows()
 
-    point = len(correct) * 20
+    point = (len_correct / (len_correct+len_wrong)) * 100
     return point
 
 
@@ -192,9 +219,9 @@ new_model = load_model('test_453.hdf5')
 # 경로 설정 및 이미지 변환
 testimage = input("파일명 입력(XX.jpg): ")
 
-# 이미지 수정, 예측
+# 예측
 res_predict, mid_points = load_and_test(testimage, classes)
-
+print('res: ', res_predict)
 # 점수
 point = ox(res_predict, mid_points, testimage)
 print("제 점수는요 {}점 ㅎ".format(point))
