@@ -5,21 +5,36 @@ import TextField from '@material-ui/core/TextField';
 import { MuiPickersUtilsProvider, KeyboardDatePicker } from '@material-ui/pickers';
 import { Dialog, DialogActions, DialogContent, DialogTitle } from '@material-ui/core';
 
-const FormDialog = ({ open, setOpen, schedule, setSchedule, setcreateSchedule }) => {
-    const handleClose = () => {
+const FormDialog = ({ open, setOpen, schedule, setSchedule, setcreateSchedule, viewschedule }) => {
+
+    const handleSubmit = () => {
         setcreateSchedule.createSchedules([schedule])
         setOpen(false)
     };
+
+    const handleClose = () => {
+        setOpen(false)
+    }
+
     const handleDateStartChange = (date) => {
         setSchedule({ ...schedule, start: date })
     }
-    const handleDateEndChange = (date) => {
-        setSchedule({ ...schedule, end: date })
+
+    const handleDateEndChange = (e) => {
+        setSchedule({ ...schedule, end: e })
     }
+
     const handleTextChange = (e) => {
         const { name, value } = e.target
-        console.log(name, value)
         setSchedule({ ...schedule, [name]: value })
+    }
+
+    const handleDelete = (e) => {
+        console.log(e)
+    }
+
+    const handleUpdate = (e) => {
+        console.log(e)
     }
 
     return (
@@ -32,6 +47,7 @@ const FormDialog = ({ open, setOpen, schedule, setSchedule, setcreateSchedule })
                     label="일정 제목"
                     onChange={handleTextChange}
                     fullWidth
+                    value={schedule.title}
                 />
                 <MuiPickersUtilsProvider utils={DateFnsUtils}>
                     <Grid container justify='space-between'>
@@ -46,6 +62,7 @@ const FormDialog = ({ open, setOpen, schedule, setSchedule, setcreateSchedule })
                             KeyboardButtonProps={{
                                 'aria-label': 'change date',
                             }}
+                            readOnly={viewschedule}
                         />
                         <KeyboardDatePicker
                             disableToolbar
@@ -58,6 +75,7 @@ const FormDialog = ({ open, setOpen, schedule, setSchedule, setcreateSchedule })
                             KeyboardButtonProps={{
                                 'aria-label': 'change date',
                             }}
+                            readOnly={viewschedule}
                         />
                     </Grid>
 
@@ -69,16 +87,33 @@ const FormDialog = ({ open, setOpen, schedule, setSchedule, setcreateSchedule })
                     label="상세 내용"
                     onChange={handleTextChange}
                     fullWidth
+                    value={schedule.description}
                 />
             </DialogContent>
-            <DialogActions>
-                <Button onClick={handleClose} color="primary">
-                    Cancel
+            {
+                viewschedule ? 
+                <DialogActions>
+                    <Button onClick={handleClose} color="primary">
+                        취소
                     </Button>
-                <Button onClick={handleClose} color="primary">
-                    Subscribe
+                    <Button onClick={handleDelete} color="primary">
+                        삭제
                     </Button>
-            </DialogActions>
+                    <Button onClick={handleUpdate} color="primary">
+                        수정
+                    </Button>
+                </DialogActions> 
+            :
+                <DialogActions>
+                    <Button onClick={handleClose} color="primary">
+                        취소
+                    </Button>
+                    <Button onClick={handleSubmit} color="primary">
+                        작성
+                    </Button>
+                </DialogActions>
+
+            }
         </Dialog >
     );
 }
