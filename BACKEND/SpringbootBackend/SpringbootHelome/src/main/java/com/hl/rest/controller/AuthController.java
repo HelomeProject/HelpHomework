@@ -2,6 +2,10 @@ package com.hl.rest.controller;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.*;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -10,6 +14,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -22,6 +28,7 @@ import com.hl.rest.vo.Member;
 import com.hl.rest.vo.MemberLogin;
 
 import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.JwtBuilder;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.swagger.annotations.ApiOperation;
@@ -42,39 +49,87 @@ public class AuthController {
 	}
 	
 	/** 토큰 생성 */
-	public static String createToken(String email, String isteacher) {
+	public String createToken(String email, String isteacher) {
 		String jwt = "";
-		try {
+		
+		//String key = GetKEY.getKey();
+		//System.out.println("key 가지러 왔어요 => " + key);
+		String key = "ghafjs110!!)";
+
+
+        Map<String, Object> map= new HashMap<String, Object>();
+        map.put("isteacher", isteacher);
+        map.put("email", email);
+
+        JwtBuilder builder = Jwts.builder()
+                .setClaims(map)
+                .signWith(SignatureAlgorithm.HS256, key.getBytes());
+
+        System.out.println("토큰 생성 완료-_-"+ builder.compact());
+        return builder.compact();
+	}
+	
+	public static String createToken(String username) {
+        System.out.println("토큰을 생성할게요.");
+        String jwt = "";
+        try {
 			String key = GetKEY.getKey();
+			Date exDate = new Date();
+			Calendar calendar = Calendar.getInstance();
+			calendar.setTime(exDate);
+			calendar.add(Calendar.MINUTE,30);
+			exDate = calendar.getTime();
+			
+			DateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss (z Z)");
+			TimeZone time = TimeZone.getTimeZone("Asia/Seoul");
+			df.setTimeZone(time);
+			String expstring = df.format(exDate);
+			System.out.println("아래 토큰 만료 시간을 안내해 드립니다 => " + expstring);
+			Date calculatedexDate = calendar.getTime();
+			
+			
 			Map<String, Object> headers = new HashMap<>();
 			headers.put("typ", "JWT");
 			headers.put("alg", "HS256");
 
 			Map<String, Object> payloads = new HashMap<>();
-			payloads.put("email", email);
-			payloads.put("isteacher", isteacher);
+			payloads.put("exp", expstring);
+			payloads.put("username", username);
+
 			jwt = Jwts.builder()
 					.setHeader(headers)
 					.setClaims(payloads)
+					.setExpiration(calculatedexDate)
 					.signWith(SignatureAlgorithm.HS256, key.getBytes()).compact();
-		}catch(Exception e) {
-			String[] input = {email, isteacher};
-			System.out.println("input => "+input);
+			
+			System.out.println(jwt);
+			System.out.println("토큰 생성 완료!");
+		}
+        catch(Exception e) {
+        	System.out.println("에러났어!@!@!@#!@#!@#!@#!@#!@#!@#");
 			System.out.println(e.getMessage());
 		}
+        System.out.println("==============");
 		return jwt;
 	}
 	
 	/** SHA-256 generator 
 	 * @throws NoSuchAlgorithmException */
-	public static String createSHA256(String str) throws NoSuchAlgorithmException {
+	@GetMapping("/auth/sha2/{str}")
+	@ApiOperation(value = "SHA-256 generator")
+	public ResponseEntity<Map<String, Object>> createSHA256(@PathVariable String str) throws NoSuchAlgorithmException {
+		ResponseEntity<Map<String, Object>> res = null;
+		Map<String, Object> msg = new HashMap<String, Object>();
+		
 		MessageDigest md = MessageDigest.getInstance("SHA-256");
 	    md.update(str.getBytes());
 	    StringBuilder sb = new StringBuilder();
 	    for(byte b : md.digest()) {
 	    	sb.append(String.format("%02x", b));
 	    }
-	    return sb.toString();
+	    msg.put("sha2", sb.toString());
+	    res = new ResponseEntity<Map<String, Object>>(msg, HttpStatus.OK);
+	    return res;
 	}
 	
 	@PostMapping("/auth/login")
@@ -83,13 +138,14 @@ public class AuthController {
 		ResponseEntity<Map<String, Object>> res = null;
 		Map<String, Object> msg = new HashMap<String, Object>();
 		
-		if(login.getEmail()=="" || login.getPassword()=="") {
-			return new ResponseEntity<Map<String, Object>>(msg, HttpStatus.BAD_REQUEST);
-		}
 		try {
 			if(login.getPassword().equals(ser.getPassword(login.getEmail()))) {
 				Member member = memser.getMem(login.getEmail());
+				System.out.println(member.toString());
+				
+				System.out.println(login.getEmail() + " " + member.getIsteacher() );
 				String jwt = createToken(login.getEmail(), member.getIsteacher());
+				System.out.println(jwt + "대체 왜 안나와");
 				
 				msg.put("email", login.getEmail());
 				msg.put("username", member.getUsername());
