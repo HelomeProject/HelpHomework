@@ -9,7 +9,8 @@ import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import useStyles from './LoginCSS'
 import axios from 'axios'
-import sha256 from 'crypto-js/sha256';
+import sha256 from './encryptSHA256'
+
 import { Redirect } from "react-router-dom";
 
 
@@ -40,13 +41,15 @@ const Login = ({ setMode, hasCookie, setHasCookie }) => {
     })
   };
 
-  const loginApi = (user) => {
+  const loginApi = async (user) => {
     const pushuser = {
-      username: user.username,
-      password: sha256(user.password)
+      email: String(user.username),
+      password: sha256(String(user.password))
     }
-    return axios.post("http://k02c1101.p.ssafy.io:9090/api/auth/login", pushuser)
+
+    return await axios.post("http://k02c1101.p.ssafy.io:9090/api/auth/login", pushuser)
       .then((res) => {
+        console.log(pushuser)
         console.log(res)
         return res
       })
@@ -60,12 +63,12 @@ const Login = ({ setMode, hasCookie, setHasCookie }) => {
     }
     try {
       const response = await loginApi(loginInfo);
-      console.log(response)
-      if (response.status === 200) {
-        setMode(1)
-        setHasCookie(true);
+      if (response.status == 200) {
+        // setMode(1)
+        // setHasCookie(true);
       } else {
-        throw new Error(response.error);
+        console.log(response.error)
+        // throw new Error(response.error);
       }
     } catch (err) {
       setLoginInfo({
