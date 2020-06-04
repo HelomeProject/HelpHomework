@@ -56,17 +56,12 @@ public class AuthController {
 		//System.out.println("key 가지러 왔어요 => " + key);
 		String key = "ghafjs110!!)";
 
+        String builder = Jwts.builder()
+                .setSubject("ghafjs110!!0")
+                .signWith(SignatureAlgorithm.HS256, key).compact();
 
-        Map<String, Object> map= new HashMap<String, Object>();
-        map.put("isteacher", isteacher);
-        map.put("email", email);
-
-        JwtBuilder builder = Jwts.builder()
-                .setClaims(map)
-                .signWith(SignatureAlgorithm.HS256, key.getBytes());
-
-        System.out.println("토큰 생성 완료-_-"+ builder.compact());
-        return builder.compact();
+        System.out.println("토큰 생성 완료-_-");
+        return builder;
 	}
 	
 	public static String createToken(String username) {
