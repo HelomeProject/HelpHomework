@@ -42,12 +42,13 @@ const calendarOptions = {
 
 const Notification = ({ mode }) => {
     const classes = useStyle()
-    const [month, setMonth] = useState(null)
-    const [year, setYear] = useState(null)
     const calendarRef = useRef(null);
-    const [isteacher, setIsteacher] = useState(calendarOptions)
+    const [year, setYear] = useState(null)
+    const [viewschedule, setViewschedule] = useState(false)
     const [open, setOpen] = useState(false)
+    const [month, setMonth] = useState(null)
     const [calendarInst, setCalendarInst] = useState(null)
+    const [isteacher, setIsteacher] = useState(calendarOptions)
     const [newschedule, setNewschedule] = useState({
         calendarId: "1",
         id: String(Math.random()),
@@ -78,7 +79,7 @@ const Notification = ({ mode }) => {
         }
         const changeDate = () => {
 
-            setMonth(calendarInstance.getDate().toDate().getMonth())
+            setMonth(calendarInstance.getDate().toDate().getMonth() + 1)
             setYear(calendarInstance.getDate().toDate().getFullYear())
         }
         changeView()
@@ -86,13 +87,21 @@ const Notification = ({ mode }) => {
     }, [mode, year, month])
 
     const onClickSchedule = useCallback(e => {
-        console.log(e);
-    }, []);
+        console.log(e.schedule)
+        setNewschedule({...newschedule,
+            ...e.schedule
+        })
+        setViewschedule(true)
+        setOpen(true)
+    }, [newschedule]);
 
     const onBeforeCreateSchedule = useCallback(e => {
-        setOpen(true)
         console.log(e)
-    }, [])
+        setNewschedule({...newschedule,
+            ...e
+        })
+        setOpen(true)
+    }, [newschedule])
 
     const onBeforeDeleteSchedule = useCallback(res => {
         console.log(res);
@@ -134,7 +143,7 @@ const Notification = ({ mode }) => {
                             onBeforeDeleteSchedule={onBeforeDeleteSchedule}
                             onBeforeUpdateSchedule={onBeforeUpdateSchedule}
                         />
-                        <FormDialog open={open} setcreateSchedule={calendarInst} setOpen={setOpen} schedule={newschedule} setSchedule={setNewschedule} />
+                        <FormDialog viewschedule={viewschedule} open={open} setcreateSchedule={calendarInst} setOpen={setOpen} schedule={newschedule} setSchedule={setNewschedule} />
                     </Paper>
                 </Grid>
                 <Grid item xs={12} sm={12} md={4}>
