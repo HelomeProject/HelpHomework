@@ -40,7 +40,7 @@ def nomalization(img_arr):
     
     return img_arr
 
-# 계산
+
 def calculate(predict_nums):
     result = eval(predict_nums)
     return result
@@ -94,12 +94,11 @@ def load_and_test(image_path, classes):
     # 정렬 ㅡㅡ...;; 후.
     RECTS, mid_points = sort_rects(rects)
 
-    for rect in rects_:
-        cv2.rectangle(img, (rect[0] - 3, rect[1] - 3), (rect[0] + rect[2] + 4, rect[1] + rect[3] + 4), (0, 255, 0), 2)
-
-    plt.imshow(img)
-    plt.show()
-    # raise
+    # 인식 네모 보기
+    # for rect in rects_:
+    #     cv2.rectangle(img, (rect[0] - 3, rect[1] - 3), (rect[0] + rect[2] + 4, rect[1] + rect[3] + 4), (0, 255, 0), 2)
+    # plt.imshow(img)
+    # plt.show()
 
     for rects in RECTS:
         predict_nums = ''
@@ -118,6 +117,7 @@ def load_and_test(image_path, classes):
             img_arr = img_arr.astype('float32') / 255
 
             img_arr = nomalization(img_arr)
+            # 인식되는 한 숫자 보기
             # ii = image.array_to_img(img_arr)
             # plt.imshow(ii)
             # plt.show()
@@ -214,7 +214,7 @@ def ox(res_predict, mid_points, testimage):
 classes = define_classes()
 
 # 저장된 학습 파일열기
-new_model = load_model('test_453.hdf5')
+new_model = load_model('train_14.hdf5')
 
 # 경로 설정 및 이미지 변환
 testimage = input("파일명 입력(XX.jpg): ")
