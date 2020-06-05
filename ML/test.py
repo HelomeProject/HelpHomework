@@ -109,9 +109,9 @@ def load_and_test(image_path, classes):
         
             squared_img = fillSquare(new_img)
             resize_img = cv2.resize(squared_img, (45, 45))
-            resize_img = cv2.GaussianBlur(resize_img, (3, 3), 0)
+            blur_img = cv2.GaussianBlur(resize_img, (3, 3), 0)
 
-            img_inv = cv2.bitwise_not(resize_img)
+            img_inv = cv2.bitwise_not(blur_img)
             
             img_arr = image.img_to_array(img_inv, dtype='float32')
             img_arr = img_arr.astype('float32') / 255
