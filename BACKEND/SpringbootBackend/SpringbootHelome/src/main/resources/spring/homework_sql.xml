@@ -22,6 +22,9 @@
 		select * from homeworktb
 		where Homework_noticeIdx in (select HomeworkNotice_idx from homeworkNoticetb where HomeworkNotice_memberIdx=#{memberIdx});
 	</select>
-	
+	<select id="getHomeworkList_student" resultType="homework" parameterType="String">
+		select * from homeworktb
+		where Homework_memberIdx=#{memberIdx};
+	</select>
 </mapper>
  

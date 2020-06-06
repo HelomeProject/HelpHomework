@@ -10,4 +10,5 @@ public interface IHomeworkDao {
 	public void CreateHomework(Homework homework);
 	public List<HomeworkNotice> getHomeworkNoticeList();
 	public List<Homework> getHomeworkList_teacher(String memberIdx);
+	public List<Homework> getHomeworkList_student(String memberIdx);
 }

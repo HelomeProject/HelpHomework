@@ -164,20 +164,21 @@ public class HomeworkController {
 			Claims de = AuthController.verification(token);
 			String email = (String) de.get("email");
 			Member member = memser.getMem(email);
-		
+			List<Homework> homeworklist = null;
+			
 			if(member.getIsteacher().equals("1")) { //선생님이 낸 숙제제출 목록 조회
-				System.out.println(member.getMemberIdx());
-				List<Homework> homeworklist = ser.getHomeworkList_teacher(member.getMemberIdx());
-				System.out.println(homeworklist);
-				if(homeworklist.size()==0) {
-					msg.put("msg", "요청에 성공하였으나 응답할 콘텐츠가 없습니다.");
-					res = new ResponseEntity<Map<String, Object>>(msg, HttpStatus.NO_CONTENT);
-				} else {
-					msg.put("HomeworkList", homeworklist);
-					res = new ResponseEntity<Map<String, Object>>(msg, HttpStatus.OK);
-				}
+				homeworklist = ser.getHomeworkList_teacher(member.getMemberIdx());
 			} else { //자신의 숙제제출 목록 조회
-				
+				homeworklist = ser.getHomeworkList_student(member.getMemberIdx());
+			}
+			
+			System.out.println(homeworklist);
+			if(homeworklist.size()==0) {
+				msg.put("msg", "요청에 성공하였으나 응답할 콘텐츠가 없습니다.");
+				res = new ResponseEntity<Map<String, Object>>(msg, HttpStatus.NO_CONTENT);
+			} else {
+				msg.put("HomeworkList", homeworklist);
+				res = new ResponseEntity<Map<String, Object>>(msg, HttpStatus.OK);
 			}
 		} catch(Exception e) {
 			msg.put("Input Data", token);
