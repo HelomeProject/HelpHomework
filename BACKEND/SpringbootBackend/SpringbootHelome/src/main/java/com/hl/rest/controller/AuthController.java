@@ -80,7 +80,6 @@ public class AuthController {
 	@PostMapping("/auth/login")
 	@ApiOperation(value = "로그인 ")
 	public ResponseEntity<Map<String, Object>> LoginMember(@RequestBody MemberLogin login) {
-		System.out.println(login.toString());
 		ResponseEntity<Map<String, Object>> res = null;
 		Map<String, Object> msg = new HashMap<String, Object>();
 		
@@ -100,9 +99,7 @@ public class AuthController {
 				msg.put("classnum", member.getClassnum());
 				msg.put("token", jwt);
 				res = new ResponseEntity<Map<String, Object>>(msg, HttpStatus.OK);
-				System.out.println("200ok");
 			} else {
-				System.out.println("401");
 				return new ResponseEntity<Map<String, Object>>(msg, HttpStatus.UNAUTHORIZED);
 			}
 		} catch(Exception e) {
