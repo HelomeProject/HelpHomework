@@ -15,5 +15,8 @@
 		homeworktb(Homework_memberIdx, Homework_noticeIdx, Homework_url, Homework_submitDate)
 		values(#{Homework_memberIdx}, #{Homework_noticeIdx}, #{Homework_url}, #{Homework_submitDate})
 	</insert>
+	<select id="getHomeworkNoticeList" resultType="homeworkNotice">
+		select * from homeworknoticetb
+	</select>
 </mapper>
  

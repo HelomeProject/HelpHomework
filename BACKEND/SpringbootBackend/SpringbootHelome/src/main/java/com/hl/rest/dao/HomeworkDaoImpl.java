@@ -1,5 +1,7 @@
 package com.hl.rest.dao;
 
+import java.util.List;
+
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -20,6 +22,11 @@ public class HomeworkDaoImpl implements IHomeworkDao{
 	@Override
 	public void CreateHomework(Homework homework) {
 		session.insert("homework.CreateHomework", homework);
+	}
+
+	@Override
+	public List<HomeworkNotice> getHomeworkNoticeList() {
+		return session.selectList("homework.getHomeworkNoticeList");
 	}
 	
 }

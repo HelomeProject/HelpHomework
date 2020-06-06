@@ -126,51 +126,53 @@ public class HomeworkController {
 		return res;
 	}
 	
-	/** 숙제조회(list) */
+	/** 숙제공지 전체목록 조회 */
 	@GetMapping("/homeworks")
-	@ApiOperation(value = "숙제 정보 전체 조회", response = List.class)
-	public @ResponseBody ResponseEntity<Map<String, Object>> GetHomeworkList(
-			@RequestHeader(value = "Authorization") String token,
-			@RequestParam(required = false, defaultValue = "0") int page,
-			@RequestParam(required = false, defaultValue = "1") int range){
+	@ApiOperation(value = "숙제공지 전체목록 조회")
+	public ResponseEntity<Map<String, Object>> GetHomeworkNoticeList(
+			@RequestHeader(value = "Authorization") String token) {
 		ResponseEntity<Map<String, Object>> res = null;
 		Map<String, Object> msg = new HashMap<String, Object>();
 		
 		try {
 			Claims de = AuthController.verification(token);
 			String email = (String) de.get("email");
-			String isteacher = (String) de.get("isteacher");
 			Member member = memser.getMem(email);
 			
-			if(isteacher.equals("1")) {
-				List<Homework_old> list = new LinkedList<>();
-				int homeworklistsize = ser.getHomeListSize(member.getGrade(), member.getClassnum());
-				Pagination pagination = new Pagination();
-				pagination.pageInfo(page, range, homeworklistsize);
-				
-				list = ser.getHomeworkList(pagination.getStartList(), pagination.getListSize(), member.getGrade(), member.getClassnum());
-				msg.put("HomeworkList", list);
-				res = new ResponseEntity<Map<String, Object>>(msg, HttpStatus.OK);
-				
-			} else {
-				List<Homework_old> list = new LinkedList<>();
-				int homeworklistsize = ser.getHomeListSize(member.getMemberIdx());
-				Pagination pagination = new Pagination();
-				pagination.pageInfo(page, range, homeworklistsize);
-				
-				list = ser.getHomeworkList(pagination.getStartList(), pagination.getListSize(), member.getMemberIdx());
-				msg.put("HomeworkList", list);
-				res = new ResponseEntity<Map<String, Object>>(msg, HttpStatus.OK);
-			}
+			List<HomeworkNotice> homeworknotice = ser.getHomeworkNoticeList();
+			msg.put("HomeworkNoticeList", homeworknotice);
+			res = new ResponseEntity<Map<String, Object>>(msg, HttpStatus.OK);
 			
-		} catch(Exception e) {
-			String[] input = {token, page+"", range+""};
-			msg.put("Input Data", input);
+		} catch (Exception e) {
+			msg.put("Input Data", token);
 			msg.put("SAY", "Error msg를 참고하여 Input Data을 다시 한 번 확인해보세요.");
 			msg.put("Error msg", e.getMessage());
 			res = new ResponseEntity<Map<String, Object>>(msg, HttpStatus.BAD_REQUEST);
 			System.out.println(e.getMessage());
 		}
-		return res;	
+		return res;
+	}
+	
+	/** 숙제제출 전제목록 조회 */
+	@PostMapping("/homeworks")
+	@ApiOperation(value = "숙제제출 전체목록 조회")
+	public ResponseEntity<Map<String, Object>> GetHomeworkList(
+			@RequestHeader(value = "Authorization") String token) {
+		ResponseEntity<Map<String, Object>> res = null;
+		Map<String, Object> msg = new HashMap<String, Object>();
+		try {
+			Claims de = AuthController.verification(token);
+			String email = (String) de.get("email");
+			Member member = memser.getMem(email);
+		
+			if(member.getIsteacher().equals("1")) { //선생님이 낸 숙제제출 목록 조회
+				List<Homework> homeworklist = ser.getHomeworkList_teacher(member.getMemberIdx());
+			} else { //자신의 숙제제출 목록 조회
+				
+			}
+		} catch(Exception e) {
+			
+		}
+		return res;
 	}
 }

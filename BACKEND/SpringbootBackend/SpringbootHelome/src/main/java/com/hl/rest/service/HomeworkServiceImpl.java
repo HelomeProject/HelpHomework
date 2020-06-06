@@ -1,5 +1,7 @@
 package com.hl.rest.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -21,6 +23,11 @@ public class HomeworkServiceImpl implements IHomeworkService{
 	@Override
 	public void CreateHomework(Homework homework) {
 		repo.CreateHomework(homework);
+	}
+
+	@Override
+	public List<HomeworkNotice> getHomeworkNoticeList() {
+		return repo.getHomeworkNoticeList();
 	}
 	
 }
