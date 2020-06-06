@@ -22,7 +22,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.hl.rest.service.IBoardService;
 import com.hl.rest.service.IMemService;
-import com.hl.rest.vo.Homework;
+import com.hl.rest.vo.Homework_old;
 import com.hl.rest.vo.Member;
 import com.hl.rest.vo.Notice;
 import com.hl.rest.vo.Pagination;

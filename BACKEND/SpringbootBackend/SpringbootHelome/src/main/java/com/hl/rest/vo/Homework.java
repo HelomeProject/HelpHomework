@@ -1,64 +1,62 @@
 package com.hl.rest.vo;
 
-import javax.validation.constraints.FutureOrPresent;
+import javax.validation.constraints.NotNull;
 
 public class Homework {
-	String homeworkIdx, homeworkTitle, homeworkDetail, memberIdx;
-	
-	@FutureOrPresent String startDate;
-	@FutureOrPresent String endDate;
+	private String Homework_idx, Homework_url, Homework_score, Homework_memberIdx, Homework_submitDate;
+	@NotNull private String Homework_noticeIdx;
 	
 	public Homework() {}
-	public Homework(String homeworkIdx, String homeworkTitle, String startDate, String endDate, String homeworkDetail,
-			String memberIdx) {
-		this.homeworkIdx = homeworkIdx;
-		this.homeworkTitle = homeworkTitle;
-		this.startDate = startDate;
-		this.endDate = endDate;
-		this.homeworkDetail = homeworkDetail;
-		this.memberIdx = memberIdx;
+	public Homework(String homework_idx, String homework_url, String homework_score, String homework_memberIdx,
+			String homework_submitDate, @NotNull String homework_noticeIdx) {
+		Homework_idx = homework_idx;
+		Homework_url = homework_url;
+		Homework_score = homework_score;
+		Homework_memberIdx = homework_memberIdx;
+		Homework_submitDate = homework_submitDate;
+		Homework_noticeIdx = homework_noticeIdx;
 	}
-
-	public String getMemberIdx() {
-		return memberIdx;
+	
+	public String getHomework_idx() {
+		return Homework_idx;
 	}
-	public void setMemberIdx(String memberIdx) {
-		this.memberIdx = memberIdx;
+	public void setHomework_idx(String homework_idx) {
+		Homework_idx = homework_idx;
 	}
-	public String getHomeworkIdx() {
-		return homeworkIdx;
+	public String getHomework_url() {
+		return Homework_url;
 	}
-	public void setHomeworkIdx(String homeworkIdx) {
-		this.homeworkIdx = homeworkIdx;
+	public void setHomework_url(String homework_url) {
+		Homework_url = homework_url;
 	}
-	public String getHomeworkTitle() {
-		return homeworkTitle;
+	public String getHomework_score() {
+		return Homework_score;
 	}
-	public void setHomeworkTitle(String homeworkTitle) {
-		this.homeworkTitle = homeworkTitle;
+	public void setHomework_score(String homework_score) {
+		Homework_score = homework_score;
 	}
-	public String getStartDate() {
-		return startDate;
+	public String getHomework_memberIdx() {
+		return Homework_memberIdx;
 	}
-	public void setStartDate(String startDate) {
-		this.startDate = startDate;
+	public void setHomework_memberIdx(String homework_memberIdx) {
+		Homework_memberIdx = homework_memberIdx;
 	}
-	public String getEndDate() {
-		return endDate;
+	public String getHomework_submitDate() {
+		return Homework_submitDate;
 	}
-	public void setEndDate(String endDate) {
-		this.endDate = endDate;
+	public void setHomework_submitDate(String homework_submitDate) {
+		Homework_submitDate = homework_submitDate;
 	}
-	public String getHomeworkDetail() {
-		return homeworkDetail;
+	public String getHomework_noticeIdx() {
+		return Homework_noticeIdx;
 	}
-	public void setHomeworkDetail(String homeworkDetail) {
-		this.homeworkDetail = homeworkDetail;
+	public void setHomework_noticeIdx(String homework_noticeIdx) {
+		Homework_noticeIdx = homework_noticeIdx;
 	}
 	@Override
 	public String toString() {
-		return "Homework [homeworkIdx=" + homeworkIdx + ", homeworkTitle=" + homeworkTitle + ", startDate=" + startDate
-				+ ", endDate=" + endDate + ", homeworkDetail=" + homeworkDetail + ", memberIdx=" + memberIdx + "]";
+		return "Homework [Homework_idx=" + Homework_idx + ", Homework_url=" + Homework_url + ", Homework_score="
+				+ Homework_score + ", Homework_memberIdx=" + Homework_memberIdx + ", Homework_submitDate="
+				+ Homework_submitDate + ", Homework_noticeIdx=" + Homework_noticeIdx + "]";
 	}
-	
 }

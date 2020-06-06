@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.hl.rest.dao.IBoardDao;
-import com.hl.rest.vo.Homework;
+import com.hl.rest.vo.Homework_old;
 import com.hl.rest.vo.Notice;
 
 @Service
@@ -16,7 +16,7 @@ public class BoardServiceImpl implements IBoardService {
 	IBoardDao repo;
 
 	@Override
-	public void insertHomework(Homework homework) {
+	public void insertHomework(Homework_old homework) {
 		repo.insertHomework(homework);
 	}
 
@@ -26,7 +26,7 @@ public class BoardServiceImpl implements IBoardService {
 	}
 
 	@Override
-	public List<Homework> getHomeworkList(int startlist, int listsize, String grade, String classnum) {
+	public List<Homework_old> getHomeworkList(int startlist, int listsize, String grade, String classnum) {
 		return repo.getHomeworkList(startlist, listsize, grade, classnum);
 	}
 
@@ -36,7 +36,7 @@ public class BoardServiceImpl implements IBoardService {
 	}
 
 	@Override
-	public List<Homework> getHomeworkList(int startlist, int listsize, String memberIdx) {
+	public List<Homework_old> getHomeworkList(int startlist, int listsize, String memberIdx) {
 		return repo.getHomeworkList(startlist, listsize, memberIdx);
 	}
 
