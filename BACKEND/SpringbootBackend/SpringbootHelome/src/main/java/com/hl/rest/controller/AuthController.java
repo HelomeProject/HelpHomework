@@ -91,6 +91,7 @@ public class AuthController {
 				Member member = memser.getMem(login.getEmail());
 				String jwt = createToken(login.getEmail(), member.getIsteacher());
 				
+				msg.put("memberIdx", member.getMemberIdx());
 				msg.put("email", login.getEmail());
 				msg.put("username", member.getUsername());
 				msg.put("school", member.getSchool());
