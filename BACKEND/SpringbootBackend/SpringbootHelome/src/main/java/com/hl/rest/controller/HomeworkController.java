@@ -60,10 +60,14 @@ public class HomeworkController {
 			Member member = memser.getMem(email);
 			homework_notice.setHomeworkNotice_memberIdx(member.getMemberIdx()+"");
 			
-			System.out.println(homework_notice);
-			ser.CreateHomeworkNotice(homework_notice);
-			msg.put("homework_notice", homework_notice);
-			res = new ResponseEntity<Map<String, Object>>(msg, HttpStatus.OK);
+			if(member.getIsteacher().equals("1")) {
+				ser.CreateHomeworkNotice(homework_notice);
+				msg.put("homework_notice", homework_notice);
+				res = new ResponseEntity<Map<String, Object>>(msg, HttpStatus.OK);
+			} else {
+				msg.put("error", "권한이 없습니다.");
+				res = new ResponseEntity<Map<String, Object>>(msg, HttpStatus.UNAUTHORIZED);
+			}
 		} catch(Exception e) {
 			Object[] input = {token, homework_notice};
 			msg.put("Input Data", input);
