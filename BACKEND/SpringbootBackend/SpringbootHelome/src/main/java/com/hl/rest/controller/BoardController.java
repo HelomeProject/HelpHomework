@@ -22,7 +22,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.hl.rest.service.IBoardService;
 import com.hl.rest.service.IMemService;
-import com.hl.rest.vo.Homework;
+import com.hl.rest.vo.Homework_old;
 import com.hl.rest.vo.Member;
 import com.hl.rest.vo.Notice;
 import com.hl.rest.vo.Pagination;
@@ -32,7 +32,7 @@ import io.swagger.annotations.ApiOperation;
 
 @CrossOrigin
 @RestController
-@RequestMapping("/api/board")
+@RequestMapping("/api/board/")
 public class BoardController {
 	
 	@Autowired
@@ -44,84 +44,6 @@ public class BoardController {
 	public void ExceptionMethod(Exception e) {
 
 	}
-	
-	/** 숙제 제출 */
-	@PostMapping("/homework")
-	@ApiOperation(value = "숙제 제출")
-	public ResponseEntity<Map<String, Object>> CreateHomework(
-			@RequestHeader(value = "Authorization") String token,
-			@RequestBody Homework homework) {
-		ResponseEntity<Map<String, Object>> res = null;
-		Map<String, Object> msg = new HashMap<String, Object>();
-		
-		try {
-			Claims de = AuthController.verification(token);
-			String email = (String) de.get("email");
-			Member member = memser.getMem(email);
-			homework.setMemberIdx(member.getMemberIdx()+"");
-						
-			ser.insertHomework(homework);
-			msg.put("Homework", homework);
-			res = new ResponseEntity<Map<String, Object>>(msg, HttpStatus.OK);
-		} catch(Exception e) {
-			Object[] input = {token, homework};
-			msg.put("Input Data", input);
-			msg.put("SAY", "Error msg를 참고하여 Input Data을 다시 한 번 확인해보세요.");
-			msg.put("Error msg", e.getMessage());
-			res = new ResponseEntity<Map<String, Object>>(msg, HttpStatus.BAD_REQUEST);
-			System.out.println(e.getMessage());
-		}
-		return res;
-	}
-	
-	/** 숙제조회(list) */
-	@GetMapping("/homeworks")
-	@ApiOperation(value = "숙제 정보 전체 조회", response = List.class)
-	public @ResponseBody ResponseEntity<Map<String, Object>> GetHomeworkList(
-			@RequestHeader(value = "Authorization") String token,
-			@RequestParam(required = false, defaultValue = "0") int page,
-			@RequestParam(required = false, defaultValue = "1") int range){
-		ResponseEntity<Map<String, Object>> res = null;
-		Map<String, Object> msg = new HashMap<String, Object>();
-		
-		try {
-			Claims de = AuthController.verification(token);
-			String email = (String) de.get("email");
-			String isteacher = (String) de.get("isteacher");
-			Member member = memser.getMem(email);
-			
-			if(isteacher.equals("1")) {
-				List<Homework> list = new LinkedList<>();
-				int homeworklistsize = ser.getHomeListSize(member.getGrade(), member.getClassnum());
-				Pagination pagination = new Pagination();
-				pagination.pageInfo(page, range, homeworklistsize);
-				
-				list = ser.getHomeworkList(pagination.getStartList(), pagination.getListSize(), member.getGrade(), member.getClassnum());
-				msg.put("HomeworkList", list);
-				res = new ResponseEntity<Map<String, Object>>(msg, HttpStatus.OK);
-				
-			} else {
-				List<Homework> list = new LinkedList<>();
-				int homeworklistsize = ser.getHomeListSize(member.getMemberIdx());
-				Pagination pagination = new Pagination();
-				pagination.pageInfo(page, range, homeworklistsize);
-				
-				list = ser.getHomeworkList(pagination.getStartList(), pagination.getListSize(), member.getMemberIdx());
-				msg.put("HomeworkList", list);
-				res = new ResponseEntity<Map<String, Object>>(msg, HttpStatus.OK);
-			}
-			
-		} catch(Exception e) {
-			String[] input = {token, page+"", range+""};
-			msg.put("Input Data", input);
-			msg.put("SAY", "Error msg를 참고하여 Input Data을 다시 한 번 확인해보세요.");
-			msg.put("Error msg", e.getMessage());
-			res = new ResponseEntity<Map<String, Object>>(msg, HttpStatus.BAD_REQUEST);
-			System.out.println(e.getMessage());
-		}
-		return res;	
-	}
-	
 	
 	/** 공지 생성 */
 	@PostMapping("/notice")

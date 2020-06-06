@@ -8,7 +8,7 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import com.hl.rest.vo.Homework;
+import com.hl.rest.vo.Homework_old;
 import com.hl.rest.vo.Notice;
 
 @Repository
@@ -17,7 +17,7 @@ public class BoardDaoImpl implements IBoardDao {
 	SqlSession session;
 
 	@Override
-	public void insertHomework(Homework homework) {
+	public void insertHomework(Homework_old homework) {
 		session.insert("board.insertHomework", homework);
 	}
 
@@ -30,7 +30,7 @@ public class BoardDaoImpl implements IBoardDao {
 	}
 
 	@Override
-	public List<Homework> getHomeworkList(int startlist, int listsize, String grade, String classnum) {
+	public List<Homework_old> getHomeworkList(int startlist, int listsize, String grade, String classnum) {
 		Map<String, Object> map = new HashMap<>();
 		map.put("startlist", startlist);
 		map.put("listsize", listsize);
@@ -45,7 +45,7 @@ public class BoardDaoImpl implements IBoardDao {
 	}
 
 	@Override
-	public List<Homework> getHomeworkList(int startlist, int listsize, String memberIdx) {
+	public List<Homework_old> getHomeworkList(int startlist, int listsize, String memberIdx) {
 		Map<String, Object> map = new HashMap<>();
 		map.put("startlist", startlist);
 		map.put("listsize", listsize);
