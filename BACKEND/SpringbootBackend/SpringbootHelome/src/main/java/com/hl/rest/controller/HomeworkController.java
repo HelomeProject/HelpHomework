@@ -127,7 +127,7 @@ public class HomeworkController {
 	}
 	
 	/** 숙제공지 전체목록 조회 */
-	@GetMapping("/homeworks")
+	@GetMapping("board/homeworks")
 	@ApiOperation(value = "숙제공지 전체목록 조회")
 	public ResponseEntity<Map<String, Object>> GetHomeworkNoticeList(
 			@RequestHeader(value = "Authorization") String token) {
@@ -154,7 +154,7 @@ public class HomeworkController {
 	}
 	
 	/** 숙제제출 전제목록 조회 */
-	@PostMapping("/homeworks")
+	@GetMapping("/homeworks")
 	@ApiOperation(value = "숙제제출 전체목록 조회")
 	public ResponseEntity<Map<String, Object>> GetHomeworkList(
 			@RequestHeader(value = "Authorization") String token) {
@@ -166,12 +166,25 @@ public class HomeworkController {
 			Member member = memser.getMem(email);
 		
 			if(member.getIsteacher().equals("1")) { //선생님이 낸 숙제제출 목록 조회
+				System.out.println(member.getMemberIdx());
 				List<Homework> homeworklist = ser.getHomeworkList_teacher(member.getMemberIdx());
+				System.out.println(homeworklist);
+				if(homeworklist.size()==0) {
+					msg.put("msg", "요청에 성공하였으나 응답할 콘텐츠가 없습니다.");
+					res = new ResponseEntity<Map<String, Object>>(msg, HttpStatus.NO_CONTENT);
+				} else {
+					msg.put("HomeworkList", homeworklist);
+					res = new ResponseEntity<Map<String, Object>>(msg, HttpStatus.OK);
+				}
 			} else { //자신의 숙제제출 목록 조회
 				
 			}
 		} catch(Exception e) {
-			
+			msg.put("Input Data", token);
+			msg.put("SAY", "Error msg를 참고하여 Input Data을 다시 한 번 확인해보세요.");
+			msg.put("Error msg", e.getMessage());
+			res = new ResponseEntity<Map<String, Object>>(msg, HttpStatus.BAD_REQUEST);
+			System.out.println(e.getMessage());
 		}
 		return res;
 	}

@@ -9,4 +9,5 @@ public interface IHomeworkService {
 	public void CreateHomeworkNotice(HomeworkNotice homeworknotice);
 	public void CreateHomework(Homework homework);
 	public List<HomeworkNotice> getHomeworkNoticeList();
+	public List<Homework> getHomeworkList_teacher(String memberIdx);
 }

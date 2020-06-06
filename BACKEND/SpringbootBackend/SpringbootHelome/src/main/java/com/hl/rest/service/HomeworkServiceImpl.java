@@ -29,5 +29,10 @@ public class HomeworkServiceImpl implements IHomeworkService{
 	public List<HomeworkNotice> getHomeworkNoticeList() {
 		return repo.getHomeworkNoticeList();
 	}
+
+	@Override
+	public List<Homework> getHomeworkList_teacher(String memberIdx) {
+		return repo.getHomeworkList_teacher(memberIdx);
+	}
 	
 }
