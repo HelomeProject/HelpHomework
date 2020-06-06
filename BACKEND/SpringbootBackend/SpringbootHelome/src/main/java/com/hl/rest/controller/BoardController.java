@@ -45,9 +45,6 @@ public class BoardController {
 
 	}
 	
-	
-	
-	
 	/** 공지 생성 */
 	@PostMapping("/notice")
 	@ApiOperation(value = "공지 생성")

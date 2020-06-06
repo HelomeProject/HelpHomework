@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.hl.rest.service.IBoardService;
 import com.hl.rest.service.IMemService;
 import com.hl.rest.vo.Homework;
+import com.hl.rest.vo.HomeworkNotice;
 import com.hl.rest.vo.Member;
 import com.hl.rest.vo.Pagination;
 
@@ -48,7 +49,7 @@ public class HomeworkController {
 	@ApiOperation(value = "숙제 제출")
 	public ResponseEntity<Map<String, Object>> CreateHomework(
 			@RequestHeader(value = "Authorization") String token,
-			@RequestBody Homework homework) {
+			@RequestBody HomeworkNotice homework_notice) {
 		ResponseEntity<Map<String, Object>> res = null;
 		Map<String, Object> msg = new HashMap<String, Object>();
 		
@@ -56,13 +57,13 @@ public class HomeworkController {
 			Claims de = AuthController.verification(token);
 			String email = (String) de.get("email");
 			Member member = memser.getMem(email);
-			homework.setMemberIdx(member.getMemberIdx()+"");
+			homework_notice.setHomeworkNotice_memberIdx(member.getMemberIdx()+"");
 						
-			ser.insertHomework(homework);
-			msg.put("Homework", homework);
+			ser.CreateHomeworkNotice(homework_notice);
+			msg.put("homework_notice", homework_notice);
 			res = new ResponseEntity<Map<String, Object>>(msg, HttpStatus.OK);
 		} catch(Exception e) {
-			Object[] input = {token, homework};
+			Object[] input = {token, homework_notice};
 			msg.put("Input Data", input);
 			msg.put("SAY", "Error msg를 참고하여 Input Data을 다시 한 번 확인해보세요.");
 			msg.put("Error msg", e.getMessage());
