@@ -9,7 +9,6 @@ import com.hl.rest.dao.IBoardDao;
 import com.hl.rest.vo.Homework;
 import com.hl.rest.vo.Notice;
 
-
 @Service
 public class BoardServiceImpl implements IBoardService {
 	

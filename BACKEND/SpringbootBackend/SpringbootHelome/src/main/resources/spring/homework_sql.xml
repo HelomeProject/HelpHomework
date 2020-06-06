@@ -6,9 +6,9 @@
 <!-- username, school, email, password, grade -->
 <mapper namespace="homework">
 	<insert id="CreateHomeworkNotice" parameterType="homeworknotice">
-		<!-- insert into
-		homeworktb(homeworkTitle, startDate, endDate, homeworkDetail, memberIdx)
-		values(#{homeworkTitle}, #{startDate}, #{endDate}, #{homeworkDetail}, #{memberIdx}) -->
+		insert into
+		homeworkNoticetb(homeworkNotice_title, homeworkNotice_startDate, homeworkNotice_endDate, homeworkNotice_detail, HomeworkNotice_memberIdx)
+		values(#{homeworkNotice_title}, #{homeworkNotice_startDate}, #{homeworkNotice_endDate}, #{homeworkNotice_detail}, #{HomeworkNotice_memberIdx})
 	</insert>
 </mapper>
  

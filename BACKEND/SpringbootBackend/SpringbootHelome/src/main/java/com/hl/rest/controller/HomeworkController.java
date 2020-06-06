@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.hl.rest.service.IBoardService;
+import com.hl.rest.service.IHomeworkService;
 import com.hl.rest.service.IMemService;
 import com.hl.rest.vo.Homework;
 import com.hl.rest.vo.HomeworkNotice;
@@ -35,7 +36,8 @@ import io.swagger.annotations.ApiOperation;
 public class HomeworkController {
 	
 	@Autowired
-	private IBoardService ser;
+	private IHomeworkService ser;
+	
 	@Autowired
 	private IMemService memser;
 	
@@ -52,13 +54,13 @@ public class HomeworkController {
 			@RequestBody HomeworkNotice homework_notice) {
 		ResponseEntity<Map<String, Object>> res = null;
 		Map<String, Object> msg = new HashMap<String, Object>();
-		
 		try {
 			Claims de = AuthController.verification(token);
 			String email = (String) de.get("email");
 			Member member = memser.getMem(email);
 			homework_notice.setHomeworkNotice_memberIdx(member.getMemberIdx()+"");
-						
+			
+			System.out.println(homework_notice);
 			ser.CreateHomeworkNotice(homework_notice);
 			msg.put("homework_notice", homework_notice);
 			res = new ResponseEntity<Map<String, Object>>(msg, HttpStatus.OK);

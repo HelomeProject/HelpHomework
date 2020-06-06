@@ -49,6 +49,17 @@ CREATE TABLE IF NOT EXISTS `homeworktb`(
 );
 desc homeworktb;
 
+CREATE TABLE IF NOT EXISTS `homeworkNoticetb`(
+	HomeworkNotice_idx int auto_increment primary key,
+    HomeworkNotice_memberIdx int,
+    HomeworkNotice_title varchar(100),
+    HomeworkNotice_startDate date,
+    HomeworkNotice_endDate date,
+    HomeworkNotice_detail varchar(200),
+    foreign key (HomeworkNotice_idx) references membertb(idx)
+);
+desc homeworkNoticetb;
+
 -- 점수 table
 CREATE TABLE IF NOT EXISTS `scoretb` (
 	idx int auto_increment primary key,

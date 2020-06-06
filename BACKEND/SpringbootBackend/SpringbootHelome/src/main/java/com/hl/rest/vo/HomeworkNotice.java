@@ -6,21 +6,29 @@ import javax.validation.constraints.NotNull;
 public class HomeworkNotice {
 	@NotNull private String HomeworkNotice_idx;
 	private String HomeworkNotice_memberIdx;
+	@NotNull private String HomeworkNotice_title;
 	@NotNull private String HomeworkNotice_startDate;
 	@NotNull private String HomeworkNotice_endDate;
 	@NotNull private String HomeworkNotice_detail;
 	
 	public HomeworkNotice() {}
 	public HomeworkNotice(@NotNull String homeworkNotice_idx, String homeworkNotice_memberIdx,
-			@NotNull String homeworkNotice_startDate, @NotNull String homeworkNotice_endDate,
-			@NotNull String homeworkNotice_detail) {
+			@NotNull String homeworkNotice_title, @NotNull String homeworkNotice_startDate,
+			@NotNull String homeworkNotice_endDate, @NotNull String homeworkNotice_detail) {
 		HomeworkNotice_idx = homeworkNotice_idx;
 		HomeworkNotice_memberIdx = homeworkNotice_memberIdx;
+		HomeworkNotice_title = homeworkNotice_title;
 		HomeworkNotice_startDate = homeworkNotice_startDate;
 		HomeworkNotice_endDate = homeworkNotice_endDate;
 		HomeworkNotice_detail = homeworkNotice_detail;
 	}
 
+	public String getHomeworkNotice_title() {
+		return HomeworkNotice_title;
+	}
+	public void setHomeworkNotice_title(String homeworkNotice_title) {
+		HomeworkNotice_title = homeworkNotice_title;
+	}
 	public String getHomeworkNotice_memberIdx() {
 		return HomeworkNotice_memberIdx;
 	}
@@ -54,8 +62,8 @@ public class HomeworkNotice {
 	@Override
 	public String toString() {
 		return "HomeworkNotice [HomeworkNotice_idx=" + HomeworkNotice_idx + ", HomeworkNotice_memberIdx="
-				+ HomeworkNotice_memberIdx + ", HomeworkNotice_startDate=" + HomeworkNotice_startDate
-				+ ", HomeworkNotice_endDate=" + HomeworkNotice_endDate + ", HomeworkNotice_detail="
-				+ HomeworkNotice_detail + "]";
+				+ HomeworkNotice_memberIdx + ", HomeworkNotice_title=" + HomeworkNotice_title
+				+ ", HomeworkNotice_startDate=" + HomeworkNotice_startDate + ", HomeworkNotice_endDate="
+				+ HomeworkNotice_endDate + ", HomeworkNotice_detail=" + HomeworkNotice_detail + "]";
 	}
 }
