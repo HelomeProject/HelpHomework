@@ -55,4 +55,9 @@ public class BoardServiceImpl implements IBoardService {
 		return repo.getNoticeList();
 	}
 
+	@Override
+	public int getNoticeListSize() {
+		return repo.getNoticeListSize();
+	}
+
 }

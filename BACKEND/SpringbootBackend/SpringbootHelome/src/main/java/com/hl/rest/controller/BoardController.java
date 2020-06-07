@@ -61,7 +61,8 @@ public class BoardController {
 			
 			if(isteacher.equals("1")) {
 				Member member = memser.getMem(email);
-				notice.setNoticeImgUrl("fakepath/"+member.getMemberIdx()+"/"+notice.getNoticeTitle());
+				int curIdx = ser.getNoticeListSize()+1;
+				notice.setNoticeImgUrl("/home/noticeImg/"+member.getGrade()+"/"+member.getClassnum()+"/"+curIdx+".jpg");
 				notice.setMemberIdx(member.getMemberIdx());
 				notice.setMemberGrade(member.getGrade());
 				notice.setMemberClassNum(member.getClassnum());
@@ -70,10 +71,9 @@ public class BoardController {
 				msg.put("Notice", notice);
 				res = new ResponseEntity<Map<String, Object>>(msg, HttpStatus.OK);
 			} else {
-				msg.put("error", "권한 없음");
+				msg.put("error", "선생님만 접근 가능합니다.");
 				res = new ResponseEntity<Map<String, Object>>(msg, HttpStatus.FORBIDDEN);
 			}
-
 		} catch(Exception e) {
 			Object[] input = {token, notice};
 			msg.put("Input Data", input);

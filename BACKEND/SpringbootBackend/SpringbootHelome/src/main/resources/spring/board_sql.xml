@@ -39,6 +39,9 @@
 	<select id="getNoticeList" resultType="notice">
 		select idx, noticeTitle, noticeImgUrl, memberIdx, memberGrade, memberClassNum from noticetb
 	</select>
-
+	<select id="getNoticeListSize" resultType="int">
+		SELECT idx FROM noticetb ORDER BY idx DESC LIMIT 1;
+	</select>
+	
 </mapper>
  
