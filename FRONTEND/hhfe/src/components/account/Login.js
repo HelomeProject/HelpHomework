@@ -9,9 +9,7 @@ import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import useStyles from './LoginCSS'
 import axios from 'axios'
-import sha256 from './encryptSHA256'
-
-import { Redirect } from "react-router-dom";
+import sha256 from './encryptSHA256';
 
 
 function Copyright() {
@@ -25,7 +23,7 @@ function Copyright() {
   );
 }
 
-const Login = ({ setMode, hasCookie, setHasCookie }) => {
+const Login = ({ setMode, setCookie, setHasCookie, setUserInfo }) => {
   const classes = useStyles();
   const [loginInfo, setLoginInfo] = useState({
     username: "",
@@ -49,8 +47,6 @@ const Login = ({ setMode, hasCookie, setHasCookie }) => {
 
     return await axios.post("http://k02c1101.p.ssafy.io:9090/api/auth/login", pushuser)
       .then((res) => {
-        console.log(pushuser)
-        console.log(res)
         return res
       })
       .catch((error) => { console.log(error) })
@@ -63,9 +59,14 @@ const Login = ({ setMode, hasCookie, setHasCookie }) => {
     }
     try {
       const response = await loginApi(loginInfo);
-      if (response.status == 200) {
+      if (response.status === 200) {
+        console.log(response.data)
+        setCookie('memberIdx', response.data.memberIdx)
+        setCookie('token',response.data.token)
+        setHasCookie(true);
+        setUserInfo(response.data)
+        setMode(parseInt(response.data.isteacher))
         // setMode(1)
-        // setHasCookie(true);
       } else {
         console.log(response.error)
         // throw new Error(response.error);
@@ -82,7 +83,6 @@ const Login = ({ setMode, hasCookie, setHasCookie }) => {
 
   return (
     <>
-      {hasCookie && (<Redirect to="/main" mode={0} />)}
       <Grid container component="main" className={classes.root}>
         <CssBaseline />
         <Grid item xs={false} sm={4} md={7} className={classes.image} />
