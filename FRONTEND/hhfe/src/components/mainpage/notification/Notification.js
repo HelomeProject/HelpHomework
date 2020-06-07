@@ -52,6 +52,7 @@ const Notification = ({ mode }) => {
     const [month, setMonth] = useState(null)
     const [calendarInst, setCalendarInst] = useState(null)
     const [isteacher, setIsteacher] = useState(calendarOptions)
+    const [schedulelist, setSchedulelist] = useState([])
     const [newschedule, setNewschedule] = useState({
         calendarId: "1",
         id: String(Math.random()),
@@ -62,14 +63,37 @@ const Notification = ({ mode }) => {
         isAllDay: true,
         description: ""
     })
+    
+    // 일정 불러오기
 
+    const newschedulelist = (data) => {
+        return data.map((temp) => {
+            return({
+                calendarId: "1",
+                id: temp.homeworkNotice_idx,
+                title: temp.homeworkNotice_title,
+                start: String(temp.homeworkNotice_startDate),
+                end: String(temp.homeworkNotice_endDate),
+                description: temp.homeworkNotice_detail,
+                category: "allday",
+                isAllDay: true,
+                isVisible: true,
+            })
+        })
+    }
+    
+    
     useEffect(() => {
-        const config = {header:{'Authorization':getCookieValue('token')}}
+        const config = {headers:{'Authorization':getCookieValue('token')}}
 
-        // 일정 불러오기
-        const loadCalendar = () => {
+        const loadCalendar = (config) => {
             axios.get('http://k02c1101.p.ssafy.io:9090/api/board/homeworks', config)
-            .then(res =>{})
+            .then(res =>{
+                setSchedulelist(newschedulelist(res.data.HomeworkNoticeList))
+                // setSchedulelist(temp)
+                // return temp
+                
+            })
             .catch(e => {console.log(e)})
         }
 
@@ -95,26 +119,31 @@ const Notification = ({ mode }) => {
             setMonth(calendarInstance.getDate().toDate().getMonth() + 1)
             setYear(calendarInstance.getDate().toDate().getFullYear())
         }
+
         changeView()
         changeDate()
-        loadCalendar()
-    }, [mode, year, month])
+        
+        loadCalendar(config)
+        return () => {}
+
+    }, [mode])
 
     const onClickSchedule = useCallback(e => {
+        console.log(e.schedule)
         setNewschedule({...newschedule,
             ...e.schedule
         })
         setViewschedule(true)
         setOpen(true)
-        e.guide.clearGuideElement();
+        
     }, [newschedule]);
 
     const onBeforeCreateSchedule = useCallback(e => {
-        console.log(e)
         setNewschedule({...newschedule,
             ...e
         })
         setOpen(true)
+        e.guide.clearGuideElement();
     }, [newschedule])
 
     const onBeforeDeleteSchedule = useCallback(res => {
@@ -150,6 +179,7 @@ const Notification = ({ mode }) => {
                         </Grid>
                         <Calendar
                             {...isteacher}
+                            schedules={schedulelist}
                             ref={calendarRef}
                             onClickSchedule={onClickSchedule}
                             onBeforeCreateSchedule={onBeforeCreateSchedule}

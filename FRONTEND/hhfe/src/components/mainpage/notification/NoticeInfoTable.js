@@ -15,7 +15,7 @@ const NoticeInfoTable = ({mode}) => {
         const config = {header:{'Authorization':getCookieValue('token')}}
         const loadNotification = () => {
             axios.get("http://k02c1101.p.ssafy.io:9090/api/board/notices", config)
-            .then(res => {console.log(res)})
+            .then(res => {})
             .catch(err => {console.log(err)})
         }
         loadNotification()
