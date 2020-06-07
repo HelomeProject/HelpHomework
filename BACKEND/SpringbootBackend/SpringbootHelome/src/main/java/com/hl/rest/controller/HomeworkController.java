@@ -222,7 +222,13 @@ public class HomeworkController {
 					res = new ResponseEntity<Map<String, Object>>(msg, HttpStatus.FORBIDDEN);
 				}
 			} else {
-				
+				homeworkList = ser.getHomeworkList_byIdx(homeworkNoticeIdx, member.getMemberIdx());
+				if(homeworkList.size()==0) {
+					res = new ResponseEntity<Map<String, Object>>(msg, HttpStatus.NO_CONTENT);
+				} else {
+					msg.put("HomeworkList", homeworkList);
+					res = new ResponseEntity<Map<String, Object>>(msg, HttpStatus.OK);
+				}
 			}
 		} catch(Exception e) {
 			Object[] input = {token, homeworkNoticeIdx};

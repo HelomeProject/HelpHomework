@@ -34,5 +34,9 @@
 		select HomeworkNotice_memberIdx from homeworkNoticetb 
 		where HomeworkNotice_idx=#{homeworkNoticeIdx};
 	</select>
+	<select id="getHomeworkList_byIdx_memberIdx" resultType="homework" parameterType="String">
+		select * from homeworktb 
+		where Homework_noticeIdx=#{homeworkNoticeIdx} and Homework_memberIdx=#{memberIdx};
+	</select>
 </mapper>
  
