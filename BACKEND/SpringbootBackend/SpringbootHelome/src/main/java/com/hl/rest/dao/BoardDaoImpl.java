@@ -67,6 +67,11 @@ public class BoardDaoImpl implements IBoardDao {
 	public List<Notice> getNoticeList() {
 		return session.selectList("board.getNoticeList");
 	}
+
+	@Override
+	public int getNoticeListSize() {
+		return session.selectOne("board.getNoticeListSize");
+	}
 	
 	
 }
