@@ -9,13 +9,14 @@ import useStyles from './MyAppBarCSS'
 import LeftDrawer from './LeftDrawer'
 import clsx from 'clsx';
 
-const MyAppBar = ({ mode, setHasCookie, removeCookie }) => {
+const MyAppBar = ({ mode, logout, userInfo }) => {
     const classes = useStyles();
     const [open, setOpen] = useState(true);
 
     const handleDrawerToggle = () => {
         setOpen(!open);
     };
+    
     return (
         <div className={classes.root}>
             <AppBar position="static"
@@ -31,13 +32,12 @@ const MyAppBar = ({ mode, setHasCookie, removeCookie }) => {
                         <MenuIcon />
                     </IconButton>
                     <Typography variant="h6" className={classes.title}>
-                        News
-            </Typography>
-                    <Button color="inherit">로그</Button>
-                    <Button color="inherit" onClick={removeCookie}>logout</Button>
+                        {userInfo.username}
+                    </Typography>
+                    <Button color="inherit" onClick={logout}>logout</Button>
                 </Toolbar>
             </AppBar>
-            <LeftDrawer open={open} mode={mode} />
+            <LeftDrawer open={open} mode={mode} userInfo={userInfo} />
         </div>
     );
 }
