@@ -16,7 +16,7 @@
 		values(#{Homework_memberIdx}, #{Homework_noticeIdx}, #{Homework_url}, #{Homework_submitDate})
 	</insert>
 	<select id="getHomeworkNoticeList" resultType="homeworkNotice">
-		select * from homeworknoticetb
+		select * from homeworkNoticetb
 	</select>
 	<select id="getHomeworkList_teacher" resultType="homework" parameterType="String">
 		select * from homeworktb
