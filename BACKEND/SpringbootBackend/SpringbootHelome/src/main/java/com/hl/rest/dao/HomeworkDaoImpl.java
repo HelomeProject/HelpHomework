@@ -1,6 +1,8 @@
 package com.hl.rest.dao;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,6 +39,24 @@ public class HomeworkDaoImpl implements IHomeworkDao{
 	@Override
 	public List<Homework> getHomeworkList_student(String memberIdx) {
 		return session.selectList("homework.getHomeworkList_student", memberIdx);
+	}
+
+	@Override
+	public List<Homework> getHomeworkList_byIdx(String homeworkNoticeIdx) {
+		return session.selectList("homework.getHomeworkList_byIdx", homeworkNoticeIdx);
+	}
+
+	@Override
+	public int getWhoseHomeworkNotice(String homeworkNoticeIdx) {
+		return session.selectOne("homework.getWhoseHomeworkNotice", homeworkNoticeIdx);
+	}
+
+	@Override
+	public List<Homework> getHomeworkList_byIdx(String homeworkNoticeIdx, String memberIdx) {
+		Map<String, String> map = new HashMap<>();
+		map.put("homeworkNoticeIdx", homeworkNoticeIdx);
+		map.put("memberIdx", memberIdx);
+		return session.selectList("homework.getHomeworkList_byIdx_memberIdx", map);
 	}
 	
 }
