@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { IconButton, Grid, Typography, Paper } from '@material-ui/core';
 import { ArrowBackIos, ArrowForwardIos } from '@material-ui/icons';
+import axios from 'axios'
 
 import useStyle from './NotificationCSS'
 import NoticeInfoTable from './NoticeInfoTable'
@@ -9,6 +10,7 @@ import Calendar from '@toast-ui/react-calendar';
 import 'tui-calendar/dist/tui-calendar.css';
 
 import FormDialog from './FormDialog'
+import getCookieValue from '../../getCookie'
 
 const themeConfig = {
     'month.dayname.textAlign': 'center'
@@ -32,6 +34,7 @@ const calendarOptions = {
     useCreationPopup: false,
     usageStatistics: false,
     calendars: calendarIdx,
+    timezone: {tooltip:'Seoul'},
     month: {
         daynames: ['일요일', '월요일', '화요일', '수요일', '목요일', '금요일', '토요일'],
         workweek: true
@@ -61,6 +64,16 @@ const Notification = ({ mode }) => {
     })
 
     useEffect(() => {
+        const config = {header:{'Authorization':getCookieValue('token')}}
+
+        // 일정 불러오기
+        const loadCalendar = () => {
+            axios.get('http://k02c1101.p.ssafy.io:9090/api/board/homeworks', config)
+            .then(res =>{})
+            .catch(e => {console.log(e)})
+        }
+
+        // calendar 요소 불러오기
         const calendarInstance = calendarRef.current.getInstance();
         setCalendarInst(calendarInstance)
 
@@ -84,15 +97,16 @@ const Notification = ({ mode }) => {
         }
         changeView()
         changeDate()
+        loadCalendar()
     }, [mode, year, month])
 
     const onClickSchedule = useCallback(e => {
-        console.log(e.schedule)
         setNewschedule({...newschedule,
             ...e.schedule
         })
         setViewschedule(true)
         setOpen(true)
+        e.guide.clearGuideElement();
     }, [newschedule]);
 
     const onBeforeCreateSchedule = useCallback(e => {
@@ -105,7 +119,6 @@ const Notification = ({ mode }) => {
 
     const onBeforeDeleteSchedule = useCallback(res => {
         console.log(res);
-
     }, []);
 
     const onBeforeUpdateSchedule = useCallback(e => {
@@ -149,7 +162,7 @@ const Notification = ({ mode }) => {
                 <Grid item xs={12} sm={12} md={4}>
                     <Paper className={classes.paper} >
                         <Grid container justify='center' alignItems='center'>
-                            <NoticeInfoTable />
+                            <NoticeInfoTable mode={mode}/>
                         </Grid>
                     </Paper>
                 </Grid>
