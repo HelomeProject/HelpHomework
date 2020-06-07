@@ -210,8 +210,12 @@ public class HomeworkController {
 				String charge = ser.getWhoseHomeworkNotice(homeworkNoticeIdx)+"";
 				if(member.getMemberIdx().equals(charge)) {
 					homeworkList = ser.getHomeworkList_byIdx(homeworkNoticeIdx);
-					msg.put("HomeworkList", homeworkList);
-					res = new ResponseEntity<Map<String, Object>>(msg, HttpStatus.OK);
+					if(homeworkList.size()!=0) {
+						msg.put("HomeworkList", homeworkList);
+						res = new ResponseEntity<Map<String, Object>>(msg, HttpStatus.OK);
+					} else {
+						res = new ResponseEntity<Map<String, Object>>(msg, HttpStatus.NO_CONTENT);
+					}
 				}
 				else {
 					msg.put("error", "해당 과제 담당자가 아니거나 권한이 없습니다.");
