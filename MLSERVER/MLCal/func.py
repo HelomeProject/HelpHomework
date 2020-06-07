@@ -127,7 +127,6 @@ def load_and_test(image_path):
         if predict_nums[0] == ')':
             predict_nums = predict_nums[1:]
         
-        print(predict_nums)
         cal = calculate(predict_nums)
         res_predict.append([predict_res, cal])
         
@@ -179,7 +178,6 @@ def define_classes(classfile = './classes.pkl'):
 
 def ox(res_predict, mid_points, testimage, homeworkidx, memberidx):
     c = 0
-    print(res_predict)
     correct, wrong = [], []
     len_correct, len_wrong = 0, 0
     for key, value in res_predict:
@@ -201,8 +199,11 @@ def ox(res_predict, mid_points, testimage, homeworkidx, memberidx):
         img = cv2.line(img, (x+18,y), (x, y+18), (0,0,255), 2)
 
     img_re = cv2.resize(img, (400, 600))
+    save_path = os.path.join(settings.MEDIA_ROOT, 'homeworkImg')
+    if not (os.path.exists(save_path)):
+        os.mkdir(save_path)
     save_path = os.path.join(settings.MEDIA_ROOT, 'homeworkImg', str(homeworkidx))
-    if not(os.path.exists(save_path)):
+    if not (os.path.exists(save_path)):
         os.mkdir(save_path)
 
     file_path = os.path.join(save_path, str(memberidx)+'.jpg')
