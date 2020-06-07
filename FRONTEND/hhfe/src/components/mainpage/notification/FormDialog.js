@@ -4,12 +4,28 @@ import DateFnsUtils from '@date-io/date-fns';
 import TextField from '@material-ui/core/TextField';
 import { MuiPickersUtilsProvider, KeyboardDatePicker } from '@material-ui/pickers';
 import { Dialog, DialogActions, DialogContent, DialogTitle } from '@material-ui/core';
-
+import axios from 'axios'
+import getCookieValue from '../../getCookie'
 const FormDialog = ({ open, setOpen, schedule, setSchedule, setcreateSchedule, viewschedule }) => {
 
     const handleSubmit = () => {
         setcreateSchedule.createSchedules([schedule])
+
+        const uploadschedule = {
+            "homeworkNotice_detail": String(schedule.description),
+            "homeworkNotice_endDate": String(JSON.stringify(schedule.end)),
+            "homeworkNotice_startDate": String(JSON.stringify(schedule.start)),
+            "homeworkNotice_title": String(schedule.title),
+          }
+        console.log(schedule.start)
+        console.log(JSON.parse(uploadschedule.homeworkNotice_startDate))
+        
+        const config = {header:{'Authorization':getCookieValue('token')}}
+        axios.post('http://k02c1101.p.ssafy.io:9090/api/board/homework', uploadschedule, config)
+        .then(res => {console.log(res)})
+        .catch(e => {console.log(e)})
         setOpen(false)
+
     };
 
     const handleClose = () => {
