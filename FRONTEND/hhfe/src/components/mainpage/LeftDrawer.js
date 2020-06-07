@@ -11,7 +11,7 @@ import useStyles from './LeftDrawerCSS'
 
 import Notification from './notification/Notification'
 
-const LeftDrawer = ({ open, mode }) => {
+const LeftDrawer = ({ open, mode, userInfo }) => {
     const classes = useStyles();
     const [tap, setTap] = useState(0);
     const handleTap = (tap) => {
@@ -63,7 +63,7 @@ const LeftDrawer = ({ open, mode }) => {
                 }}
             >
                 <div className={classes.drawerHeader}>
-
+            {userInfo.school} {userInfo.grade}학년 {userInfo.classnum}반
                 </div>
                 <Divider />
                 <List>
