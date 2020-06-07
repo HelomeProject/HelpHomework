@@ -10,11 +10,16 @@ from .func import scoring
 # Create your views here.
 @csrf_exempt
 def calc(request):
+    print(settings.BASE_DIR)
     if request.FILES['file']:
+        print(request.POST)
         filename="1.jpg"
-        save_path = os.path.join(settings.MEDIA_ROOT, 'homework', filename)
+        save_path = os.path.join(settings.MEDIA_ROOT, 'homeworkoriginal', filename)
         path = default_storage.save(save_path, request.FILES['file'])
-        print(scoring(path))
-        return JsonResponse({'success':'save to DB'}, status=200)
+        point = scoring(path, 1, 1)
+        return JsonResponse({
+            'success':'save to DB',
+            'point': point
+            }, status=200)
     else:
         return JsonResponse({'error':'no file upload'}, status=400)
