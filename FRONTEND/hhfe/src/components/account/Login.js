@@ -60,7 +60,6 @@ const Login = ({ setMode, setCookie, setHasCookie, setUserInfo }) => {
     try {
       const response = await loginApi(loginInfo);
       if (response.status === 200) {
-        console.log(response.data)
         setCookie('memberIdx', response.data.memberIdx)
         setCookie('token',response.data.token)
         setHasCookie(true);
