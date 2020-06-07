@@ -43,5 +43,10 @@ public class HomeworkDaoImpl implements IHomeworkDao{
 	public List<Homework> getHomeworkList_byIdx(String homeworkNoticeIdx) {
 		return session.selectList("homework.getHomeworkList_byIdx", homeworkNoticeIdx);
 	}
+
+	@Override
+	public int getWhoseHomeworkNotice(String homeworkNoticeIdx) {
+		return session.selectOne("homework.getWhoseHomeworkNotice", homeworkNoticeIdx);
+	}
 	
 }

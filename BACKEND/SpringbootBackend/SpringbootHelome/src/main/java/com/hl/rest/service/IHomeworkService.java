@@ -12,4 +12,5 @@ public interface IHomeworkService {
 	public List<Homework> getHomeworkList_teacher(String memberIdx);
 	public List<Homework> getHomeworkList_student(String memberIdx);
 	public List<Homework> getHomeworkList_byIdx(String homeworkNoticeIdx);
+	public int getWhoseHomeworkNotice(String homeworkNoticeIdx);
 }
