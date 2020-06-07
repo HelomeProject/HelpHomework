@@ -6,26 +6,33 @@ import { MuiPickersUtilsProvider, KeyboardDatePicker } from '@material-ui/picker
 import { Dialog, DialogActions, DialogContent, DialogTitle } from '@material-ui/core';
 import axios from 'axios'
 import getCookieValue from '../../getCookie'
+import getFormatDate from './getFormatData'
 const FormDialog = ({ open, setOpen, schedule, setSchedule, setcreateSchedule, viewschedule }) => {
+
+    const upload = (data, config) => {
+        return axios.post('http://k02c1101.p.ssafy.io:9090/api/board/homework', data, config)
+        .then(res => {
+            setOpen(false)
+            console.log(res)
+        })
+        .catch(e => {console.log(e)})
+        
+    }
 
     const handleSubmit = () => {
         setcreateSchedule.createSchedules([schedule])
-
         const uploadschedule = {
             "homeworkNotice_detail": String(schedule.description),
-            "homeworkNotice_endDate": String(JSON.stringify(schedule.end)),
-            "homeworkNotice_startDate": String(JSON.stringify(schedule.start)),
+            "homeworkNotice_endDate": String(getFormatDate(schedule.end.toDate())),
+            "homeworkNotice_startDate": String(getFormatDate(schedule.start.toDate())),
             "homeworkNotice_title": String(schedule.title),
           }
-        console.log(schedule.start)
-        console.log(JSON.parse(uploadschedule.homeworkNotice_startDate))
         
-        const config = {header:{'Authorization':getCookieValue('token')}}
-        axios.post('http://k02c1101.p.ssafy.io:9090/api/board/homework', uploadschedule, config)
-        .then(res => {console.log(res)})
-        .catch(e => {console.log(e)})
-        setOpen(false)
-
+        const config = {
+            headers : {'Authorization':getCookieValue('token')},
+          }
+        
+        upload(uploadschedule, config)
     };
 
     const handleClose = () => {
