@@ -14,7 +14,12 @@ const FileUpload = () => {
 
     const onChange = (e) => {
         setImage(e.target.files[0])
-        setImgname(e.target.files[0].name)
+        if (e.target.files[0]){
+            setImgname(e.target.files[0].name)
+        } else {
+            setImgname("사진")
+        }
+            
     }
 
     const onClick = () => {
@@ -23,6 +28,7 @@ const FileUpload = () => {
 
         return axios.post("http://127.0.0.1:8000/api/v1/calc/", formData)
             .then(res => {
+                console.log(res)
             })
             .catch(err => {
             })
