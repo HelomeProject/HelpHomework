@@ -189,4 +189,35 @@ public class HomeworkController {
 		}
 		return res;
 	}
+	
+	
+	/** 숙제제출 현황 조회 */
+	@GetMapping("/homework/{homeworkIdx}")
+	@ApiOperation(value = "숙제 제출현황 조회(선생님:homeworkIdx를 낸 학생 전체 리스트, 학생:자신이 제출한 것)")
+	public ResponseEntity<Map<String, Object>> GetHomework(
+			@RequestHeader(value = "Authorization") String token,
+			@PathVariable("homeworkIdx") String homeworkIdx) {
+		ResponseEntity<Map<String, Object>> res = null;
+		Map<String, Object> msg = new HashMap<String, Object>();
+		try {
+			Claims de = AuthController.verification(token);
+			String email = (String) de.get("email");
+			Member member = memser.getMem(email);
+			
+			if(member.getIsteacher().equals("1")) { //선생님
+				
+			} else {
+				
+			}
+		} catch(Exception e) {
+			Object[] input = {token, homeworkIdx};
+			msg.put("Input Data", input);
+			msg.put("SAY", "Error msg를 참고하여 Input Data을 다시 한 번 확인해보세요.");
+			msg.put("Error msg", e.getMessage());
+			res = new ResponseEntity<Map<String, Object>>(msg, HttpStatus.BAD_REQUEST);
+			System.out.println(e.getMessage());
+		}
+		return res;
+	}
+	
 }
