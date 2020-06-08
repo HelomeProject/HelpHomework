@@ -67,6 +67,10 @@ const Login = ({ setMode, setCookie, hasCookie, setHasCookie, setUserInfo }) => 
         setMode(parseInt(response.data.isteacher))
         // setMode(1)
       } else {
+        setLoginInfo({
+          username: "",
+          password: ""
+        })
         console.log(response.error)
         // throw new Error(response.error);
       }
@@ -101,9 +105,10 @@ const Login = ({ setMode, setCookie, hasCookie, setHasCookie, setUserInfo }) => 
                     margin="normal"
                     required
                     fullWidth
-                    id="email"
+                    id="username"
                     label="Email Address"
                     name="username"
+                    value={loginInfo.username}
                     autoComplete="email"
                     autoFocus
                     onChange={handleChange}
@@ -115,6 +120,7 @@ const Login = ({ setMode, setCookie, hasCookie, setHasCookie, setUserInfo }) => 
                     fullWidth
                     name="password"
                     label="Password"
+                    value={loginInfo.password}
                     type="password"
                     id="password"
                     autoComplete="current-password"

@@ -11,27 +11,29 @@ const FormDialog = ({ open, setOpen, schedule, setSchedule, setcreateSchedule, v
 
     const upload = (data, config) => {
         return axios.post('http://k02c1101.p.ssafy.io:9090/api/board/homework', data, config)
-        .then(res => {
-            setOpen(false)
-            console.log(res)
-        })
-        .catch(e => {console.log(e)})
-        
+            .then(res => {
+                setOpen(false)
+                console.log(res)
+            })
+            .catch(e => { console.log(e) })
+
     }
 
     const handleSubmit = () => {
         setcreateSchedule.createSchedules([schedule])
+
         const uploadschedule = {
             "homeworkNotice_detail": String(schedule.description),
             "homeworkNotice_endDate": String(getFormatDate(schedule.end.toDate())),
             "homeworkNotice_startDate": String(getFormatDate(schedule.start.toDate())),
             "homeworkNotice_title": String(schedule.title),
-          }
-        
+        }
+        console.log(uploadschedule)
+
         const config = {
-            headers : {'Authorization':getCookieValue('token')},
-          }
-        
+            headers: { 'Authorization': getCookieValue('token') },
+        }
+
         upload(uploadschedule, config)
     };
 
@@ -43,8 +45,8 @@ const FormDialog = ({ open, setOpen, schedule, setSchedule, setcreateSchedule, v
         setSchedule({ ...schedule, start: date })
     }
 
-    const handleDateEndChange = (e) => {
-        setSchedule({ ...schedule, end: e })
+    const handleDateEndChange = (date) => {
+        setSchedule({ ...schedule, end: date })
     }
 
     const handleTextChange = (e) => {
@@ -114,27 +116,27 @@ const FormDialog = ({ open, setOpen, schedule, setSchedule, setcreateSchedule, v
                 />
             </DialogContent>
             {
-                viewschedule ? 
-                <DialogActions>
-                    <Button onClick={handleClose} color="primary">
-                        취소
+                viewschedule ?
+                    <DialogActions>
+                        <Button onClick={handleClose} color="primary">
+                            취소
                     </Button>
-                    <Button onClick={handleDelete} color="primary">
-                        삭제
+                        <Button onClick={handleDelete} color="primary">
+                            삭제
                     </Button>
-                    <Button onClick={handleUpdate} color="primary">
-                        수정
+                        <Button onClick={handleUpdate} color="primary">
+                            수정
                     </Button>
-                </DialogActions> 
-            :
-                <DialogActions>
-                    <Button onClick={handleClose} color="primary">
-                        취소
+                    </DialogActions>
+                    :
+                    <DialogActions>
+                        <Button onClick={handleClose} color="primary">
+                            취소
                     </Button>
-                    <Button onClick={handleSubmit} color="primary">
-                        작성
+                        <Button onClick={handleSubmit} color="primary">
+                            작성
                     </Button>
-                </DialogActions>
+                    </DialogActions>
 
             }
         </Dialog >
