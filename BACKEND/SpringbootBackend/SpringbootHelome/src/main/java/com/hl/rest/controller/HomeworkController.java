@@ -106,7 +106,6 @@ public class HomeworkController {
 				df.setTimeZone(time);
 				String today = df.format(new Date());
 				homework.setHomework_submitDate(today);
-				homework.setHomework_score("");
 				
 				ser.CreateHomework(homework);
 				msg.put("Homework", homework);

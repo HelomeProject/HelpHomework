@@ -12,8 +12,8 @@
 	</insert>
 	<insert id="CreateHomework" parameterType="homework">
 		insert into
-		homeworktb(Homework_memberIdx, Homework_noticeIdx, Homework_url, Homework_submitDate)
-		values(#{Homework_memberIdx}, #{Homework_noticeIdx}, #{Homework_url}, #{Homework_submitDate})
+		homeworktb(Homework_memberIdx, Homework_noticeIdx, Homework_url, Homework_submitDate, Homework_score)
+		values(#{Homework_memberIdx}, #{Homework_noticeIdx}, #{Homework_url}, #{Homework_submitDate}, #{Homework_score})
 	</insert>
 	<select id="getHomeworkNoticeList" resultType="homeworkNotice">
 		select * from homeworkNoticetb

@@ -62,7 +62,7 @@ public class BoardController {
 			if(isteacher.equals("1")) {
 				Member member = memser.getMem(email);
 				int curIdx = ser.getNoticeListSize()+1;
-				notice.setNoticeImgUrl("/home/noticeImg/"+member.getGrade()+"/"+member.getClassnum()+"/"+curIdx+".jpg");
+				notice.setNoticeImgUrl("/home/noticeImg/"+member.getGrade()+"_"+member.getClassnum()+"_"+notice.getNoticeTitle()+".jpg");
 				notice.setMemberIdx(member.getMemberIdx());
 				notice.setMemberGrade(member.getGrade());
 				notice.setMemberClassNum(member.getClassnum());
