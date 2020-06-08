@@ -55,7 +55,7 @@ def sort_rects(rects):
     for i in range(1, len(rects)):
         x, y, w, h = rects[i][0], rects[i][1], rects[i][2], rects[i][3]
         x_, y_, w_, h_ = rects[i-1][0], rects[i-1][1], rects[i-1][2], rects[i-1][3]
-        if (y+(h//2)) - (y_+(h_//2)) > 20:
+        if (y+(h//2)) - (y_+(h_//2)) > 25:
             arr.sort()
             mid_points.append(arr[0])
             arrs.append(arr)
@@ -192,11 +192,11 @@ def ox(res_predict, mid_points, testimage, homeworkidx, memberidx):
     img = cv2.imread(testimage)
     for i in correct:
         x, y, w, h = mid_points[i][0], mid_points[i][1], mid_points[i][2], mid_points[i][3]
-        img = cv2.circle(img, (x+9,y+9), 14, (0,0,255), 2)
+        img = cv2.circle(img, (x+(h//2),y+(h//2)), 22, (0,0,255), 2)
     for j in wrong:
         x, y, w, h = mid_points[j][0], mid_points[j][1], mid_points[j][2], mid_points[j][3]
-        img = cv2.line(img, (x,y), (x+18, y+18), (0,0,255), 2)
-        img = cv2.line(img, (x+18,y), (x, y+18), (0,0,255), 2)
+        img = cv2.line(img, (x-3,y-3), (x+22, y+22), (0,0,255), 2)
+        img = cv2.line(img, (x + 22, y - 3), (x - 3, y + 22), (0, 0, 255), 2)
 
     img_re = cv2.resize(img, (400, 600))
     save_path = os.path.join(settings.MEDIA_ROOT, 'homeworkImg')
