@@ -15,4 +15,5 @@ public interface IHomeworkService {
 	public List<Homework> getHomeworkList_byIdx(String homeworkNoticeIdx, String memberIdx);
 	public int getWhoseHomeworkNotice(String homeworkNoticeIdx);
 	public void updateHomeworkNotice(HomeworkNotice homeworknotice);
+	public void deleteHomeworkNotice(String homeworkNoticeIdx);
 }

@@ -59,5 +59,10 @@ public class HomeworkServiceImpl implements IHomeworkService{
 	public void updateHomeworkNotice(HomeworkNotice homeworknotice) {
 		repo.updateHomeworkNotice(homeworknotice);
 	}
+
+	@Override
+	public void deleteHomeworkNotice(String homeworkNoticeIdx) {
+		repo.deleteHomeworkNotice(homeworkNoticeIdx);
+	}
 	
 }

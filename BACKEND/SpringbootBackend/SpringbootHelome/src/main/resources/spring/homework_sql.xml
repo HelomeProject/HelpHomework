@@ -43,7 +43,9 @@
 		HomeworkNotice_title=#{HomeworkNotice_title}, HomeworkNotice_startDate=#{HomeworkNotice_startDate}, HomeworkNotice_endDate=#{HomeworkNotice_endDate}, HomeworkNotice_detail=#{HomeworkNotice_detail}
 		where HomeworkNotice_idx=#{HomeworkNotice_idx};
 	</update>
-	
-	
+	<delete id="deleteHomeworkNotice" parameterType="String">
+		delete from homeworkNoticetb
+		where HomeworkNotice_idx=#{homeworkNoticeIdx}
+	</delete>
 </mapper>
  

@@ -63,5 +63,10 @@ public class HomeworkDaoImpl implements IHomeworkDao{
 	public void updateHomeworkNotice(HomeworkNotice homeworknotice) {
 		session.update("homework.updateHomeworkNotice", homeworknotice);
 	}
+
+	@Override
+	public void deleteHomeworkNotice(String homeworkNoticeIdx) {
+		session.delete("homework.deleteHomeworkNotice", homeworkNoticeIdx);
+	}
 	
 }
