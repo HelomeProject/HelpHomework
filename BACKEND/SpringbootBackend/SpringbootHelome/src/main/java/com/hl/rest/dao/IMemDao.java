@@ -12,4 +12,5 @@ public interface IMemDao {
 	public int getMemListSize();
 	public List<Member> getMemStudentList(int startlist, int listsize, String grade, String classnum);
 	public void updateMember(Member member);
+	public void deleteMember(String memberIdx);
 }

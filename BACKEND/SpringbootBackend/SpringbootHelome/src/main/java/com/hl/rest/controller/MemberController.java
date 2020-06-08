@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -164,7 +165,26 @@ public class MemberController {
 		return res;
 	}
 	
-	
 	/** 회원탈퇴 */
-	
+	@DeleteMapping("/users/{memberIdx}")
+	@ApiOperation(value = "멤버정보 삭제(탈퇴)", response = List.class)
+	public @ResponseBody ResponseEntity<Map<String, Object>> DeleteMember(
+			@RequestHeader(value = "Authorization") @Valid String token,
+			@PathVariable("memberIdx") String memberIdx) {
+		ResponseEntity<Map<String, Object>> res = null;
+		Map<String, Object> msg = new HashMap<String, Object>();
+		try {
+			ser.deleteMember(memberIdx);
+			msg.put("msg", "회원 탈퇴가 완료됐습니다. 안녕히가세요.");
+			res = new ResponseEntity<Map<String, Object>>(msg, HttpStatus.OK);
+		}catch(Exception e) {
+			Object[] input = {token, memberIdx};
+			msg.put("Input Data", input);
+			msg.put("SAY", "Error msg를 참고하여 Input Data을 다시 한 번 확인해보세요.");
+			msg.put("Error msg", e.getMessage());
+			res = new ResponseEntity<Map<String, Object>>(msg, HttpStatus.BAD_REQUEST);
+			System.out.println(e.getMessage());
+		}
+		return res;
+	}
 }

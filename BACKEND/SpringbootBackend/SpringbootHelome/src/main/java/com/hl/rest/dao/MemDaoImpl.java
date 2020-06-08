@@ -59,4 +59,9 @@ public class MemDaoImpl implements IMemDao {
 		session.update("member.updateMember", member);
 	}
 
+	@Override
+	public void deleteMember(String memberIdx) {
+		session.delete("member.deleteMember", memberIdx);
+	}
+
 }

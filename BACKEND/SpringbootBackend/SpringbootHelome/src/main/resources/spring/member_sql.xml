@@ -32,5 +32,9 @@
 		username=#{username}, password=#{password}, isteacher=#{isteacher}, school=#{school}, grade=#{grade}, classnum=#{classnum}
 		where idx=#{memberIdx};
 	</update>
+	<delete id="deleteMember" parameterType="String">
+		delete from membertb
+		where idx=#{memberIdx}
+	</delete>
 </mapper>
  

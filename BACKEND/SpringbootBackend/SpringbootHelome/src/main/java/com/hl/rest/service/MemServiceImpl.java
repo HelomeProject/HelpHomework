@@ -43,5 +43,10 @@ public class MemServiceImpl implements IMemService {
 	public void updateMember(Member member) {
 		repo.updateMember(member);
 	}
+
+	@Override
+	public void deleteMember(String memberIdx) {
+		repo.deleteMember(memberIdx);
+	}
 	
 }
