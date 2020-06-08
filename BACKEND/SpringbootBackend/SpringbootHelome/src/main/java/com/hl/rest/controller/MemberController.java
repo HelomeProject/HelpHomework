@@ -67,7 +67,7 @@ public class MemberController {
 	/** 회원조회(list) */
 	@GetMapping("/users")
 	@ApiOperation(value = "멤버 정보 전체 조회", response = List.class)
-	public @ResponseBody ResponseEntity<Map<String, Object>> listMem(
+	public @ResponseBody ResponseEntity<Map<String, Object>> GetMemberList(
 			@RequestHeader(value = "Authorization") @Valid String token,
 			@RequestParam(required = false, defaultValue = "1") int page,
 			@RequestParam(required = false, defaultValue = "1") int range) {
@@ -111,7 +111,7 @@ public class MemberController {
 	/** 회원조회(self) */
 	@GetMapping("/users/{memberIdx}")
 	@ApiOperation(value = "멤버 정보 조회", response = List.class)
-	public @ResponseBody ResponseEntity<Map<String, Object>> listMem(
+	public @ResponseBody ResponseEntity<Map<String, Object>> GetMember(
 			@RequestHeader(value = "Authorization") @Valid String token,
 			@PathVariable("memberIdx") String memberIdx) {
 		ResponseEntity<Map<String, Object>> res = null;

@@ -4,7 +4,6 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.TimeZone;
@@ -22,18 +21,13 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.hl.rest.service.IBoardService;
 import com.hl.rest.service.IHomeworkService;
 import com.hl.rest.service.IMemService;
-import com.hl.rest.vo.Homework_old;
 import com.hl.rest.vo.Homework;
 import com.hl.rest.vo.HomeworkNotice;
 import com.hl.rest.vo.Member;
-import com.hl.rest.vo.Pagination;
 
 import io.jsonwebtoken.Claims;
 import io.swagger.annotations.ApiOperation;
@@ -227,7 +221,7 @@ public class HomeworkController {
 	}
 	
 	/** 숙제공지 전체목록 조회 */
-	@GetMapping("board/homeworks")
+	@GetMapping("/board/homeworks")
 	@ApiOperation(value = "숙제공지 전체목록 조회")
 	public ResponseEntity<Map<String, Object>> GetHomeworkNoticeList(
 			@RequestHeader(value = "Authorization") String token) {
