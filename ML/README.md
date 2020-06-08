@@ -6,11 +6,34 @@
 
 ![캡처dd](README.assets/CNN.JPG)
 
+```python
+model = Sequential()
+
+# 필터개수, 필터 사이즈, activation function , input_shape=(가로크기,세로크기,차원)
+model.add(Conv2D(64, (3, 3), activation='relu', input_shape=(45, 45, 1)))
+model.add(Conv2D(128, (3, 3), activation='relu'))
+model.add(MaxPooling2D(pool_size=(2, 2)))
+model.add(Dropout(0.25))
+# model.add(BatchNormalization()) # 정규화
+model.add(Flatten())
+model.add(Dense(128, activation='relu'))
+model.add(Dropout(0.5))
+model.add(Dense(nb_classes, activation='softmax'))
+
+model.compile(loss='categorical_crossentropy',# mean square error, mean absolute error 등 사용 가능
+              optimizer='adam',	# 최적화 알고리즘, sgd, adam 등등
+              metrics=['accuracy'])
+```
+
+
+
 
 
 [학습]
 
 ![ddd](README.assets/train.JPG)
+
+
 
 
 
@@ -96,6 +119,12 @@ img_th = cv2.adaptiveThreshold(img_blur, 255, cv2.ADAPTIVE_THRESH_GAUSSIAN_C, cv
 
 ![Figure_1](README.assets/Figure_1.jpeg)
 
+```python
+images, contours, hierachy = cv2.findContours(img_th.copy(), cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
+```
+
+
+
 
 
 [수식 인식]
@@ -123,18 +152,6 @@ img_th = cv2.adaptiveThreshold(img_blur, 255, cv2.ADAPTIVE_THRESH_GAUSSIAN_C, cv
 [필기체로 인식 후 정답 표시]
 
 ![결과캡처](README.assets/결과캡처-1591354410709.JPG)
-
-
-
-[필기체 수식 인식]
-
-![인식1](README.assets/인식1.JPG)
-
-
-
-[필기체 계산 값 예측 및 수식 결과 값 예측]
-
-![인식2](README.assets/인식2.JPG)
 
 
 
