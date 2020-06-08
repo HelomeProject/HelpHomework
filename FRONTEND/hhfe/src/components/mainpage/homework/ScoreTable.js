@@ -101,27 +101,37 @@ const ScoreTable = ({ mode, homeworkIdx }) => {
         if (mode === 0) {
             axios.get("http://k02c1101.p.ssafy.io:9090/api/homeworks", config)
                 .then(res => {
-                    setRows(res.data.HomeworkList)
-                    return (res.data.HomeworkList)
+                    if (res.data !== "") {
+                        setRows(res.data.HomeworkList)
+                        return (res.data.HomeworkList)
+                    }
+                    else
+                        return null
+
                 })
                 .then(data => {
-                    seturl(fronturl + data[0].homework_url)
+                    if (data !== null) { seturl(fronturl + data[0].homework_url) }
+
                 })
                 .catch((err) => { console.log(err) })
         } else {
             axios.get("http://k02c1101.p.ssafy.io:9090/api/homeworks/" + String(homeworkIdx), config)
                 .then(res => {
-                    console.log(res)
-                    setRowsteacher(res.data.HomeworkList)
-                    return (res.data.HomeworkList)
+                    if (res.data !== "") {
+                        setRowsteacher(res.data.HomeworkList)
+                        return (res.data.HomeworkList)
+                    }
+                    else
+                        return null
+
                 })
                 .then(data => {
-                    seturl(fronturl + data[0].homework_url)
+                    if (data !== null) { seturl(fronturl + data[0].homework_url) }
+
                 })
                 .catch((err) => { console.log(err) })
 
         }
-        console.log("test")
     }, [mode, homeworkIdx])
 
 
@@ -151,7 +161,7 @@ const ScoreTable = ({ mode, homeworkIdx }) => {
             </Grid>
             <Grid item xs={12} sm={12} md={6}>
                 <Paper className={classes.paper}>
-                    <img className={classes.img} src={url} alt="test" />
+                    <img className={classes.img} src={url} alt="사진이 없습니다." />
                 </Paper>
             </Grid>
         </Grid >
