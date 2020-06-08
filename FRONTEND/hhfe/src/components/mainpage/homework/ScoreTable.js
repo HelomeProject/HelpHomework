@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from '@material-ui/core';
 
 import useStyles from './ScoreTableCSS'
@@ -6,30 +6,127 @@ import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
 import CropOriginalIcon from '@material-ui/icons/CropOriginal';
 import IconButton from '@material-ui/core/IconButton';
+import axios from 'axios'
+import getCookieValue from '../../getCookie'
 
-const createData = (num, date, score, url) => {
-    return { num, date, score, url };
+const Viewtable = ({ rows, seturl, mode, rowsteacher }) => {
+    const fronturl = 'http://k02c1101.p.ssafy.io:8000'
+    if (mode === 0) {
+        return (
+            <>
+                {rows === [] ? (
+                    <TableRow>
+                        <TableCell component="th" scope="row">
+                            1
+                        </TableCell>
+                        <TableCell align="right"> - </TableCell>
+                        <TableCell align="right"> - </TableCell>
+                        <TableCell align="right"> - </TableCell>
+                        <TableCell align="right"> - </TableCell>
+                    </TableRow>
+                ) : (
+                        <>
+                            {rows.map((val, idx) => (
+                                <TableRow key={idx}>
+                                    <TableCell component="th" scope="row">
+                                        {idx + 1}
+                                    </TableCell>
+                                    <TableCell align="right">{val.homework_submitDate}</TableCell>
+                                    <TableCell align="right">{val.homework_score}</TableCell>
+                                    <TableCell align="right"  >
+                                        <IconButton onClick={() => { seturl(fronturl + val.homework_url) }}> <CropOriginalIcon /> </IconButton>
+                                    </TableCell>
+                                </TableRow>
+                            ))}
+                        </>
+                    )
+                }
+            </>
+        )
+    } else {
+        return (
+            <>
+                {rowsteacher === [] ? (
+                    <TableRow>
+                        <TableCell component="th" scope="row">
+                            1
+                        </TableCell>
+                        <TableCell align="right"> - </TableCell>
+                        <TableCell align="right"> - </TableCell>
+                        <TableCell align="right"> - </TableCell>
+                        <TableCell align="right"> - </TableCell>
+                    </TableRow>
+                ) : (
+                        <>
+                            {rowsteacher.map((val, idx) => (
+                                <TableRow key={idx}>
+                                    <TableCell component="th" scope="row">
+                                        {idx + 1}
+                                    </TableCell>
+                                    <TableCell align="right">{val.homework_submitDate}</TableCell>
+                                    <TableCell align="right">{val.homework_score}</TableCell>
+                                    <TableCell align="right"  >
+                                        <IconButton onClick={() => { seturl(fronturl + val.homework_url) }}> <CropOriginalIcon /> </IconButton>
+                                    </TableCell>
+                                </TableRow>
+                            ))}
+                        </>
+                    )
+                }
+            </>
+        )
+
+    }
+
 }
 
-const rows = [
-    createData(1, 159, 6.0, "https://placeimg.com/64/64/3"),
-    createData(2, 237, 9.0, 37),
-    createData(3, 262, 16.0, 24),
-    createData(4, 305, 3.7, 67),
-    createData(5, 356, 16.0, 49),
-];
-
-const ScoreTable = ({ mode }) => {
+const ScoreTable = ({ mode, homeworkIdx }) => {
     const classes = useStyles();
     const tableheadname = [
         ['No.', '숙제 제출일', '점수', '이미지'],
         ['No.', '이름', '점수', '파일']
     ]
-    const [url, seturl] = useState(rows[0].url)
+    const [rows, setRows] = useState([])
+    const [rowsteacher, setRowsteacher] = useState([])
+    const [url, seturl] = useState('')
 
-    const viewImg = (url) => {
-        seturl(url)
-    }
+
+
+
+    useEffect(() => {
+        const fronturl = 'http://k02c1101.p.ssafy.io:8000'
+        const config = {
+            headers: { 'Authorization': getCookieValue('token') },
+        }
+        if (mode === 0) {
+            axios.get("http://k02c1101.p.ssafy.io:9090/api/homeworks", config)
+                .then(res => {
+                    setRows(res.data.HomeworkList)
+                    return (res.data.HomeworkList)
+                })
+                .then(data => {
+                    seturl(fronturl + data[0].homework_url)
+                })
+                .catch((err) => { console.log(err) })
+        } else {
+            axios.get("http://k02c1101.p.ssafy.io:9090/api/homeworks/" + String(homeworkIdx), config)
+                .then(res => {
+                    console.log(res)
+                    setRowsteacher(res.data.HomeworkList)
+                    return (res.data.HomeworkList)
+                })
+                .then(data => {
+                    seturl(fronturl + data[0].homework_url)
+                })
+                .catch((err) => { console.log(err) })
+
+        }
+        console.log("test")
+    }, [mode, homeworkIdx])
+
+
+
+
 
     return (
         <Grid container spacing={3}>
@@ -46,18 +143,7 @@ const ScoreTable = ({ mode }) => {
                                 </TableRow>
                             </TableHead>
                             <TableBody>
-                                {rows.map((row) => (
-                                    <TableRow key={row.num}>
-                                        <TableCell component="th" scope="row" >
-                                            {row.num}
-                                        </TableCell>
-                                        <TableCell align="right">{row.date}</TableCell>
-                                        <TableCell align="right">{row.score}</TableCell>
-                                        <TableCell align="right" onClick={() => { viewImg(row.url) }} >
-                                            <IconButton> <CropOriginalIcon /> </IconButton>
-                                        </TableCell>
-                                    </TableRow>
-                                ))}
+                                <Viewtable rows={rows} seturl={seturl} rowsteacher={rowsteacher} mode={mode} />
                             </TableBody>
                         </Table>
                     </TableContainer>
