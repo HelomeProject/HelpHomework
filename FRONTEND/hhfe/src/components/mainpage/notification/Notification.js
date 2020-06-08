@@ -115,7 +115,6 @@ const Notification = ({ mode, userInfo }) => {
     }, [mode])
 
     const onClickSchedule = useCallback(e => {
-        console.log(e.schedule)
         setNewschedule({
             ...newschedule,
             ...e.schedule

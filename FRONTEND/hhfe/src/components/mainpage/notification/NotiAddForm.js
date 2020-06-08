@@ -22,7 +22,6 @@ const NotiAddForm = ({ open, setOpen, setNotilist, notilist, userInfo }) => {
   }
 
   const onChangeFile = (e) => {
-    console.log(e.target.files[0])
     setNotiimg(e.target.files[0])
     if (e.target.files[0]) {
       setNotiimgname(e.target.files[0].name)
@@ -42,7 +41,6 @@ const NotiAddForm = ({ open, setOpen, setNotilist, notilist, userInfo }) => {
       .then(res => {
         const newnotilist = notilist.concat(res.data.Notice)
         setNotilist(newnotilist)
-        console.log(res)
         setOpen(false)
         setNotiimg(null)
         setNotiimgname("사진")
@@ -53,8 +51,8 @@ const NotiAddForm = ({ open, setOpen, setNotilist, notilist, userInfo }) => {
         formData.append('grade', userInfo.grade)
         formData.append('classnum', userInfo.classnum)
 
-        axios.post("http://127.0.0.1:8000/api/v1/addnoti/", formData)
-          .then(res => { console.log(res) })
+        axios.post("http://k02c1101.p.ssafy.io:8000/api/v1/addnoti/", formData)
+          .then(res => { })
           .catch(err => { console.log(err) })
 
       })

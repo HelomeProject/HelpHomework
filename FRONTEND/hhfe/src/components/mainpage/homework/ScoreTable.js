@@ -34,7 +34,6 @@ const Viewtable = ({ url, rows, seturl, mode, rowsteacher }) => {
                                     <TableCell align="right">{val.homework_score}</TableCell>
                                     <TableCell align="right"  >
                                         <IconButton onClick={() => {
-                                            console.log(url)
                                             seturl(fronturl + val.homework_url)
                                         }}> <CropOriginalIcon /> </IconButton>
                                     </TableCell>
@@ -69,7 +68,6 @@ const Viewtable = ({ url, rows, seturl, mode, rowsteacher }) => {
                                     <TableCell align="right">{val.homework_score}</TableCell>
                                     <TableCell align="right"  >
                                         <IconButton onClick={() => {
-                                            console.log(url)
                                             seturl(fronturl + val.homework_url)
                                         }}> <CropOriginalIcon /> </IconButton>
                                     </TableCell>
@@ -93,7 +91,6 @@ const ScoreTable = ({ mode, rows, rowsteacher, seturl, url }) => {
     ]
 
 
-    console.log(url)
     return (
         <Grid container spacing={3}>
             <Grid item xs={12} sm={12} md={6}>
