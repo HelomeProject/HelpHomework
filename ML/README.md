@@ -2,6 +2,18 @@
 
 
 
+[CNN 모델]
+
+![캡처dd](README.assets/CNN.JPG)
+
+
+
+[학습]
+
+![ddd](README.assets/train.JPG)
+
+
+
 
 
 [이미지 변환전] 
@@ -20,7 +32,7 @@ img = cv2.imread(image_path) # 이미지를 불러온다.
 
 ```python
 img_gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY) # Gray Image // RGB를 Gray로 변환(3차원 -> 1차원)
-img_inv = cv2.bitwise_not(img_gray)				 # Inverse Image
+img_inv = cv2.bitwise_not(img_gray)	# Inverse Image
 img_blur = cv2.GaussianBlur(img_inv, (5, 5), 0)  # Gaussian Image (5,5) 필터로 적용
 ```
 
@@ -49,10 +61,10 @@ images, contours, hierachy= cv2.findContours(img_th.copy(), cv2.RETR_EXTERNAL, c
 
 [확률]
 
-![확률캡처](README.assets/확률캡처.PNG)
+![확률캡처](README.assets/확률.PNG)
 
 ```python
-print('predict: "{}" {}%'.format(predict_num, maxPredict)) 	# 예측 숫자, 가장 높은 확률의 숫자
+print('predict: "{}" {}%'.format(predict_num, maxPredict)) # 예측 숫자, 가장 높은 확률의 숫자
 print('predict: ', classes[np.argmax(output)]) 	# 분류한 classes key 값
 for i in range(len(classes)):
     print('{}: {} %'.format(classes[i], round(output[0][i]*100,4))) # classes 각각의 확률
@@ -84,6 +96,24 @@ img_th = cv2.adaptiveThreshold(img_blur, 255, cv2.ADAPTIVE_THRESH_GAUSSIAN_C, cv
 
 ![Figure_1](README.assets/Figure_1.jpeg)
 
+
+
+[수식 인식]
+
+![Equation](README.assets/Equation.jpg)
+
+
+
+
+
+[수식 계산 값과 사용자 입력 값]
+
+![Equ_and_Res](README.assets/Equ_and_Res.jpg)
+
+
+
+
+
 [정답 표시]
 
 ![res](README.assets/res.JPG)
@@ -112,7 +142,7 @@ img_th = cv2.adaptiveThreshold(img_blur, 255, cv2.ADAPTIVE_THRESH_GAUSSIAN_C, cv
 
 [요약도 - Train]
 
-1) 이미지 수집
+1) 이미지 수집 (약 15만개)
 
 2) 이미지 분류
 
