@@ -14,4 +14,5 @@ public interface IHomeworkDao {
 	public List<Homework> getHomeworkList_byIdx(String homeworkNoticeIdx);
 	public List<Homework> getHomeworkList_byIdx(String homeworkNoticeIdx, String memberIdx);
 	public int getWhoseHomeworkNotice(String homeworkNoticeIdx);
+	public void updateHomeworkNotice(HomeworkNotice homeworknotice);
 }

@@ -38,5 +38,12 @@
 		select * from homeworktb 
 		where Homework_noticeIdx=#{homeworkNoticeIdx} and Homework_memberIdx=#{memberIdx};
 	</select>
+	<update id="updateHomeworkNotice" parameterType="homeworknotice">
+		update homeworkNoticetb set
+		HomeworkNotice_title=#{HomeworkNotice_title}, HomeworkNotice_startDate=#{HomeworkNotice_startDate}, HomeworkNotice_endDate=#{HomeworkNotice_endDate}, HomeworkNotice_detail=#{HomeworkNotice_detail}
+		where HomeworkNotice_idx=#{HomeworkNotice_idx};
+	</update>
+	
+	
 </mapper>
  
