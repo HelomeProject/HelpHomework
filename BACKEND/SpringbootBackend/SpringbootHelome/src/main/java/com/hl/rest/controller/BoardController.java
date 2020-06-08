@@ -1,7 +1,6 @@
 package com.hl.rest.controller;
 
 import java.util.HashMap;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
@@ -14,20 +13,16 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.hl.rest.service.IBoardService;
 import com.hl.rest.service.IMemService;
-import com.hl.rest.vo.Homework_old;
 import com.hl.rest.vo.Member;
 import com.hl.rest.vo.Notice;
-import com.hl.rest.vo.Pagination;
 
 import io.jsonwebtoken.Claims;
 import io.swagger.annotations.ApiOperation;
@@ -39,6 +34,7 @@ public class BoardController {
 	
 	@Autowired
 	private IBoardService ser;
+	
 	@Autowired
 	private IMemService memser;
 	
@@ -63,7 +59,7 @@ public class BoardController {
 			
 			if(isteacher.equals("1")) {
 				Member member = memser.getMem(email);
-				int curIdx = ser.getNoticeListSize()+1;
+				//int curIdx = ser.getNoticeListSize()+1;
 				notice.setNoticeImgUrl("/home/noticeImg/"+member.getGrade()+"_"+member.getClassnum()+"_"+notice.getNoticeTitle()+".jpg");
 				notice.setMemberIdx(member.getMemberIdx());
 				notice.setMemberGrade(member.getGrade());
