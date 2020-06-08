@@ -43,7 +43,6 @@ def calc(request):
 @csrf_exempt
 def savenotification(request):
     if request.FILES['file']:
-
         if not (os.path.exists(settings.MEDIA_ROOT)):
             os.mkdir(settings.MEDIA_ROOT)
 
@@ -51,7 +50,7 @@ def savenotification(request):
         if not (os.path.exists(save_path)):
             os.mkdir(save_path)
 
-        filename = str(request.POST['grade']) + '_' + str(request.POST['classnum']) + '_' + 'noticeIdx.jpg'
+        filename = str(request.POST['grade']) + '_' + str(request.POST['classnum']) + '_' + str(request.POST['title']) + '.jpg'
         file_path = os.path.join(save_path, filename)
         default_storage.save(file_path, request.FILES['file'])
         return JsonResponse({'success': 'save to DB'}, status=200)
