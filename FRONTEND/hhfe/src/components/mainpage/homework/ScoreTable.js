@@ -85,58 +85,6 @@ const ScoreTable = ({ mode, rows, rowsteacher, seturl, url }) => {
         ['No.', '숙제 제출일', '점수', '이미지'],
         ['No.', '학생 번호', '점수', '파일']
     ]
-    // const [rows, setRows] = useState([])
-    // const [rowsteacher, setRowsteacher] = useState([])
-    // const [url, seturl] = useState('')
-
-
-
-
-    // useEffect(() => {
-    //     const fronturl = 'http://k02c1101.p.ssafy.io:8000'
-    //     const config = {
-    //         headers: { 'Authorization': getCookieValue('token') },
-    //     }
-    //     if (mode === 0) {
-    //         axios.get("http://k02c1101.p.ssafy.io:9090/api/homeworks", config)
-    //             .then(res => {
-    //                 if (res.data !== "") {
-    //                     setRows(res.data.HomeworkList)
-    //                     return (res.data.HomeworkList)
-    //                 }
-    //                 else
-    //                     return null
-
-    //             })
-    //             .then(data => {
-    //                 if (data !== null) { seturl(fronturl + data[0].homework_url) }
-
-    //             })
-    //             .catch((err) => { console.log(err) })
-    //     } else {
-    //         axios.get("http://k02c1101.p.ssafy.io:9090/api/homeworks/" + String(homeworkIdx), config)
-    //             .then(res => {
-    //                 if (res.data !== "") {
-    //                     console.log(res.data.HomeworkListList)
-    //                     setRowsteacher(res.data.HomeworkList)
-    //                     return (res.data.HomeworkList)
-    //                 }
-    //                 else
-    //                     return null
-
-    //             })
-    //             .then(data => {
-    //                 if (data !== null) { seturl(fronturl + data[0].homework_url) }
-
-    //             })
-    //             .catch((err) => { console.log(err) })
-
-    //     }
-    // }, [mode, homeworkIdx])
-
-
-
-
 
     return (
         <Grid container spacing={3}>
