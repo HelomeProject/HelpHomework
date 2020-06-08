@@ -34,7 +34,7 @@ const calendarOptions = {
     useCreationPopup: false,
     usageStatistics: false,
     calendars: calendarIdx,
-    timezone: {tooltip:'Seoul'},
+    timezone: { tooltip: 'Seoul' },
     month: {
         daynames: ['일요일', '월요일', '화요일', '수요일', '목요일', '금요일', '토요일'],
         workweek: true
@@ -43,7 +43,7 @@ const calendarOptions = {
 }
 
 
-const Notification = ({ mode }) => {
+const Notification = ({ mode, userInfo }) => {
     const classes = useStyle()
     const calendarRef = useRef(null);
     const [year, setYear] = useState(null)
@@ -63,83 +63,71 @@ const Notification = ({ mode }) => {
         isAllDay: true,
         description: ""
     })
-    
+
     // 일정 불러오기
 
     const newschedulelist = (data) => {
-        return data.map((temp) => {
-            return({
-                calendarId: "1",
-                id: temp.homeworkNotice_idx,
-                title: temp.homeworkNotice_title,
-                start: String(temp.homeworkNotice_startDate),
-                end: String(temp.homeworkNotice_endDate),
-                description: temp.homeworkNotice_detail,
-                category: "allday",
-                isAllDay: true,
-                isVisible: true,
-            })
-        })
+        return data.map((temp) => ({
+            calendarId: "1",
+            id: temp.homeworkNotice_idx,
+            title: temp.homeworkNotice_title,
+            start: String(temp.homeworkNotice_startDate),
+            end: String(temp.homeworkNotice_endDate),
+            description: temp.homeworkNotice_detail,
+            category: "allday",
+            isAllDay: true,
+            isVisible: true,
+        }))
     }
-    
-    
+
+
     useEffect(() => {
-        const config = {headers:{'Authorization':getCookieValue('token')}}
-
-        const loadCalendar = (config) => {
-            axios.get('http://k02c1101.p.ssafy.io:9090/api/board/homeworks', config)
-            .then(res =>{
-                setSchedulelist(newschedulelist(res.data.HomeworkNoticeList))
-                // setSchedulelist(temp)
-                // return temp
-                
+        const ac = new AbortController();
+        const config = { headers: { 'Authorization': getCookieValue('token') } }
+        axios.get('http://k02c1101.p.ssafy.io:9090/api/board/homeworks', config)
+            .then(res => {
+                const { HomeworkNoticeList } = res.data;
+                const list = newschedulelist(HomeworkNoticeList);
+                setSchedulelist(list)
             })
-            .catch(e => {console.log(e)})
-        }
+            .catch(e => { console.log(e) })
+        return () => ac.abort()
+    }, [])
 
+    useEffect(() => {
         // calendar 요소 불러오기
         const calendarInstance = calendarRef.current.getInstance();
         setCalendarInst(calendarInstance)
-
-        const changeView = () => {
-            if (mode === 1) {
-                setIsteacher({
-                    ...calendarOptions,
-                    isReadOnly: false,
-                })
-            } else {
-                setIsteacher({
-                    ...calendarOptions,
-                    isReadOnly: true,
-                })
-            }
+        if (mode === 1) {
+            setIsteacher({
+                ...calendarOptions,
+                isReadOnly: false,
+            })
+        } else {
+            setIsteacher({
+                ...calendarOptions,
+                isReadOnly: true,
+            })
         }
-        const changeDate = () => {
-
-            setMonth(calendarInstance.getDate().toDate().getMonth() + 1)
-            setYear(calendarInstance.getDate().toDate().getFullYear())
-        }
-
-        changeView()
-        changeDate()
-        
-        loadCalendar(config)
-        return () => {}
+        setMonth(calendarInstance.getDate().toDate().getMonth() + 1)
+        setYear(calendarInstance.getDate().toDate().getFullYear())
 
     }, [mode])
 
     const onClickSchedule = useCallback(e => {
         console.log(e.schedule)
-        setNewschedule({...newschedule,
+        setNewschedule({
+            ...newschedule,
             ...e.schedule
         })
         setViewschedule(true)
         setOpen(true)
-        
+
     }, [newschedule]);
 
     const onBeforeCreateSchedule = useCallback(e => {
-        setNewschedule({...newschedule,
+        setNewschedule({
+            ...newschedule,
             ...e
         })
         setOpen(true)
@@ -192,7 +180,7 @@ const Notification = ({ mode }) => {
                 <Grid item xs={12} sm={12} md={4}>
                     <Paper className={classes.paper} >
                         <Grid container justify='center' alignItems='center'>
-                            <NoticeInfoTable mode={mode}/>
+                            <NoticeInfoTable mode={mode} userInfo={userInfo} />
                         </Grid>
                     </Paper>
                 </Grid>
