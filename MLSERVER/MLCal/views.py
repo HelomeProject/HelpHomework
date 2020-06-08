@@ -11,14 +11,18 @@ from .func import scoring
 @csrf_exempt
 def calc(request):
     if request.FILES['file']:
+
         if not (os.path.exists(settings.MEDIA_ROOT)):
             os.mkdir(settings.MEDIA_ROOT)
+
         save_path = os.path.join(settings.MEDIA_ROOT, 'homeworkoriginal')
         if not (os.path.exists(save_path)):
             os.mkdir(save_path)
+
         save_path = os.path.join(settings.MEDIA_ROOT, 'homeworkoriginal', request.POST['homeworkIdx'])
         if not (os.path.exists(save_path)):
             os.mkdir(save_path)
+
         file_path = os.path.join(save_path, str(request.POST['memberIdx']) + '.jpg')
         if os.path.exists(file_path):
             os.remove(file_path)
@@ -39,15 +43,14 @@ def calc(request):
 @csrf_exempt
 def savenotification(request):
     if request.FILES['file']:
-        print(1)
         if not (os.path.exists(settings.MEDIA_ROOT)):
             os.mkdir(settings.MEDIA_ROOT)
-        print(2)
+
         save_path = os.path.join(settings.MEDIA_ROOT, 'noticeImg')
         if not (os.path.exists(save_path)):
             os.mkdir(save_path)
-        print(3)
-        filename = str(request.POST['grade']) + '_' + str(request.POST['classnum']) + '_' + 'noticeIdx.jpg'
+
+        filename = str(request.POST['grade']) + '_' + str(request.POST['classnum']) + '_' + str(request.POST['title']) + '.jpg'
         file_path = os.path.join(save_path, filename)
         default_storage.save(file_path, request.FILES['file'])
         return JsonResponse({'success': 'save to DB'}, status=200)
