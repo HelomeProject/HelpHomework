@@ -64,7 +64,6 @@ const Register = () => {
 
   const createUserApi = (user) => {
     const url = "http://k02c1101.p.ssafy.io:9090/api/member/user"
-    console.log(user)
     return axios.post(url, user)
       .then((res) => {
         console.log(res)

@@ -11,7 +11,21 @@ import useStyles from './LeftDrawerCSS'
 
 import Notification from './notification/Notification'
 
-const LeftDrawer = ({ open, mode }) => {
+const ContentControl = ({ tap, mode, userInfo }) => {
+
+    switch (tap) {
+        case 0:
+            return <Notification mode={mode} userInfo={userInfo} />
+        case 1:
+            return <HomeworkContent mode={mode} />
+        case 2:
+            return <div />
+        default:
+            return <Notification mode={mode} userInfo={userInfo} />
+    }
+}
+
+const LeftDrawer = ({ open, mode, userInfo }) => {
     const classes = useStyles();
     const [tap, setTap] = useState(0);
     const handleTap = (tap) => {
@@ -39,18 +53,7 @@ const LeftDrawer = ({ open, mode }) => {
         )
     })
 
-    const ContentControl = () => {
-        switch (tap) {
-            case 0:
-                return <Notification mode={mode} />
-            case 1:
-                return <HomeworkContent mode={mode} />
-            case 2:
-                return <div />
-            default:
-                return <Notification />
-        }
-    }
+
     return (
         <div className={classes.root}>
             <Drawer
@@ -63,7 +66,7 @@ const LeftDrawer = ({ open, mode }) => {
                 }}
             >
                 <div className={classes.drawerHeader}>
-
+                    {userInfo.school} {userInfo.grade}학년 {userInfo.classnum}반
                 </div>
                 <Divider />
                 <List>
@@ -76,7 +79,7 @@ const LeftDrawer = ({ open, mode }) => {
                     [classes.contentShift]: open,
                 })}
             >
-                <ContentControl />
+                <ContentControl tap={tap} mode={mode} userInfo={userInfo} />
             </main>
         </div >
     );

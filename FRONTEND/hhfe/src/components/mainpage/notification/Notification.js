@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { IconButton, Grid, Typography, Paper } from '@material-ui/core';
 import { ArrowBackIos, ArrowForwardIos } from '@material-ui/icons';
+import axios from 'axios'
 
 import useStyle from './NotificationCSS'
 import NoticeInfoTable from './NoticeInfoTable'
@@ -9,6 +10,7 @@ import Calendar from '@toast-ui/react-calendar';
 import 'tui-calendar/dist/tui-calendar.css';
 
 import FormDialog from './FormDialog'
+import getCookieValue from '../../getCookie'
 
 const themeConfig = {
     'month.dayname.textAlign': 'center'
@@ -32,6 +34,7 @@ const calendarOptions = {
     useCreationPopup: false,
     usageStatistics: false,
     calendars: calendarIdx,
+    timezone: { tooltip: 'Seoul' },
     month: {
         daynames: ['일요일', '월요일', '화요일', '수요일', '목요일', '금요일', '토요일'],
         workweek: true
@@ -40,14 +43,16 @@ const calendarOptions = {
 }
 
 
-const Notification = ({ mode }) => {
+const Notification = ({ mode, userInfo }) => {
     const classes = useStyle()
-    const [month, setMonth] = useState(null)
-    const [year, setYear] = useState(null)
     const calendarRef = useRef(null);
-    const [isteacher, setIsteacher] = useState(calendarOptions)
+    const [year, setYear] = useState(null)
+    const [viewschedule, setViewschedule] = useState(false)
     const [open, setOpen] = useState(false)
+    const [month, setMonth] = useState(null)
     const [calendarInst, setCalendarInst] = useState(null)
+    const [isteacher, setIsteacher] = useState(calendarOptions)
+    const [schedulelist, setSchedulelist] = useState([])
     const [newschedule, setNewschedule] = useState({
         calendarId: "1",
         id: String(Math.random()),
@@ -59,44 +64,78 @@ const Notification = ({ mode }) => {
         description: ""
     })
 
+    // 일정 불러오기
+
+    const newschedulelist = (data) => {
+        return data.map((temp) => ({
+            calendarId: "1",
+            id: temp.homeworkNotice_idx,
+            title: temp.homeworkNotice_title,
+            start: String(temp.homeworkNotice_startDate),
+            end: String(temp.homeworkNotice_endDate),
+            description: temp.homeworkNotice_detail,
+            category: "allday",
+            isAllDay: true,
+            isVisible: true,
+        }))
+    }
+
+
     useEffect(() => {
+        const ac = new AbortController();
+        const config = { headers: { 'Authorization': getCookieValue('token') } }
+        axios.get('http://k02c1101.p.ssafy.io:9090/api/board/homeworks', config)
+            .then(res => {
+                const { HomeworkNoticeList } = res.data;
+                const list = newschedulelist(HomeworkNoticeList);
+                setSchedulelist(list)
+            })
+            .catch(e => { console.log(e) })
+        return () => ac.abort()
+    }, [])
+
+    useEffect(() => {
+        // calendar 요소 불러오기
         const calendarInstance = calendarRef.current.getInstance();
         setCalendarInst(calendarInstance)
-
-        const changeView = () => {
-            if (mode === 1) {
-                setIsteacher({
-                    ...calendarOptions,
-                    isReadOnly: false,
-                })
-            } else {
-                setIsteacher({
-                    ...calendarOptions,
-                    isReadOnly: true,
-                })
-            }
+        if (mode === 1) {
+            setIsteacher({
+                ...calendarOptions,
+                isReadOnly: false,
+            })
+        } else {
+            setIsteacher({
+                ...calendarOptions,
+                isReadOnly: true,
+            })
         }
-        const changeDate = () => {
+        setMonth(calendarInstance.getDate().toDate().getMonth() + 1)
+        setYear(calendarInstance.getDate().toDate().getFullYear())
 
-            setMonth(calendarInstance.getDate().toDate().getMonth())
-            setYear(calendarInstance.getDate().toDate().getFullYear())
-        }
-        changeView()
-        changeDate()
-    }, [mode, year, month])
+    }, [mode])
 
     const onClickSchedule = useCallback(e => {
-        console.log(e);
-    }, []);
+        console.log(e.schedule)
+        setNewschedule({
+            ...newschedule,
+            ...e.schedule
+        })
+        setViewschedule(true)
+        setOpen(true)
+
+    }, [newschedule]);
 
     const onBeforeCreateSchedule = useCallback(e => {
+        setNewschedule({
+            ...newschedule,
+            ...e
+        })
         setOpen(true)
-        console.log(e)
-    }, [])
+        e.guide.clearGuideElement();
+    }, [newschedule])
 
     const onBeforeDeleteSchedule = useCallback(res => {
         console.log(res);
-
     }, []);
 
     const onBeforeUpdateSchedule = useCallback(e => {
@@ -128,19 +167,20 @@ const Notification = ({ mode }) => {
                         </Grid>
                         <Calendar
                             {...isteacher}
+                            schedules={schedulelist}
                             ref={calendarRef}
                             onClickSchedule={onClickSchedule}
                             onBeforeCreateSchedule={onBeforeCreateSchedule}
                             onBeforeDeleteSchedule={onBeforeDeleteSchedule}
                             onBeforeUpdateSchedule={onBeforeUpdateSchedule}
                         />
-                        <FormDialog open={open} setcreateSchedule={calendarInst} setOpen={setOpen} schedule={newschedule} setSchedule={setNewschedule} />
+                        <FormDialog viewschedule={viewschedule} open={open} setcreateSchedule={calendarInst} setOpen={setOpen} schedule={newschedule} setSchedule={setNewschedule} />
                     </Paper>
                 </Grid>
                 <Grid item xs={12} sm={12} md={4}>
                     <Paper className={classes.paper} >
                         <Grid container justify='center' alignItems='center'>
-                            <NoticeInfoTable />
+                            <NoticeInfoTable mode={mode} userInfo={userInfo} />
                         </Grid>
                     </Paper>
                 </Grid>

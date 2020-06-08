@@ -1,60 +1,54 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import FileUpload from './FileUpload'
 import ScoreTable from './ScoreTable'
+import getCookieValue from '../../getCookie'
 import { Paper, Grid, Select, MenuItem } from '@material-ui/core';
 import useStyles from './HomeworkContentCSS'
+import axios from 'axios'
 
 const HomeworkContent = ({ mode }) => {
     const classes = useStyles();
-    const [homework, setHomework] = React.useState('');
+    const [homeworkIdx, setHomeworkIdx] = useState('')
+    const [homeworklist, setHomeworklist] = useState([])
+
+    useEffect(() => {
+        const config = { headers: { 'Authorization': getCookieValue('token') } }
+        axios.get('http://k02c1101.p.ssafy.io:9090/api/board/homeworks', config)
+            .then(res => {
+                setHomeworklist(res.data.HomeworkNoticeList)
+                setHomeworkIdx(res.data.HomeworkNoticeList[0].homeworkNotice_idx)
+            })
+            .catch(e => { console.log(e) })
+
+    }, [])
 
     const handleChange = (event) => {
-        setHomework(event.target.value);
+        setHomeworkIdx(event.target.value);
     };
-
-    const homeworkapp = [
-        {
-            homeworkidx: 1,
-            homeworktitle: "숙제 : 구몬 1회 풀기"
-        },
-        {
-            homeworkidx: 2,
-            homeworktitle: "숙제 : 수학익힘책 다 풀기"
-        },
-        {
-            homeworkidx: 3,
-            homeworktitle: "숙제 : 그냥 풀어라"
-        },
-    ]
-
-    const homeworklist = homeworkapp.map((val) => {
-        return (
-            <MenuItem key={val.homeworkidx} value={val.homeworkidx}>{val.homeworktitle}</MenuItem>
-        )
-    })
 
     return (
         <>
             <Paper className={classes.paperFileUpload}>
-                <Grid container>
+                <Grid container alignItems="center">
                     <Grid item xs={6}>
                         <Select
+                            fullWidth
                             labelId="demo-simple-select-label"
                             id="demo-simple-select"
-                            value={homework}
+                            value={homeworkIdx}
                             onChange={handleChange}
-                            autoWidth
                         >
-                            {homeworklist}
+                            {homeworklist.map(val => <MenuItem
+                                key={val.homeworkNotice_idx} value={val.homeworkNotice_idx}
+                            >{val.homeworkNotice_title}</MenuItem>)}
                         </Select>
                     </Grid>
                     <Grid item xs={6}>
-                        <FileUpload />
-
+                        <FileUpload homeworkIdx={homeworkIdx} />
                     </Grid>
                 </Grid>
             </Paper>
-            <ScoreTable mode={mode} />
+            <ScoreTable mode={mode} homeworkIdx={homeworkIdx} />
         </>
     )
 }

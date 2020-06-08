@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Avatar, Button } from '@material-ui/core';
 import CssBaseline from '@material-ui/core/CssBaseline';
-import { TextField, FormControlLabel, Checkbox, Link } from '@material-ui/core';
+import { TextField, Link } from '@material-ui/core';
 import Paper from '@material-ui/core/Paper';
 import Box from '@material-ui/core/Box';
 import Grid from '@material-ui/core/Grid';
@@ -9,22 +9,21 @@ import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import useStyles from './LoginCSS'
 import axios from 'axios'
-import sha256 from 'crypto-js/sha256';
+import sha256 from './encryptSHA256';
 import { Redirect } from "react-router-dom";
-
 
 function Copyright() {
   return (
     <Typography variant="body2" color="textSecondary" align="center">
       {'© '}
       <Link color="inherit" href="">
-        홈런(Home-Learn)~!!
+        홈런(Home-Learn)
       </Link>{' '}
     </Typography>
   );
 }
 
-const Login = ({ setMode, hasCookie, setHasCookie }) => {
+const Login = ({ setMode, setCookie, hasCookie, setHasCookie, setUserInfo }) => {
   const classes = useStyles();
   const [loginInfo, setLoginInfo] = useState({
     username: "",
@@ -40,14 +39,14 @@ const Login = ({ setMode, hasCookie, setHasCookie }) => {
     })
   };
 
-  const loginApi = (user) => {
+  const loginApi = async (user) => {
     const pushuser = {
-      username: user.username,
-      password: sha256(user.password)
+      email: String(user.username),
+      password: sha256(String(user.password))
     }
-    return axios.post("http://k02c1101.p.ssafy.io:9090/api/auth/login", pushuser)
+
+    return await axios.post("http://k02c1101.p.ssafy.io:9090/api/auth/login", pushuser)
       .then((res) => {
-        console.log(res)
         return res
       })
       .catch((error) => { console.log(error) })
@@ -60,12 +59,16 @@ const Login = ({ setMode, hasCookie, setHasCookie }) => {
     }
     try {
       const response = await loginApi(loginInfo);
-      console.log(response)
       if (response.status === 200) {
-        setMode(1)
+        setCookie('memberIdx', response.data.memberIdx)
+        setCookie('token', response.data.token)
         setHasCookie(true);
+        setUserInfo(response.data)
+        setMode(parseInt(response.data.isteacher))
+        // setMode(1)
       } else {
-        throw new Error(response.error);
+        console.log(response.error)
+        // throw new Error(response.error);
       }
     } catch (err) {
       setLoginInfo({
@@ -79,73 +82,68 @@ const Login = ({ setMode, hasCookie, setHasCookie }) => {
 
   return (
     <>
-      {hasCookie && (<Redirect to="/main" mode={0} />)}
-      <Grid container component="main" className={classes.root}>
-        <CssBaseline />
-        <Grid item xs={false} sm={4} md={7} className={classes.image} />
-        <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square>
-          <div className={classes.paper}>
-            <Avatar className={classes.avatar}>
-              <LockOutlinedIcon />
-            </Avatar>
-            <Typography component="h1" variant="h5">
-              로 그 인
+      {
+        hasCookie ? <Redirect to='/main' /> :
+          <Grid container component="main" className={classes.root}>
+            <CssBaseline />
+            <Grid item xs={false} sm={4} md={7} className={classes.image} />
+            <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square>
+              <div className={classes.paper}>
+                <Avatar className={classes.avatar}>
+                  <LockOutlinedIcon />
+                </Avatar>
+                <Typography component="h1" variant="h5">
+                  로 그 인
           </Typography>
-            <form className={classes.form} onSubmit={handleSubmit} method="POST">
-              <TextField
-                variant="outlined"
-                margin="normal"
-                required
-                fullWidth
-                id="email"
-                label="Email Address"
-                name="username"
-                autoComplete="email"
-                autoFocus
-                onChange={handleChange}
-              />
-              <TextField
-                variant="outlined"
-                margin="normal"
-                required
-                fullWidth
-                name="password"
-                label="Password"
-                type="password"
-                id="password"
-                autoComplete="current-password"
-                onChange={handleChange}
-              />
-              <FormControlLabel
-                control={<Checkbox value="remember" color="primary" />}
-                label="회원정보 기억하기"
-              />
-
-              <Button
-                type="submit"
-                fullWidth
-                variant="contained"
-                color="primary"
-                className={classes.submit}
-              >
-                로그인
+                <form className={classes.form} onSubmit={handleSubmit} method="POST">
+                  <TextField
+                    variant="outlined"
+                    margin="normal"
+                    required
+                    fullWidth
+                    id="email"
+                    label="Email Address"
+                    name="username"
+                    autoComplete="email"
+                    autoFocus
+                    onChange={handleChange}
+                  />
+                  <TextField
+                    variant="outlined"
+                    margin="normal"
+                    required
+                    fullWidth
+                    name="password"
+                    label="Password"
+                    type="password"
+                    id="password"
+                    autoComplete="current-password"
+                    onChange={handleChange}
+                  />
+                  <Button
+                    type="submit"
+                    fullWidth
+                    variant="contained"
+                    color="primary"
+                    className={classes.submit}
+                  >
+                    로그인
             </Button>
-              <Grid container>
-                <Grid item>
-                  <Link href="/register" variant="body2">
-                    {"아직회원이 아니세요??"}
-                  </Link>
-                </Grid>
-              </Grid>
-              <Box mt={5}>
-                <Copyright />
-              </Box>
-            </form>
-          </div>
-        </Grid>
-      </Grid>
-  )
-}
+                  <Grid container>
+                    <Grid item>
+                      <Link href="/register" variant="body2">
+                        {"아직회원이 아니세요??"}
+                      </Link>
+                    </Grid>
+                  </Grid>
+                  <Box mt={5}>
+                    <Copyright />
+                  </Box>
+                </form>
+              </div>
+            </Grid>
+          </Grid>
+      }
     </>
   );
 }
