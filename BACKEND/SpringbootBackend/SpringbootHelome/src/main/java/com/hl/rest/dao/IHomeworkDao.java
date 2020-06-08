@@ -16,4 +16,5 @@ public interface IHomeworkDao {
 	public int getWhoseHomeworkNotice(String homeworkNoticeIdx);
 	public void updateHomeworkNotice(HomeworkNotice homeworknotice);
 	public void deleteHomeworkNotice(String homeworkNoticeIdx);
+	public int getWhoseHomework(String homeworkIdx);
 }

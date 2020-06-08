@@ -47,5 +47,9 @@
 		delete from homeworkNoticetb
 		where HomeworkNotice_idx=#{homeworkNoticeIdx}
 	</delete>
+	<select id="getWhoseHomework" resultType="int" parameterType="String">
+		select Homework_memberIdx from homeworktb 
+		where Homework_idx=#{homeworkIdx};
+	</select>
 </mapper>
  
