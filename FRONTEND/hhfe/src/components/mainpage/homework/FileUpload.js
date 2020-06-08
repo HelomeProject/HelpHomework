@@ -9,7 +9,7 @@ import getCookieValue from '../../getCookie'
 axios.defaults.xsrfCookieName = 'csrftoken';
 axios.defaults.xsrfHeaderName = 'X-CSRFTOKEN';
 
-const FileUpload = ({ homeworkIdx }) => {
+const FileUpload = ({ mode, homeworkIdx, setRows, setRowsteacher, rows, rowsteacher }) => {
     const [img, setImage] = useState(null);
     const [imgname, setImgname] = useState("")
 
@@ -25,6 +25,14 @@ const FileUpload = ({ homeworkIdx }) => {
     const uploadData = (data, config) => {
         axios.post("http://k02c1101.p.ssafy.io:9090/api/homework", data, config)
             .then(res => {
+                if (mode === 1) {
+                    const newRow = rowsteacher.concat([res.data.Homework])
+                    setRowsteacher(newRow)
+                } else {
+                    const newRow = rows.concat([res.data.Homework])
+                    setRows(newRow)
+                }
+
             })
             .catch(e => { console.log(e) })
     }
@@ -54,7 +62,6 @@ const FileUpload = ({ homeworkIdx }) => {
                 }
             })
             .then(data => {
-                console.log(data)
                 uploadData(data, config)
             })
             .catch(err => {

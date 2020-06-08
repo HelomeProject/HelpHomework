@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from '@material-ui/core';
 
 import useStyles from './ScoreTableCSS'
@@ -6,8 +6,7 @@ import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
 import CropOriginalIcon from '@material-ui/icons/CropOriginal';
 import IconButton from '@material-ui/core/IconButton';
-import axios from 'axios'
-import getCookieValue from '../../getCookie'
+
 
 const Viewtable = ({ rows, seturl, mode, rowsteacher }) => {
     const fronturl = 'http://k02c1101.p.ssafy.io:8000'
@@ -63,7 +62,7 @@ const Viewtable = ({ rows, seturl, mode, rowsteacher }) => {
                                     <TableCell component="th" scope="row">
                                         {idx + 1}
                                     </TableCell>
-                                    <TableCell align="right">{val.homework_submitDate}</TableCell>
+                                    <TableCell align="right">{val.homework_memberIdx}</TableCell>
                                     <TableCell align="right">{val.homework_score}</TableCell>
                                     <TableCell align="right"  >
                                         <IconButton onClick={() => { seturl(fronturl + val.homework_url) }}> <CropOriginalIcon /> </IconButton>
@@ -80,59 +79,60 @@ const Viewtable = ({ rows, seturl, mode, rowsteacher }) => {
 
 }
 
-const ScoreTable = ({ mode, homeworkIdx }) => {
+const ScoreTable = ({ mode, rows, rowsteacher, seturl, url }) => {
     const classes = useStyles();
     const tableheadname = [
         ['No.', '숙제 제출일', '점수', '이미지'],
-        ['No.', '이름', '점수', '파일']
+        ['No.', '학생 번호', '점수', '파일']
     ]
-    const [rows, setRows] = useState([])
-    const [rowsteacher, setRowsteacher] = useState([])
-    const [url, seturl] = useState('')
+    // const [rows, setRows] = useState([])
+    // const [rowsteacher, setRowsteacher] = useState([])
+    // const [url, seturl] = useState('')
 
 
 
 
-    useEffect(() => {
-        const fronturl = 'http://k02c1101.p.ssafy.io:8000'
-        const config = {
-            headers: { 'Authorization': getCookieValue('token') },
-        }
-        if (mode === 0) {
-            axios.get("http://k02c1101.p.ssafy.io:9090/api/homeworks", config)
-                .then(res => {
-                    if (res.data !== "") {
-                        setRows(res.data.HomeworkList)
-                        return (res.data.HomeworkList)
-                    }
-                    else
-                        return null
+    // useEffect(() => {
+    //     const fronturl = 'http://k02c1101.p.ssafy.io:8000'
+    //     const config = {
+    //         headers: { 'Authorization': getCookieValue('token') },
+    //     }
+    //     if (mode === 0) {
+    //         axios.get("http://k02c1101.p.ssafy.io:9090/api/homeworks", config)
+    //             .then(res => {
+    //                 if (res.data !== "") {
+    //                     setRows(res.data.HomeworkList)
+    //                     return (res.data.HomeworkList)
+    //                 }
+    //                 else
+    //                     return null
 
-                })
-                .then(data => {
-                    if (data !== null) { seturl(fronturl + data[0].homework_url) }
+    //             })
+    //             .then(data => {
+    //                 if (data !== null) { seturl(fronturl + data[0].homework_url) }
 
-                })
-                .catch((err) => { console.log(err) })
-        } else {
-            axios.get("http://k02c1101.p.ssafy.io:9090/api/homeworks/" + String(homeworkIdx), config)
-                .then(res => {
-                    if (res.data !== "") {
-                        setRowsteacher(res.data.HomeworkList)
-                        return (res.data.HomeworkList)
-                    }
-                    else
-                        return null
+    //             })
+    //             .catch((err) => { console.log(err) })
+    //     } else {
+    //         axios.get("http://k02c1101.p.ssafy.io:9090/api/homeworks/" + String(homeworkIdx), config)
+    //             .then(res => {
+    //                 if (res.data !== "") {
+    //                     console.log(res.data.HomeworkListList)
+    //                     setRowsteacher(res.data.HomeworkList)
+    //                     return (res.data.HomeworkList)
+    //                 }
+    //                 else
+    //                     return null
 
-                })
-                .then(data => {
-                    if (data !== null) { seturl(fronturl + data[0].homework_url) }
+    //             })
+    //             .then(data => {
+    //                 if (data !== null) { seturl(fronturl + data[0].homework_url) }
 
-                })
-                .catch((err) => { console.log(err) })
+    //             })
+    //             .catch((err) => { console.log(err) })
 
-        }
-    }, [mode, homeworkIdx])
+    //     }
+    // }, [mode, homeworkIdx])
 
 
 
