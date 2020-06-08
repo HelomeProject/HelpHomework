@@ -73,26 +73,32 @@ const HomeworkContent = ({ mode }) => {
 
     return (
         <>
-            <Paper className={classes.paperFileUpload}>
-                <Grid container alignItems="center">
-                    <Grid item xs={6}>
-                        <Select
-                            fullWidth
-                            labelId="demo-simple-select-label"
-                            id="demo-simple-select"
-                            value={homeworkIdx}
-                            onChange={handleChange}
-                        >
-                            {homeworklist.map(val => <MenuItem
-                                key={val.homeworkNotice_idx} value={val.homeworkNotice_idx}
-                            >{val.homeworkNotice_title}</MenuItem>)}
-                        </Select>
+
+            {mode === 1 ? <></> :
+                <Paper className={classes.paperFileUpload}>
+                    <Grid container alignItems="center">
+
+                        <Grid item xs={6}>
+                            <Select
+                                fullWidth
+                                labelId="demo-simple-select-label"
+                                id="demo-simple-select"
+                                value={homeworkIdx}
+                                onChange={handleChange}
+                            >
+                                {homeworklist.map(val => <MenuItem
+                                    key={val.homeworkNotice_idx} value={val.homeworkNotice_idx}
+                                >{val.homeworkNotice_title}</MenuItem>)}
+                            </Select>
+                        </Grid>
+                        <Grid item xs={6}>
+                            <FileUpload mode={mode} homeworkIdx={homeworkIdx} rows={rows} setRows={setRows} rowsteacher={rowsteacher} setRowsteacher={setRowsteacher} />
+                        </Grid>
                     </Grid>
-                    <Grid item xs={6}>
-                        <FileUpload mode={mode} homeworkIdx={homeworkIdx} rows={rows} setRows={setRows} rowsteacher={rowsteacher} setRowsteacher={setRowsteacher} />
-                    </Grid>
-                </Grid>
-            </Paper>
+                </Paper>
+            }
+
+
             <ScoreTable mode={mode} homeworkIdx={homeworkIdx} rows={rows} rowsteacher={rowsteacher} url={url} seturl={seturl} />
         </>
     )
