@@ -1,8 +1,9 @@
 from tensorflow.keras.models import load_model
 from tensorflow.keras.preprocessing import image
+import tensorflow as tf
+
 import pickle
 import numpy as np
-import tensorflow as tf
 from PIL import Image
 import matplotlib.pyplot as plt
 import cv2
@@ -58,7 +59,6 @@ def sort_rects(rects):
             mid_points.append(arr[0])
             arrs.append(arr)
             arr = []
-        
         arr.append((x,y,w,h))
     arr.sort()
     mid_points.append(arr[0])
@@ -82,16 +82,15 @@ def load_and_test(image_path, classes):
     img_blur = cv2.GaussianBlur(img_gray, (5, 5), 0)
 
     img_th = cv2.adaptiveThreshold(img_blur, 255, cv2.ADAPTIVE_THRESH_GAUSSIAN_C, cv2.THRESH_BINARY_INV, 5, 2)
-    images, contours, hierachy= cv2.findContours(img_th.copy(), cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE) # 오류 생기면 images를 지우세요
+    images, contours, hierachy= cv2.findContours(img_th.copy(), cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
 
     rects = [cv2.boundingRect(each) for each in contours]
     rects_ = [(x,y,w,h) for (x,y,w,h) in rects if (w*h>29)]
     rects = sorted(rects_, key=lambda x:x[1])
     
-    # 정렬 ㅡㅡ...;; 후.
     RECTS, mid_points = sort_rects(rects)
 
-    # 인식 네모 보기
+    # Show contours
     # for rect in rects_:
     #     cv2.rectangle(img, (rect[0] - 3, rect[1] - 3), (rect[0] + rect[2] + 4, rect[1] + rect[3] + 4), (0, 255, 0), 2)
     # plt.imshow(img)
@@ -114,17 +113,18 @@ def load_and_test(image_path, classes):
             img_arr = img_arr.astype('float32') / 255
 
             img_arr = nomalization(img_arr)
-            # 인식되는 한 숫자 보기
+
+            ## Show a one number recongnition 
             # ii = image.array_to_img(img_arr)
             # plt.imshow(ii)
             # plt.show()
+
             predict_nums, predict_res, jud = pre(new_model, img_arr, jud, predict_nums, predict_res, classes)
 
         predict_nums = predict_nums[:-2]
         if predict_nums[0] == ')':
             predict_nums = predict_nums[1:]
         
-        print(predict_nums)
         cal = calculate(predict_nums)
         res_predict.append([predict_res, cal])
         
@@ -207,18 +207,17 @@ def ox(res_predict, mid_points, testimage):
     return point
 
 
-# classes 정의
+# Define classes
 classes = define_classes()
 
-# 저장된 학습 파일열기
+# Load saved train file
 new_model = load_model('train_14.hdf5')
 
-# 경로 설정 및 이미지 변환
+# Input file path and image convert
 testimage = input("파일명 입력(XX.jpg): ")
 
-# 예측
+# Predict
 res_predict, mid_points = load_and_test(testimage, classes)
 
-# 점수
+# Right or wrong marking and scoring
 point = ox(res_predict, mid_points, testimage)
-print("제 점수는요 {}점 ㅎ".format(point))
