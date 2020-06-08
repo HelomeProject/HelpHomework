@@ -19,8 +19,9 @@ function Copyright() {
     <Typography variant="body2" color="textSecondary" align="center">
       {'© '}
       <Link color="inherit" href="https://material-ui.com/">
-        홈런(Home-Learn)~!!
+        홈런(Home-Learn) : Team HomeStay
       </Link>{' '}
+      <Typography color="inherit">고태환 | 김하은 | 남선웅 | 최동호</Typography>
     </Typography>
   );
 }
@@ -66,7 +67,6 @@ const Register = () => {
     const url = "http://k02c1101.p.ssafy.io:9090/api/member/user"
     return axios.post(url, user)
       .then((res) => {
-        console.log(res)
         return res
       })
       .catch((error) => { console.log(error) })

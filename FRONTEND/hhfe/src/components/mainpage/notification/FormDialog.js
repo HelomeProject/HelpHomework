@@ -13,7 +13,6 @@ const FormDialog = ({ open, setOpen, schedule, setSchedule, setcreateSchedule, v
         return axios.post('http://k02c1101.p.ssafy.io:9090/api/board/homework', data, config)
             .then(res => {
                 setOpen(false)
-                console.log(res)
             })
             .catch(e => { console.log(e) })
 
@@ -28,7 +27,6 @@ const FormDialog = ({ open, setOpen, schedule, setSchedule, setcreateSchedule, v
             "homeworkNotice_startDate": String(getFormatDate(schedule.start.toDate())),
             "homeworkNotice_title": String(schedule.title),
         }
-        console.log(uploadschedule)
 
         const config = {
             headers: { 'Authorization': getCookieValue('token') },

@@ -17,8 +17,10 @@ function Copyright() {
     <Typography variant="body2" color="textSecondary" align="center">
       {'© '}
       <Link color="inherit" href="">
-        홈런(Home-Learn)
+        홈런(Home-Learn) : Team HomeStay
+
       </Link>{' '}
+      <Typography color="inherit">고태환 | 김하은 | 남선웅 | 최동호</Typography>
     </Typography>
   );
 }

@@ -50,7 +50,6 @@ const HomeworkContent = ({ mode }) => {
             axios.get("http://k02c1101.p.ssafy.io:9090/api/homeworks/" + String(homeworkIdx), config)
                 .then(res => {
                     if (res.data !== "") {
-                        console.log(res.data)
                         setRowsteacher(res.data.HomeworkList)
                         return (res.data.HomeworkList)
                     }
