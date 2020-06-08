@@ -82,9 +82,6 @@ def load_and_test(image_path, classes):
     img_blur = cv2.GaussianBlur(img_gray, (5, 5), 0)
 
     img_th = cv2.adaptiveThreshold(img_blur, 255, cv2.ADAPTIVE_THRESH_GAUSSIAN_C, cv2.THRESH_BINARY_INV, 5, 2)
-    # cv2.imshow('abc',img_th)
-    # cv2.waitKey(0)
-    # cv2.destroyAllWindows()
     images, contours, hierachy= cv2.findContours(img_th.copy(), cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE) # 오류 생기면 images를 지우세요
 
     rects = [cv2.boundingRect(each) for each in contours]
@@ -221,7 +218,7 @@ testimage = input("파일명 입력(XX.jpg): ")
 
 # 예측
 res_predict, mid_points = load_and_test(testimage, classes)
-print('res: ', res_predict)
+
 # 점수
 point = ox(res_predict, mid_points, testimage)
 print("제 점수는요 {}점 ㅎ".format(point))
