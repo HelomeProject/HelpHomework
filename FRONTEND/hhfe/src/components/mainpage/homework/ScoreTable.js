@@ -8,7 +8,7 @@ import CropOriginalIcon from '@material-ui/icons/CropOriginal';
 import IconButton from '@material-ui/core/IconButton';
 
 
-const Viewtable = ({ rows, seturl, mode, rowsteacher }) => {
+const Viewtable = ({ url, rows, seturl, mode, rowsteacher }) => {
     const fronturl = 'http://k02c1101.p.ssafy.io:8000'
     if (mode === 0) {
         return (
@@ -33,7 +33,10 @@ const Viewtable = ({ rows, seturl, mode, rowsteacher }) => {
                                     <TableCell align="right">{val.homework_submitDate}</TableCell>
                                     <TableCell align="right">{val.homework_score}</TableCell>
                                     <TableCell align="right"  >
-                                        <IconButton onClick={() => { seturl(fronturl + val.homework_url) }}> <CropOriginalIcon /> </IconButton>
+                                        <IconButton onClick={() => {
+                                            console.log(url)
+                                            seturl(fronturl + val.homework_url)
+                                        }}> <CropOriginalIcon /> </IconButton>
                                     </TableCell>
                                 </TableRow>
                             ))}
@@ -65,7 +68,10 @@ const Viewtable = ({ rows, seturl, mode, rowsteacher }) => {
                                     <TableCell align="right">{val.homework_memberIdx}</TableCell>
                                     <TableCell align="right">{val.homework_score}</TableCell>
                                     <TableCell align="right"  >
-                                        <IconButton onClick={() => { seturl(fronturl + val.homework_url) }}> <CropOriginalIcon /> </IconButton>
+                                        <IconButton onClick={() => {
+                                            console.log(url)
+                                            seturl(fronturl + val.homework_url)
+                                        }}> <CropOriginalIcon /> </IconButton>
                                     </TableCell>
                                 </TableRow>
                             ))}
@@ -86,6 +92,8 @@ const ScoreTable = ({ mode, rows, rowsteacher, seturl, url }) => {
         ['No.', '학생 번호', '점수', '파일']
     ]
 
+
+    console.log(url)
     return (
         <Grid container spacing={3}>
             <Grid item xs={12} sm={12} md={6}>
@@ -101,7 +109,7 @@ const ScoreTable = ({ mode, rows, rowsteacher, seturl, url }) => {
                                 </TableRow>
                             </TableHead>
                             <TableBody>
-                                <Viewtable rows={rows} seturl={seturl} rowsteacher={rowsteacher} mode={mode} />
+                                <Viewtable url={url} rows={rows} seturl={seturl} rowsteacher={rowsteacher} mode={mode} />
                             </TableBody>
                         </Table>
                     </TableContainer>
@@ -109,7 +117,7 @@ const ScoreTable = ({ mode, rows, rowsteacher, seturl, url }) => {
             </Grid>
             <Grid item xs={12} sm={12} md={6}>
                 <Paper className={classes.paper}>
-                    <img className={classes.img} src={url} alt="사진이 없습니다." />
+                    <img className={classes.img} src={url} alt="noimg" />
                 </Paper>
             </Grid>
         </Grid >

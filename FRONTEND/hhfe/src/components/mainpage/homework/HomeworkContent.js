@@ -92,7 +92,7 @@ const HomeworkContent = ({ mode }) => {
                             </Select>
                         </Grid>
                         <Grid item xs={6}>
-                            <FileUpload mode={mode} homeworkIdx={homeworkIdx} rows={rows} setRows={setRows} rowsteacher={rowsteacher} setRowsteacher={setRowsteacher} />
+                            <FileUpload seturl={seturl} mode={mode} homeworkIdx={homeworkIdx} rows={rows} setRows={setRows} rowsteacher={rowsteacher} setRowsteacher={setRowsteacher} />
                         </Grid>
                     </Grid>
                 </Paper>
