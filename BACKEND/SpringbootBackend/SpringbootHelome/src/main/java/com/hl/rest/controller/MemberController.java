@@ -11,10 +11,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -31,14 +31,14 @@ import io.swagger.annotations.ApiOperation;
 
 @CrossOrigin
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/api/member")
 public class MemberController {
 	
 	@Autowired
 	private IMemService ser;
 	
 	/** 회원가입 */
-	@PostMapping("/member/user")
+	@PostMapping("/user")
 	@ApiOperation(value = "회원가입 ")
 	public ResponseEntity<Map<String, Object>> CreateMember(@RequestBody @Valid Member mem) {
 		ResponseEntity<Map<String, Object>> res = null;
@@ -64,7 +64,7 @@ public class MemberController {
 	}
 	
 	/** 회원조회(list) */
-	@GetMapping("/member/users")
+	@GetMapping("/users")
 	@ApiOperation(value = "멤버 정보 전체 조회", response = List.class)
 	public @ResponseBody ResponseEntity<Map<String, Object>> listMem(
 			@RequestHeader(value = "Authorization") @Valid String token,
@@ -108,7 +108,7 @@ public class MemberController {
 	}
 	
 	/** 회원조회(self) */
-	@GetMapping("/member/users/{memberIdx}")
+	@GetMapping("/users/{memberIdx}")
 	@ApiOperation(value = "멤버 정보 조회", response = List.class)
 	public @ResponseBody ResponseEntity<Map<String, Object>> listMem(
 			@RequestHeader(value = "Authorization") @Valid String token,
@@ -139,7 +139,32 @@ public class MemberController {
 		return res;
 	}
 	
-	/** 회원수정(self) */
+	/** 회원수정 */
+	@PutMapping("/users/{memberIdx}")
+	@ApiOperation(value = "멤버정보 수정", response = List.class)
+	public @ResponseBody ResponseEntity<Map<String, Object>> UpdateMember(
+			@RequestHeader(value = "Authorization") @Valid String token,
+			@PathVariable("memberIdx") String memberIdx,
+			@RequestBody Member member) {
+		ResponseEntity<Map<String, Object>> res = null;
+		Map<String, Object> msg = new HashMap<String, Object>();
+		try {
+			member.setMemberIdx(memberIdx);
+			ser.updateMember(member);
+			msg.put("Member", member);
+			res = new ResponseEntity<Map<String, Object>>(msg, HttpStatus.OK);
+		} catch(Exception e) {
+			Object[] input = {token, member, memberIdx};
+			msg.put("Input Data", input);
+			msg.put("SAY", "Error msg를 참고하여 Input Data을 다시 한 번 확인해보세요.");
+			msg.put("Error msg", e.getMessage());
+			res = new ResponseEntity<Map<String, Object>>(msg, HttpStatus.BAD_REQUEST);
+			System.out.println(e.getMessage());
+		}
+		return res;
+	}
+	
+	
 	/** 회원탈퇴 */
 	
 }

@@ -11,5 +11,5 @@ public interface IMemDao {
 	public Member getMem(int memberIdx);
 	public int getMemListSize();
 	public List<Member> getMemStudentList(int startlist, int listsize, String grade, String classnum);
-	
+	public void updateMember(Member member);
 }

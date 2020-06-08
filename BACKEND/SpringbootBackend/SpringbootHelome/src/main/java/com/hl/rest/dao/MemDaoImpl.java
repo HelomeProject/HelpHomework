@@ -54,4 +54,9 @@ public class MemDaoImpl implements IMemDao {
 		return session.selectOne("member.getMemberIdx", memberIdx);
 	}
 
+	@Override
+	public void updateMember(Member member) {
+		session.update("member.updateMember", member);
+	}
+
 }

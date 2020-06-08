@@ -27,6 +27,10 @@
 		where grade = #{grade} and classnum=#{classnum} and isteacher=0
 		limit #{startlist}, #{listisze}
 	</select>
-	
+	<update id="updateMember" parameterType="member">
+		update membertb set
+		username=#{username}, password=#{password}, isteacher=#{isteacher}, school=#{school}, grade=#{grade}, classnum=#{classnum}
+		where idx=#{memberIdx};
+	</update>
 </mapper>
  

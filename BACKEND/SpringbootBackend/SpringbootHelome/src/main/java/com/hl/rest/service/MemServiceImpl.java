@@ -38,5 +38,10 @@ public class MemServiceImpl implements IMemService {
 	public Member getMem(int memberIdx) {
 		return repo.getMem(memberIdx);
 	}
+
+	@Override
+	public void updateMember(Member member) {
+		repo.updateMember(member);
+	}
 	
 }
