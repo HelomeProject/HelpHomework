@@ -11,4 +11,5 @@ public interface IBoardDao {
 	public void createNotice(Notice notice);
 	public List<Notice> getNoticeList();
 	public int getNoticeListSize();
+	public void deleteNotice(int noticeIdx);
 }

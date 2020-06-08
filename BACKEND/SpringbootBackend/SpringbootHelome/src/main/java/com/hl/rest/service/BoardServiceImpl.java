@@ -35,4 +35,9 @@ public class BoardServiceImpl implements IBoardService {
 		return repo.getNoticeListSize();
 	}
 
+	@Override
+	public void deleteNotice(int noticeIdx) {
+		repo.deleteNotice(noticeIdx);
+	}
+
 }

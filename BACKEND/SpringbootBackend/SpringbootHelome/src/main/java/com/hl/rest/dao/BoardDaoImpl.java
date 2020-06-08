@@ -35,6 +35,9 @@ public class BoardDaoImpl implements IBoardDao {
 	public int getNoticeListSize() {
 		return session.selectOne("board.getNoticeListSize");
 	}
-	
-	
+
+	@Override
+	public void deleteNotice(int noticeIdx) {
+		session.delete("board.deleteNotice", noticeIdx);
+	}
 }
