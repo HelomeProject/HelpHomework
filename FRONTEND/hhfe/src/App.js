@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Route, Redirect, Switch } from "react-router-dom";
+import { Route, Switch } from "react-router-dom";
 import { withCookies, useCookies } from 'react-cookie';
 import axios from 'axios'
 
@@ -18,16 +18,16 @@ const App = () => {
   useEffect(() => {
     const reloaduser = (idx, config) => {
       axios.get('http://k02c1101.p.ssafy.io:9090/api/member/users/' + idx, config)
-      .then((res) => {
-        setUserInfo(res.data.Member)
-        setMode(parseInt(res.data.Member.isteacher))
-      })
-      .catch((e) => console.log(e))
+        .then((res) => {
+          setUserInfo(res.data.Member)
+          setMode(parseInt(res.data.Member.isteacher))
+        })
+        .catch((e) => console.log(e))
     }
     if (cookies.token && cookies.token !== 'undefined') {
 
       const config = {
-        headers : {'Authorization':cookies.token},
+        headers: { 'Authorization': cookies.token },
       }
 
       reloaduser(cookies.memberIdx, config)
@@ -36,14 +36,14 @@ const App = () => {
   }, [cookies]);
 
   const logout = () => {
-    removeCookie('token', {path:'/', expires: 0});
-    removeCookie('memberIdx', {path:'/', expires: 0});
+    removeCookie('token', { path: '/', expires: 0 });
+    removeCookie('memberIdx', { path: '/', expires: 0 });
     setHasCookie(false);
   }
 
   return (
-    <>
-      {!hasCookie ? <Redirect to="/" /> : <Redirect to='/main' />}
+    <div>
+
       <Switch>
         <Route
           exact path="/"
@@ -60,15 +60,18 @@ const App = () => {
             );
           }}
         />
+
         <Route
           exact path="/register"
           component={Register}
         />
+
         <Route
           exact path="/main"
           render={() => {
             return (
               <MyAppBar
+                hasCookie={hasCookie}
                 mode={mode}
                 userInfo={userInfo}
                 setHasCookie={setHasCookie}
@@ -78,7 +81,7 @@ const App = () => {
           }}
         />
       </Switch>
-    </>
+    </div>
   );
 };
 
