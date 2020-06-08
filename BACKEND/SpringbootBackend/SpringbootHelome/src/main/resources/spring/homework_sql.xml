@@ -51,5 +51,9 @@
 		select Homework_memberIdx from homeworktb 
 		where Homework_idx=#{homeworkIdx};
 	</select>
+	<delete id="deleteHomework" parameterType="String">
+		delete from homeworktb
+		where Homework_idx=#{homeworkIdx}
+	</delete>
 </mapper>
  

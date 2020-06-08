@@ -73,5 +73,10 @@ public class HomeworkDaoImpl implements IHomeworkDao{
 	public int getWhoseHomework(String homeworkIdx) {
 		return session.selectOne("homework.getWhoseHomework", homeworkIdx);
 	}
+
+	@Override
+	public void deleteHomework(String homeworkIdx) {
+		session.delete("homework.deleteHomework", homeworkIdx);
+	}
 	
 }

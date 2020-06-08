@@ -69,5 +69,10 @@ public class HomeworkServiceImpl implements IHomeworkService{
 	public int getWhoseHomework(String homeworkIdx) {
 		return repo.getWhoseHomework(homeworkIdx);
 	}
+
+	@Override
+	public void deleteHomework(String homeworkIdx) {
+		repo.deleteHomework(homeworkIdx);
+	}
 	
 }

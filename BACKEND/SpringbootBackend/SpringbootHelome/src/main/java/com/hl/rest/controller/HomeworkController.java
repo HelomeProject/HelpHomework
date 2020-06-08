@@ -208,15 +208,13 @@ public class HomeworkController {
 			
 			//내 숙제만 삭제할 수 있음
 			if(member.getMemberIdx().equals(ser.getWhoseHomework(homeworkIdx)+"")) {
-				//ser.deleteHomework(homeworkIdx);
+				ser.deleteHomework(homeworkIdx);
 				msg.put("msg", "과제가 삭제됐습니다.");
 				res = new ResponseEntity<Map<String, Object>>(msg, HttpStatus.OK);
 			} else {
 				msg.put("error", "자신의 과제가 아니거나 권한이 없습니다.");
 				res = new ResponseEntity<Map<String, Object>>(msg, HttpStatus.FORBIDDEN);
 			}
-			
-			
 		} catch(Exception e) {
 			Object[] input = {token, homeworkIdx};
 			msg.put("Input Data", input);
