@@ -58,5 +58,25 @@ public class HomeworkDaoImpl implements IHomeworkDao{
 		map.put("memberIdx", memberIdx);
 		return session.selectList("homework.getHomeworkList_byIdx_memberIdx", map);
 	}
+
+	@Override
+	public void updateHomeworkNotice(HomeworkNotice homeworknotice) {
+		session.update("homework.updateHomeworkNotice", homeworknotice);
+	}
+
+	@Override
+	public void deleteHomeworkNotice(String homeworkNoticeIdx) {
+		session.delete("homework.deleteHomeworkNotice", homeworkNoticeIdx);
+	}
+
+	@Override
+	public int getWhoseHomework(String homeworkIdx) {
+		return session.selectOne("homework.getWhoseHomework", homeworkIdx);
+	}
+
+	@Override
+	public void deleteHomework(String homeworkIdx) {
+		session.delete("homework.deleteHomework", homeworkIdx);
+	}
 	
 }

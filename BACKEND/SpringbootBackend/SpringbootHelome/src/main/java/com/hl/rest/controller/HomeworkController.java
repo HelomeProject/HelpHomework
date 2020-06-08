@@ -13,10 +13,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -85,6 +87,72 @@ public class HomeworkController {
 		return res;
 	}
 	
+	/** 숙제공지 수정 */
+	@PutMapping("/board/homework/{homeworkNoticeIdx}")
+	@ApiOperation(value = "숙제공지 수정")
+	public ResponseEntity<Map<String, Object>> UpdateHomeworkNotice(
+			@RequestHeader(value = "Authorization") String token,
+			@PathVariable("homeworkNoticeIdx") String homeworkNoticeIdx,
+			@RequestBody HomeworkNotice homework_notice) {
+		ResponseEntity<Map<String, Object>> res = null;
+		Map<String, Object> msg = new HashMap<String, Object>();
+		try {
+			Claims de = AuthController.verification(token);
+			String email = (String) de.get("email");
+			Member member = memser.getMem(email);
+			
+			if(member.getMemberIdx().equals(ser.getWhoseHomeworkNotice(homeworkNoticeIdx)+"")) {
+				homework_notice.setHomeworkNotice_idx(homeworkNoticeIdx);
+				ser.updateHomeworkNotice(homework_notice);
+				msg.put("HomeworkNotice", homework_notice);
+				res = new ResponseEntity<Map<String, Object>>(msg, HttpStatus.OK);
+			} else {
+				msg.put("error", "숙제공지에 대한 담당자가 아니거나 학생은 수정에 대한 권한이 없습니다.");
+				res = new ResponseEntity<Map<String, Object>>(msg, HttpStatus.FORBIDDEN);
+			}	
+		}catch(Exception e) {
+			Object[] input = {token, homework_notice, homeworkNoticeIdx};
+			msg.put("Input Data", input);
+			msg.put("SAY", "Error msg를 참고하여 Input Data을 다시 한 번 확인해보세요.");
+			msg.put("Error msg", e.getMessage());
+			res = new ResponseEntity<Map<String, Object>>(msg, HttpStatus.BAD_REQUEST);
+			System.out.println(e.getMessage());
+		}
+		return res;
+	}
+	
+	/** 숙제공지 삭제 */
+	@DeleteMapping("/board/homework/{homeworkNoticeIdx}")
+	@ApiOperation(value = "숙제공지 삭제")
+	public ResponseEntity<Map<String, Object>> DeleteHomeworkNotice(
+			@RequestHeader(value = "Authorization") String token,
+			@PathVariable("homeworkNoticeIdx") String homeworkNoticeIdx) {
+		ResponseEntity<Map<String, Object>> res = null;
+		Map<String, Object> msg = new HashMap<String, Object>();
+		try {
+			Claims de = AuthController.verification(token);
+			String email = (String) de.get("email");
+			Member member = memser.getMem(email);
+			
+			if(member.getMemberIdx().equals(ser.getWhoseHomeworkNotice(homeworkNoticeIdx)+"")) {
+				ser.deleteHomeworkNotice(homeworkNoticeIdx);
+				msg.put("msg", "해당 숙제공지가 삭제됐습니다.");
+				res = new ResponseEntity<Map<String, Object>>(msg, HttpStatus.OK);
+			} else {
+				msg.put("error", "숙제공지에 대한 담당자가 아니거나 학생은 수정에 대한 권한이 없습니다.");
+				res = new ResponseEntity<Map<String, Object>>(msg, HttpStatus.FORBIDDEN);
+			}	
+		}catch(Exception e) {
+			Object[] input = {token, homeworkNoticeIdx};
+			msg.put("Input Data", input);
+			msg.put("SAY", "Error msg를 참고하여 Input Data을 다시 한 번 확인해보세요.");
+			msg.put("Error msg", e.getMessage());
+			res = new ResponseEntity<Map<String, Object>>(msg, HttpStatus.BAD_REQUEST);
+			System.out.println(e.getMessage());
+		}
+		return res;
+	}
+	
 	/** 숙제 제출 */
 	@PostMapping("/homework")
 	@ApiOperation(value = "숙제 제출")
@@ -106,17 +174,49 @@ public class HomeworkController {
 				df.setTimeZone(time);
 				String today = df.format(new Date());
 				homework.setHomework_submitDate(today);
-				homework.setHomework_score("");
 				
 				ser.CreateHomework(homework);
 				msg.put("Homework", homework);
 				res = new ResponseEntity<Map<String, Object>>(msg, HttpStatus.OK);
 			} else {
 				msg.put("error", "선생님은 제출할 수 없습니다.");
-				res = new ResponseEntity<Map<String, Object>>(msg, HttpStatus.UNAUTHORIZED);
+				res = new ResponseEntity<Map<String, Object>>(msg, HttpStatus.FORBIDDEN);
 			}
 		}catch(Exception e) {
 			Object[] input = {token, homework};
+			msg.put("Input Data", input);
+			msg.put("SAY", "Error msg를 참고하여 Input Data을 다시 한 번 확인해보세요.");
+			msg.put("Error msg", e.getMessage());
+			res = new ResponseEntity<Map<String, Object>>(msg, HttpStatus.BAD_REQUEST);
+			System.out.println(e.getMessage());
+		}
+		return res;
+	}
+	
+	/** 숙제제출 삭제 */
+	@DeleteMapping("/homework/{homeworkIdx}")
+	@ApiOperation(value = "숙제 제출 삭제")
+	public ResponseEntity<Map<String, Object>> DeleteHomework(
+			@RequestHeader(value = "Authorization") String token,
+			@PathVariable("homeworkIdx") String homeworkIdx) {
+		ResponseEntity<Map<String, Object>> res = null;
+		Map<String, Object> msg = new HashMap<String, Object>();
+		try {
+			Claims de = AuthController.verification(token);
+			String email = (String) de.get("email");
+			Member member = memser.getMem(email);
+			
+			//내 숙제만 삭제할 수 있음
+			if(member.getMemberIdx().equals(ser.getWhoseHomework(homeworkIdx)+"")) {
+				ser.deleteHomework(homeworkIdx);
+				msg.put("msg", "과제가 삭제됐습니다.");
+				res = new ResponseEntity<Map<String, Object>>(msg, HttpStatus.OK);
+			} else {
+				msg.put("error", "자신의 과제가 아니거나 권한이 없습니다.");
+				res = new ResponseEntity<Map<String, Object>>(msg, HttpStatus.FORBIDDEN);
+			}
+		} catch(Exception e) {
+			Object[] input = {token, homeworkIdx};
 			msg.put("Input Data", input);
 			msg.put("SAY", "Error msg를 참고하여 Input Data을 다시 한 번 확인해보세요.");
 			msg.put("Error msg", e.getMessage());

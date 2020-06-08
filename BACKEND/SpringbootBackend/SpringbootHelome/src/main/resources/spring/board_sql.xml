@@ -42,6 +42,9 @@
 	<select id="getNoticeListSize" resultType="int">
 		SELECT idx FROM noticetb ORDER BY idx DESC LIMIT 1;
 	</select>
-	
+	<delete id="deleteNotice" parameterType="int">
+		delete from noticetb
+		where idx=#{noticeIdx}
+	</delete>
 </mapper>
  

@@ -16,31 +16,6 @@ public class BoardServiceImpl implements IBoardService {
 	IBoardDao repo;
 
 	@Override
-	public void insertHomework(Homework_old homework) {
-		repo.insertHomework(homework);
-	}
-
-	@Override
-	public int getHomeListSize(String grade, String classnum) {
-		return repo.getHomeListSize(grade, classnum);
-	}
-
-	@Override
-	public List<Homework_old> getHomeworkList(int startlist, int listsize, String grade, String classnum) {
-		return repo.getHomeworkList(startlist, listsize, grade, classnum);
-	}
-
-	@Override
-	public int getHomeListSize(String memberIdx) {
-		return repo.getHomeListSize(memberIdx);
-	}
-
-	@Override
-	public List<Homework_old> getHomeworkList(int startlist, int listsize, String memberIdx) {
-		return repo.getHomeworkList(startlist, listsize, memberIdx);
-	}
-
-	@Override
 	public Notice getNotice(String noticeIdx) {
 		return repo.getNotice(noticeIdx);
 	}
@@ -58,6 +33,11 @@ public class BoardServiceImpl implements IBoardService {
 	@Override
 	public int getNoticeListSize() {
 		return repo.getNoticeListSize();
+	}
+
+	@Override
+	public void deleteNotice(int noticeIdx) {
+		repo.deleteNotice(noticeIdx);
 	}
 
 }

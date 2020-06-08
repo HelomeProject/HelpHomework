@@ -9,10 +9,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -62,7 +64,7 @@ public class BoardController {
 			if(isteacher.equals("1")) {
 				Member member = memser.getMem(email);
 				int curIdx = ser.getNoticeListSize()+1;
-				notice.setNoticeImgUrl("/home/noticeImg/"+member.getGrade()+"/"+member.getClassnum()+"/"+curIdx+".jpg");
+				notice.setNoticeImgUrl("/home/noticeImg/"+member.getGrade()+"_"+member.getClassnum()+"_"+notice.getNoticeTitle()+".jpg");
 				notice.setMemberIdx(member.getMemberIdx());
 				notice.setMemberGrade(member.getGrade());
 				notice.setMemberClassNum(member.getClassnum());
@@ -133,6 +135,39 @@ public class BoardController {
 			List<Notice> list = ser.getNoticeList();
 			msg.put("NoticeList", list);
 			res = new ResponseEntity<Map<String, Object>>(msg, HttpStatus.OK);
+		} catch(Exception e) {
+			msg.put("Input Data", token);
+			msg.put("SAY", "Error msg를 참고하여 Input Data을 다시 한 번 확인해보세요.");
+			msg.put("Error msg", e.getMessage());
+			res = new ResponseEntity<Map<String, Object>>(msg, HttpStatus.BAD_REQUEST);
+			System.out.println(e.getMessage());
+		}
+		return res;
+	}
+	
+	/** 공지 삭제 */
+	@DeleteMapping("/notice/{noticeIdx}")
+	@ApiOperation(value = "공지사항 삭제", response = List.class)
+	public @ResponseBody ResponseEntity<Map<String, Object>> DeleteNotice(
+			@RequestHeader(value = "Authorization") String token,
+			@PathVariable("noticeIdx") int noticeIdx) {
+		ResponseEntity<Map<String, Object>> res = null;
+		Map<String, Object> msg = new HashMap<String, Object>();
+		
+		try {
+			Claims de = AuthController.verification(token);
+			String email = (String) de.get("email");
+			Member member = memser.getMem(email);
+			
+			Notice notice = ser.getNotice(noticeIdx+"");
+			if(member.getGrade().equals(notice.getMemberGrade()) && member.getClassnum().equals(notice.getMemberClassNum())) {
+				ser.deleteNotice(noticeIdx);
+				msg.put("Notice", notice);
+				res = new ResponseEntity<Map<String, Object>>(msg, HttpStatus.OK);
+			} else {
+				msg.put("error", "해당 공지 글에 대한 삭제 권한이 없습니다.");
+				res = new ResponseEntity<Map<String, Object>>(msg, HttpStatus.FORBIDDEN);
+			}
 		} catch(Exception e) {
 			msg.put("Input Data", token);
 			msg.put("SAY", "Error msg를 참고하여 Input Data을 다시 한 번 확인해보세요.");
