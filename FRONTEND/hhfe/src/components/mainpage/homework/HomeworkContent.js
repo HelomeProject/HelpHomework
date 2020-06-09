@@ -6,6 +6,7 @@ import { Paper, Grid, Select, MenuItem } from '@material-ui/core';
 import useStyles from './HomeworkContentCSS'
 import axios from 'axios'
 
+
 const HomeworkContent = ({ mode }) => {
     const classes = useStyles();
     const [homeworkIdx, setHomeworkIdx] = useState('')
@@ -13,6 +14,7 @@ const HomeworkContent = ({ mode }) => {
     const [rows, setRows] = useState([])
     const [rowsteacher, setRowsteacher] = useState([])
     const [url, seturl] = useState('')
+    const [delHome, setDelHome] = useState(false)
 
     useEffect(() => {
         const config = { headers: { 'Authorization': getCookieValue('token') } }
@@ -36,9 +38,12 @@ const HomeworkContent = ({ mode }) => {
                     if (res.data !== "") {
                         setRows(res.data.HomeworkList)
                         return (res.data.HomeworkList)
-                    }
-                    else
+                    } else {
+                        setRows([])
+                        seturl('')
                         return null
+                    }
+
 
                 })
                 .then(data => {
@@ -53,8 +58,12 @@ const HomeworkContent = ({ mode }) => {
                         setRowsteacher(res.data.HomeworkList)
                         return (res.data.HomeworkList)
                     }
-                    else
+                    else {
+                        setRowsteacher([])
+                        seturl('')
                         return null
+                    }
+
 
                 })
                 .then(data => {
@@ -64,7 +73,8 @@ const HomeworkContent = ({ mode }) => {
                 .catch((err) => { console.log(err) })
 
         }
-    }, [mode, homeworkIdx])
+        setDelHome(false)
+    }, [mode, homeworkIdx, delHome])
 
     const handleChange = (event) => {
         setHomeworkIdx(event.target.value);
@@ -91,14 +101,14 @@ const HomeworkContent = ({ mode }) => {
                             </Select>
                         </Grid>
                         <Grid item xs={6}>
-                            <FileUpload seturl={seturl} mode={mode} homeworkIdx={homeworkIdx} rows={rows} setRows={setRows} rowsteacher={rowsteacher} setRowsteacher={setRowsteacher} />
+                            <FileUpload setDel={setDelHome} seturl={seturl} mode={mode} homeworkIdx={homeworkIdx} rows={rows} setRows={setRows} rowsteacher={rowsteacher} setRowsteacher={setRowsteacher} />
                         </Grid>
                     </Grid>
                 </Paper>
             }
 
 
-            <ScoreTable mode={mode} homeworkIdx={homeworkIdx} rows={rows} rowsteacher={rowsteacher} url={url} seturl={seturl} />
+            <ScoreTable mode={mode} homeworkIdx={homeworkIdx} rows={rows} rowsteacher={rowsteacher} url={url} seturl={seturl} setDel={setDelHome} />
         </>
     )
 }
