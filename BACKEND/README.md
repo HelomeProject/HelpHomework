@@ -51,7 +51,6 @@
 | POST        | /notice       | 공지사항 생성       | CreateNotice          | :ballot_box_with_check: |
 | DELETE      | /notice/:id   | 공지사항 삭제       | DeleteNotice          | :ballot_box_with_check: |
 | ----------- | -----------   | -----------         | -----------           |                         |
-| GET         | /homework/:id | 숙제공지 조회(one)  | GetHomeworkNotice     |                         |
 | GET         | /homeworks    | 숙제공지 조회(list) | GetHomeworkNoticeList | :ballot_box_with_check: |
 | POST        | /homework     | 숙제공지 생성       | CreateHomeworkNotice  | :ballot_box_with_check: |
 | PUT         | /homework/:id | 숙제공지 수정       | UpdateHomeworkNotice  | :ballot_box_with_check: |
