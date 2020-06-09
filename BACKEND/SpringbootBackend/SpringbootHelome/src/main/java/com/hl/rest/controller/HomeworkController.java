@@ -76,7 +76,6 @@ public class HomeworkController {
 			msg.put("SAY", "Error msg를 참고하여 Input Data을 다시 한 번 확인해보세요.");
 			msg.put("Error msg", e.getMessage());
 			res = new ResponseEntity<Map<String, Object>>(msg, HttpStatus.BAD_REQUEST);
-			System.out.println(e.getMessage());
 		}
 		return res;
 	}
@@ -110,7 +109,6 @@ public class HomeworkController {
 			msg.put("SAY", "Error msg를 참고하여 Input Data을 다시 한 번 확인해보세요.");
 			msg.put("Error msg", e.getMessage());
 			res = new ResponseEntity<Map<String, Object>>(msg, HttpStatus.BAD_REQUEST);
-			System.out.println(e.getMessage());
 		}
 		return res;
 	}
@@ -142,7 +140,6 @@ public class HomeworkController {
 			msg.put("SAY", "Error msg를 참고하여 Input Data을 다시 한 번 확인해보세요.");
 			msg.put("Error msg", e.getMessage());
 			res = new ResponseEntity<Map<String, Object>>(msg, HttpStatus.BAD_REQUEST);
-			System.out.println(e.getMessage());
 		}
 		return res;
 	}
@@ -182,7 +179,6 @@ public class HomeworkController {
 			msg.put("SAY", "Error msg를 참고하여 Input Data을 다시 한 번 확인해보세요.");
 			msg.put("Error msg", e.getMessage());
 			res = new ResponseEntity<Map<String, Object>>(msg, HttpStatus.BAD_REQUEST);
-			System.out.println(e.getMessage());
 		}
 		return res;
 	}
@@ -215,7 +211,6 @@ public class HomeworkController {
 			msg.put("SAY", "Error msg를 참고하여 Input Data을 다시 한 번 확인해보세요.");
 			msg.put("Error msg", e.getMessage());
 			res = new ResponseEntity<Map<String, Object>>(msg, HttpStatus.BAD_REQUEST);
-			System.out.println(e.getMessage());
 		}
 		return res;
 	}
@@ -242,7 +237,6 @@ public class HomeworkController {
 			msg.put("SAY", "Error msg를 참고하여 Input Data을 다시 한 번 확인해보세요.");
 			msg.put("Error msg", e.getMessage());
 			res = new ResponseEntity<Map<String, Object>>(msg, HttpStatus.BAD_REQUEST);
-			System.out.println(e.getMessage());
 		}
 		return res;
 	}
@@ -260,9 +254,9 @@ public class HomeworkController {
 			Member member = memser.getMem(email);
 			List<Homework> homeworklist = null;
 			
-			if(member.getIsteacher().equals("1")) { //선생님이 낸 숙제제출 목록 조회
+			if(member.getIsteacher().equals("1")) { 
 				homeworklist = ser.getHomeworkList_teacher(member.getMemberIdx());
-			} else { //자신의 숙제제출 목록 조회
+			} else { 
 				homeworklist = ser.getHomeworkList_student(member.getMemberIdx());
 			}
 			
@@ -287,7 +281,7 @@ public class HomeworkController {
 	
 	/** 숙제제출 현황 조회 */
 	@GetMapping("/homework/{homeworkNoticeIdx}")
-	@ApiOperation(value = "숙제 제출현황 조회(선생님:homeworkNoticeIdx를 낸 학생 전체 리스트, 학생:자신이 제출한 것)")
+	@ApiOperation(value = "숙제 제출현황 조회")
 	public ResponseEntity<Map<String, Object>> GetHomework(
 			@RequestHeader(value = "Authorization") String token,
 			@PathVariable("homeworkNoticeIdx") String homeworkNoticeIdx) {
@@ -299,7 +293,6 @@ public class HomeworkController {
 			Member member = memser.getMem(email);
 			
 			List<Homework> homeworkList=null;
-			
 			if(member.getIsteacher().equals("1")) {
 				String charge = ser.getWhoseHomeworkNotice(homeworkNoticeIdx)+"";
 				if(member.getMemberIdx().equals(charge)) {
@@ -330,7 +323,6 @@ public class HomeworkController {
 			msg.put("SAY", "Error msg를 참고하여 Input Data을 다시 한 번 확인해보세요.");
 			msg.put("Error msg", e.getMessage());
 			res = new ResponseEntity<Map<String, Object>>(msg, HttpStatus.BAD_REQUEST);
-			System.out.println(e.getMessage());
 		}
 		return res;
 	}
