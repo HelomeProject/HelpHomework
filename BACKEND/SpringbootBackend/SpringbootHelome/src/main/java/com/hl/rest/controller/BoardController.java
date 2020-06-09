@@ -78,7 +78,6 @@ public class BoardController {
 			msg.put("SAY", "Error msg를 참고하여 Input Data을 다시 한 번 확인해보세요.");
 			msg.put("Error msg", e.getMessage());
 			res = new ResponseEntity<Map<String, Object>>(msg, HttpStatus.BAD_REQUEST);
-			System.out.println(e.getMessage());
 		}
 		return res;
 	}
@@ -97,7 +96,6 @@ public class BoardController {
 			String email = (String) de.get("email");
 			Member member = memser.getMem(email);
 			
-			//권한이 있는지?
 			Notice notice = ser.getNotice(noticeIdx);
 			if(member.getGrade().equals(notice.getMemberGrade()) && member.getClassnum().equals(notice.getMemberClassNum())) {
 				msg.put("Notice", notice);
@@ -113,7 +111,6 @@ public class BoardController {
 			msg.put("SAY", "Error msg를 참고하여 Input Data을 다시 한 번 확인해보세요.");
 			msg.put("Error msg", e.getMessage());
 			res = new ResponseEntity<Map<String, Object>>(msg, HttpStatus.BAD_REQUEST);
-			System.out.println(e.getMessage());
 		}
 		return res;
 	}
@@ -136,7 +133,6 @@ public class BoardController {
 			msg.put("SAY", "Error msg를 참고하여 Input Data을 다시 한 번 확인해보세요.");
 			msg.put("Error msg", e.getMessage());
 			res = new ResponseEntity<Map<String, Object>>(msg, HttpStatus.BAD_REQUEST);
-			System.out.println(e.getMessage());
 		}
 		return res;
 	}
@@ -169,7 +165,6 @@ public class BoardController {
 			msg.put("SAY", "Error msg를 참고하여 Input Data을 다시 한 번 확인해보세요.");
 			msg.put("Error msg", e.getMessage());
 			res = new ResponseEntity<Map<String, Object>>(msg, HttpStatus.BAD_REQUEST);
-			System.out.println(e.getMessage());
 		}
 		return res;
 	}

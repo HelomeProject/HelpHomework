@@ -122,7 +122,7 @@ public class AuthController {
 				.parseClaimsJws(token)
 				.getBody();
 		} catch(Exception e) {
-			System.out.println("claims error : 아마 키가 없을걸?");
+			System.out.println("claims error");
 		}
 		return c;
 	}
