@@ -34,8 +34,10 @@ const NotiList = ({ mode, notilist, setTitle, setOpenView, setImgurl, setDel }) 
                                     setImgurl(fronturl + val.noticeImgUrl)
                                     setOpenView(true)
                                 }} />
-                                {!mode === 1 ? <div /> :
-                                    <IconButton onClick={() => { deleteNoti(val.idx) }}><DeleteForeverIcon /></IconButton>
+                                {
+                                    mode === 0 ? <div />
+                                        :
+                                        <IconButton onClick={() => { deleteNoti(val.idx) }}><DeleteForeverIcon /></IconButton>
                                 }
 
                             </ListItem>
@@ -83,7 +85,7 @@ const NoticeInfoTable = ({ mode, userInfo }) => {
             <Grid className={classes.listitem}>
                 <Divider />
                 <List>
-                    <NotiList notilist={notilist} setTitle={setTitle} setOpenView={setOpenView} setImgurl={setImgurl} setDel={setDel} />
+                    <NotiList mode={mode} notilist={notilist} setTitle={setTitle} setOpenView={setOpenView} setImgurl={setImgurl} setDel={setDel} />
                 </List>
                 <NotiAddForm userInfo={userInfo} open={openForm} setOpen={setOpenForm} notilist={notilist} setNotilist={setNotilist} />
                 <ViewNotice openView={openView} setOpenView={setOpenView} title={title} imgurl={imgurl} setImgurl={setImgurl} />

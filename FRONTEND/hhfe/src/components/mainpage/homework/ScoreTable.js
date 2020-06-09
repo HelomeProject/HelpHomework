@@ -6,10 +6,24 @@ import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
 import CropOriginalIcon from '@material-ui/icons/CropOriginal';
 import IconButton from '@material-ui/core/IconButton';
+import axios from 'axios'
+import getCookieValue from '../../getCookie'
+import DeleteForeverIcon from '@material-ui/icons/DeleteForever';
 
-
-const Viewtable = ({ url, rows, seturl, mode, rowsteacher }) => {
+const Viewtable = ({ url, rows, seturl, mode, rowsteacher, setDel }) => {
     const fronturl = 'http://k02c1101.p.ssafy.io:8000'
+    const config = {
+        headers: { 'Authorization': getCookieValue('token') },
+    }
+    const deleteHomework = (idx) => {
+        return axios.delete('http://k02c1101.p.ssafy.io:9090/api/homework/' + String(idx), config)
+            .then((res) => {
+                setDel(true)
+            }
+            ).catch((err) => {
+                console.log(err)
+            })
+    }
     if (mode === 0) {
         return (
             <>
@@ -37,6 +51,11 @@ const Viewtable = ({ url, rows, seturl, mode, rowsteacher }) => {
                                             seturl(fronturl + val.homework_url)
                                         }}> <CropOriginalIcon /> </IconButton>
                                     </TableCell>
+                                    <TableCell align="right"  >
+                                        <IconButton onClick={() => {
+                                            deleteHomework(val.homework_idx)
+                                        }}> <DeleteForeverIcon /> </IconButton>
+                                    </TableCell>
                                 </TableRow>
                             ))}
                         </>
@@ -56,6 +75,7 @@ const Viewtable = ({ url, rows, seturl, mode, rowsteacher }) => {
                         <TableCell align="right"> - </TableCell>
                         <TableCell align="right"> - </TableCell>
                         <TableCell align="right"> - </TableCell>
+                        <TableCell align="right"> - </TableCell>
                     </TableRow>
                 ) : (
                         <>
@@ -71,6 +91,11 @@ const Viewtable = ({ url, rows, seturl, mode, rowsteacher }) => {
                                             seturl(fronturl + val.homework_url)
                                         }}> <CropOriginalIcon /> </IconButton>
                                     </TableCell>
+                                    <TableCell align="right"  >
+                                        <IconButton onClick={() => {
+                                            deleteHomework(val.homework_idx)
+                                        }}> <DeleteForeverIcon /> </IconButton>
+                                    </TableCell>
                                 </TableRow>
                             ))}
                         </>
@@ -83,12 +108,13 @@ const Viewtable = ({ url, rows, seturl, mode, rowsteacher }) => {
 
 }
 
-const ScoreTable = ({ mode, rows, rowsteacher, seturl, url }) => {
+const ScoreTable = ({ mode, rows, rowsteacher, seturl, url, setDel }) => {
     const classes = useStyles();
     const tableheadname = [
-        ['No.', '숙제 제출일', '점수', '이미지'],
-        ['No.', '학생 번호', '점수', '파일']
+        ['No.', '숙제 제출일', '점수', '이미지', '삭제'],
+        ['No.', '학생 번호', '점수', '이미지', '삭제']
     ]
+
 
 
     return (
@@ -103,10 +129,11 @@ const ScoreTable = ({ mode, rows, rowsteacher, seturl, url }) => {
                                     <TableCell className={classes.tableCellDate} align="right">{tableheadname[mode][1]}</TableCell>
                                     <TableCell className={classes.tableCellScore} align="right">{tableheadname[mode][2]}</TableCell>
                                     <TableCell className={classes.tableCellImage} align="right">{tableheadname[mode][3]}</TableCell>
+                                    <TableCell className={classes.tableCellImage} align="right">{tableheadname[mode][4]}</TableCell>
                                 </TableRow>
                             </TableHead>
                             <TableBody>
-                                <Viewtable url={url} rows={rows} seturl={seturl} rowsteacher={rowsteacher} mode={mode} />
+                                <Viewtable setDel={setDel} url={url} rows={rows} seturl={seturl} rowsteacher={rowsteacher} mode={mode} />
                             </TableBody>
                         </Table>
                     </TableContainer>
