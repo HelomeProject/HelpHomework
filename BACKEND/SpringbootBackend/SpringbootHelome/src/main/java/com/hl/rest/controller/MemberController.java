@@ -52,13 +52,11 @@ public class MemberController {
 		}catch(Exception e) {
 			if(e.getMessage().contains("Duplicate")) {
 				res = new ResponseEntity<Map<String, Object>>(msg, HttpStatus.CONFLICT);
-				System.out.println(e.getMessage());
 			} else {
 				msg.put("Input Data", mem);
 				msg.put("SAY", "Error msg를 참고하여 Input Data을 다시 한 번 확인해보세요.");
 				msg.put("Error msg", e.getMessage());
 				res = new ResponseEntity<Map<String, Object>>(msg, HttpStatus.BAD_REQUEST);
-				System.out.println(e.getMessage());
 			}
 		}
 		return res;
@@ -102,7 +100,6 @@ public class MemberController {
 			msg.put("SAY", "Error msg를 참고하여 Input Data을 다시 한 번 확인해보세요.");
 			msg.put("Error msg", e.getMessage());
 			res = new ResponseEntity<Map<String, Object>>(msg, HttpStatus.BAD_REQUEST);
-			System.out.println(e.getMessage());
 		}
 		
 		return res;
@@ -135,7 +132,6 @@ public class MemberController {
 			msg.put("SAY", "Error msg를 참고하여 Input Data을 다시 한 번 확인해보세요.");
 			msg.put("Error msg", e.getMessage());
 			res = new ResponseEntity<Map<String, Object>>(msg, HttpStatus.BAD_REQUEST);
-			System.out.println(e.getMessage());
 		}
 		return res;
 	}
@@ -160,7 +156,6 @@ public class MemberController {
 			msg.put("SAY", "Error msg를 참고하여 Input Data을 다시 한 번 확인해보세요.");
 			msg.put("Error msg", e.getMessage());
 			res = new ResponseEntity<Map<String, Object>>(msg, HttpStatus.BAD_REQUEST);
-			System.out.println(e.getMessage());
 		}
 		return res;
 	}
@@ -183,7 +178,6 @@ public class MemberController {
 			msg.put("SAY", "Error msg를 참고하여 Input Data을 다시 한 번 확인해보세요.");
 			msg.put("Error msg", e.getMessage());
 			res = new ResponseEntity<Map<String, Object>>(msg, HttpStatus.BAD_REQUEST);
-			System.out.println(e.getMessage());
 		}
 		return res;
 	}
