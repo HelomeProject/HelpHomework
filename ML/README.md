@@ -1,8 +1,6 @@
-# ########수정 중입니다########
+# Machine Learning
 
-
-
-[CNN 모델]
+### [CNN 모델]
 
 ![캡처dd](README.assets/CNN.JPG)
 
@@ -29,7 +27,7 @@ model.compile(loss='categorical_crossentropy',# mean square error, mean absolute
 
 
 
-[학습]
+### [학습]
 
 ![ddd](README.assets/train.JPG)
 
@@ -39,7 +37,7 @@ model.compile(loss='categorical_crossentropy',# mean square error, mean absolute
 
 
 
-[이미지 변환전] 
+### [이미지 변환전] 
 
 ![3](README.assets/3.jpg)
 
@@ -49,7 +47,7 @@ img = cv2.imread(image_path) # 이미지를 불러온다.
 
 
 
-[Gray변환, 반전, 가우시안 블러적용]
+### [Gray변환, 반전, 가우시안 블러적용]
 
 ![3](README.assets/3.PNG)
 
@@ -61,7 +59,7 @@ img_blur = cv2.GaussianBlur(img_inv, (5, 5), 0)  # Gaussian Image (5,5) 필터�
 
 
 
-[수식 이미지]
+### [수식 이미지]
 
 ![u](README.assets/u.jpg)
 
@@ -69,7 +67,7 @@ img_blur = cv2.GaussianBlur(img_inv, (5, 5), 0)  # Gaussian Image (5,5) 필터�
 
 
 
-[수식 인식]
+### [수식 인식]
 
 ![캡처1](README.assets/캡처1.PNG)
 
@@ -82,7 +80,7 @@ images, contours, hierachy= cv2.findContours(img_th.copy(), cv2.RETR_EXTERNAL, c
 
 
 
-[확률]
+### [확률]
 
 ![확률캡처](README.assets/확률.PNG)
 
@@ -97,13 +95,13 @@ for i in range(len(classes)):
 
 
 
-[예측된 수식과 결과]
+### [예측된 수식과 결과]
 
 ![결과캡처](README.assets/결과캡처.PNG)
 
 
 
-[adativeThreshold 이미지]
+### [adativeThreshold 이미지]
 
 ![adaIMG](README.assets/adaIMG.JPG)
 
@@ -115,7 +113,7 @@ img_th = cv2.adaptiveThreshold(img_blur, 255, cv2.ADAPTIVE_THRESH_GAUSSIAN_C, cv
 
 
 
-[인식]
+### [인식]
 
 ![Figure_1](README.assets/Figure_1.jpeg)
 
@@ -127,7 +125,7 @@ images, contours, hierachy = cv2.findContours(img_th.copy(), cv2.RETR_EXTERNAL, 
 
 
 
-[수식 인식]
+### [수식 인식]
 
 ![Equation](README.assets/Equation.jpg)
 
@@ -135,7 +133,7 @@ images, contours, hierachy = cv2.findContours(img_th.copy(), cv2.RETR_EXTERNAL, 
 
 
 
-[수식 계산 값과 사용자 입력 값]
+### [수식 계산 값과 사용자 입력 값]
 
 ![Equ_and_Res](README.assets/Equ_and_Res.jpg)
 
@@ -143,13 +141,13 @@ images, contours, hierachy = cv2.findContours(img_th.copy(), cv2.RETR_EXTERNAL, 
 
 
 
-[정답 표시]
+### [정답 표시]
 
 ![res](README.assets/res.JPG)
 
 
 
-[필기체로 인식 후 정답 표시]
+### [필기체로 인식 후 정답 표시]
 
 ![결과캡처](README.assets/결과캡처-1591354410709.JPG)
 
@@ -157,7 +155,7 @@ images, contours, hierachy = cv2.findContours(img_th.copy(), cv2.RETR_EXTERNAL, 
 
 
 
-[요약도 - Train]
+### [요약도 - Train]
 
 1) 이미지 수집 (약 15만개)
 
@@ -167,7 +165,7 @@ images, contours, hierachy = cv2.findContours(img_th.copy(), cv2.RETR_EXTERNAL, 
 
 
 
-[요약도 - Test]
+### [요약도 - Test]
 
 1) 이미지 불러오기
 
