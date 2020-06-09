@@ -8,12 +8,12 @@
 
 ## 역할
 
-| 이름       | 역할   | 담당 업무                                                    |
-| ---------- | ------ | ------------------------------------------------------------ |
-| 고태환(PM) | 풀스택 | React.js FE 개발 및 배포, Django BE 개발 및 배포, 프로젝트 관리 및 운영 |
-| 남선웅     | FE     | React.js FE 개발, UI 구현 (Material UI), UCC 제작 및 시연    |
-| 김하은     | BE     | Springboot-MyBatis BE 개발 및 배포, DB 설계 및 구축 (MySQL), AWS Maintainer, Git Maintainer |
-| 최동호     | ML     | 머신러닝 알고리즘 적용 (Tensorflow Keras), 수식 이미지 인식 기능 구현 (OpenCV), 숫자, 기호 이미지 데이터 수집 및 변환, 수식 예측 및 결과 채점 알고리즘 구현 및 적용 |
+| 이름       | 역할  | 담당 업무                                                    |
+| ---------- | ----- | ------------------------------------------------------------ |
+| 고태환(PM) | FE/BE | React.js FE 개발 및 배포, Django BE 개발 및 배포, 프로젝트 관리 및 운영 |
+| 남선웅     | FE    | React.js FE 개발, UI 구현 (Material UI), UCC 제작 및 시연    |
+| 김하은     | BE    | Springboot-MyBatis BE 개발 및 배포, DB 설계 및 구축 (MySQL), AWS Maintainer, Git Maintainer |
+| 최동호     | ML    | 머신러닝 알고리즘 (Tensorflow Keras), 수식 이미지 인식(OpenCV), 숫자/기호 데이터 수집 및 변환, 수식 예측 알고리즘 |
 
 
 
