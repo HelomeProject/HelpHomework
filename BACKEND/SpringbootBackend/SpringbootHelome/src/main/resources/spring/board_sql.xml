@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- username, school, email, password, grade -->
+<mapper namespace="board">
+	<insert id="insertHomework" parameterType="homework">
+		insert into
+		homeworktb(homeworkTitle, startDate, endDate, homeworkDetail, memberIdx)
+		values(#{homeworkTitle}, #{startDate}, #{endDate}, #{homeworkDetail}, #{memberIdx})
+	</insert>
+	<select id="getHomeworkListSize" resultType="int" parameterType="map">
+		select count(*) from homeworktb
+		where memberIdx in (select idx from membertb where grade=#{grade} and classnum=#{classnum})
+	</select>
+	<select id="getHomeworkSize" resultType="int" parameterType="int">
+		select count(*) from homeworktb where memberIdx = #{memberIdx}
+	</select>
+	<select id="getHomeworkList" resultType="homework" parameterType="map">
+		select * from homeworktb 
+		where memberIdx in (select idx from membertb where grade=#{grade} and classnum=#{classnum})
+	</select>
+	<select id="getMyHomeworkList" resultType="homework" parameterType="map">
+		select idx as homeworkIdx, homeworkTitle, startDate, endDate,homeworkDetail, memberIdx from homeworktb 
+		where memberIdx = #{memberIdx}
+	</select>
+	
+	
+	<select id="getNotice" resultType="notice" parameterType="String">
+		select idx, noticeTitle, noticeImgUrl, memberIdx, memberGrade, memberClassNum from noticetb
+		where idx = memberIdx
+	</select>
+	<insert id="createNotice" parameterType="notice">
+		insert into
+		noticetb(noticeTitle, noticeImgUrl, memberIdx, memberGrade, memberClassNum)
+		values(#{noticeTitle}, #{noticeImgUrl}, #{memberIdx}, #{memberGrade}, #{memberClassNum})
+	</insert>
+	<select id="getNoticeList" resultType="notice">
+		select idx, noticeTitle, noticeImgUrl, memberIdx, memberGrade, memberClassNum from noticetb
+	</select>
+	<select id="getNoticeListSize" resultType="int">
+		SELECT idx FROM noticetb ORDER BY idx DESC LIMIT 1;
+	</select>
+	<delete id="deleteNotice" parameterType="int">
+		delete from noticetb
+		where idx=#{noticeIdx}
+	</delete>
+</mapper>
+ 

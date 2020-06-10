@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- username, school, email, password, grade -->
+<mapper namespace="homework">
+	<insert id="CreateHomeworkNotice" parameterType="homeworknotice">
+		insert into
+		homeworkNoticetb(homeworkNotice_title, homeworkNotice_startDate, homeworkNotice_endDate, homeworkNotice_detail, HomeworkNotice_memberIdx)
+		values(#{homeworkNotice_title}, #{homeworkNotice_startDate}, #{homeworkNotice_endDate}, #{homeworkNotice_detail}, #{HomeworkNotice_memberIdx})
+	</insert>
+	<insert id="CreateHomework" parameterType="homework">
+		insert into
+		homeworktb(Homework_memberIdx, Homework_noticeIdx, Homework_url, Homework_submitDate, Homework_score)
+		values(#{Homework_memberIdx}, #{Homework_noticeIdx}, #{Homework_url}, #{Homework_submitDate}, #{Homework_score})
+	</insert>
+	<select id="getHomeworkNoticeList" resultType="homeworkNotice">
+		select * from homeworkNoticetb
+	</select>
+	<select id="getHomeworkList_teacher" resultType="homework" parameterType="String">
+		select * from homeworktb
+		where Homework_noticeIdx in (select HomeworkNotice_idx from homeworkNoticetb where HomeworkNotice_memberIdx=#{memberIdx});
+	</select>
+	<select id="getHomeworkList_student" resultType="homework" parameterType="String">
+		select * from homeworktb
+		where Homework_memberIdx=#{memberIdx};
+	</select>
+	<select id="getHomeworkList_byIdx" resultType="homework" parameterType="String">
+		select * from homeworktb
+		where Homework_noticeIdx=#{homeworkNoticeIdx};
+	</select>
+	<select id="getWhoseHomeworkNotice" resultType="int" parameterType="String">
+		select HomeworkNotice_memberIdx from homeworkNoticetb 
+		where HomeworkNotice_idx=#{homeworkNoticeIdx};
+	</select>
+	<select id="getHomeworkList_byIdx_memberIdx" resultType="homework" parameterType="String">
+		select * from homeworktb 
+		where Homework_noticeIdx=#{homeworkNoticeIdx} and Homework_memberIdx=#{memberIdx};
+	</select>
+	<update id="updateHomeworkNotice" parameterType="homeworknotice">
+		update homeworkNoticetb set
+		HomeworkNotice_title=#{HomeworkNotice_title}, HomeworkNotice_startDate=#{HomeworkNotice_startDate}, HomeworkNotice_endDate=#{HomeworkNotice_endDate}, HomeworkNotice_detail=#{HomeworkNotice_detail}
+		where HomeworkNotice_idx=#{HomeworkNotice_idx};
+	</update>
+	<delete id="deleteHomeworkNotice" parameterType="String">
+		delete from homeworkNoticetb
+		where HomeworkNotice_idx=#{homeworkNoticeIdx}
+	</delete>
+	<select id="getWhoseHomework" resultType="int" parameterType="String">
+		select Homework_memberIdx from homeworktb 
+		where Homework_idx=#{homeworkIdx};
+	</select>
+	<delete id="deleteHomework" parameterType="String">
+		delete from homeworktb
+		where Homework_idx=#{homeworkIdx}
+	</delete>
+</mapper>
+ 

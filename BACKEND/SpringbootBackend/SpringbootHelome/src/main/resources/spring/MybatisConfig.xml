@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration
+  PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+  <typeAliases>
+  	<typeAlias type="com.hl.rest.vo.Member" alias="member"/>
+  	<typeAlias type="com.hl.rest.vo.Notice" alias="notice"/>
+  	<typeAlias type="com.hl.rest.vo.Homework" alias="homework"/>
+  	<typeAlias type="com.hl.rest.vo.HomeworkNotice" alias="homeworknotice"/>
+  </typeAliases>
+  <mappers>
+    <mapper resource="spring/member_sql.xml"/>
+    <mapper resource="spring/board_sql.xml"/>
+    <mapper resource="spring/homework_sql.xml"/>
+  </mappers>
+</configuration>

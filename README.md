@@ -1,50 +1,24 @@
-# commit message convention
+# HomeLearn
 
-### JIRA-StoryIDX [상태] 명사형-설명
+## 주제
 
-``S02P31C110-4 [*] Readme file modification for commit message convention`` 혹은
-
-``S02P31C110-4 [*] 커밋 메시지 컨벤션을 위한 리드미 파일 수정``
+[2020.05.04 - 2020.06.09] 머신러닝을 이용한 지능형 온라인 과제 관리 시스템
 
 
 
-### 상태
+## 역할
 
-[+] add 추가
-
-[-]  remove 삭제
-
-[*] edit 수정
-
-
-
-### 브랜치 branch : feature/api명
-
-default branch는 develop으로 변경되어 있으므로 이후 feature/api명으로 브랜치를 바꿔서 사용
-
-``feature/readme`` ``feature/login`` ``feature/tensorflow`` ``feature/ui``
+| 이름       | 역할  | 담당 업무                                                    |
+| ---------- | ----- | ------------------------------------------------------------ |
+| 고태환(PM) | FE/BE | React.js FE 개발 및 배포, Django BE 개발 및 배포, 프로젝트 관리 및 운영 |
+| 남선웅     | FE    | React.js FE 개발, UI 구현 (Material UI), UCC 제작 및 시연    |
+| 김하은     | BE    | Springboot-MyBatis BE 개발 및 배포, DB 설계 및 구축 (MySQL), AWS Maintainer, Git Maintainer |
+| 최동호     | ML    | 머신러닝 알고리즘 (Tensorflow Keras), 수식 이미지 인식(OpenCV), 숫자/기호 데이터 수집 및 변환, 수식 예측 알고리즘 |
 
 
 
-### git 초기 명령어
+## 주요기능
 
-``git clone https://lab.ssafy.com/s02-final/s02p31c110``
+* 보다 쉬운 학사 관리를 위한 공지사항 및 과제 관리 Scheduler
 
-``git branch feature/api명``
-
-``git checkout feature/api명``
-
-작업
-
-``git add .``
-
-위 규칙대로 commit 메시지 작성
-
-``git push``
-
-``git checkout develop``
-
-``git pull``
-
-``git branch -D feature/api명``
-
+* 과제 업로드 시, 해당 과제에 대한 정답/오답 여부 및 점수 실시간 확인 가능
