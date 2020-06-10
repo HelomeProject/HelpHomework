@@ -1,6 +1,8 @@
 # Machine Learning
 
+<br>
 
+## TRAIN
 
 ![cnn모델_학습캡처](README.assets/cnn모델_학습캡처.JPG)
 
@@ -23,9 +25,15 @@ model.compile(loss='categorical_crossentropy',# mean square error, mean absolute
               metrics=['accuracy'])
 ```
 
+<br>
+
+<br>
+
+## TEST
 
 
 
+### 이미지 변환
 
 ![3캡쳐들](README.assets/3캡쳐들-1591792634261.JPG)
 
@@ -39,9 +47,7 @@ img_inv = cv2.bitwise_not(img_gray)	# Inverse Image
 img_blur = cv2.GaussianBlur(img_inv, (5, 5), 0)  # Gaussian Image (5,5) 필터로 적용
 ```
 
-
-
-
+<br>
 
 ![th와수식인식](README.assets/th와수식인식-1591793144571.JPG)
 
@@ -51,11 +57,9 @@ img_th = cv2.adaptiveThreshold(img_blur, 255, cv2.ADAPTIVE_THRESH_GAUSSIAN_C, cv
 # (img, Threshold 값 이상이면 바꿀 값, Method, Type, 필터 사이즈, 평균이나 가중평균에서 차감할 값)
 ```
 
+<br>
 
-
-
-
-[GAUSSIAN_C VS MEAN_C]
+##### [GAUSSIAN_C VS MEAN_C]
 
 ![adaIMG](README.assets/adaIMG.JPG)
 
@@ -67,11 +71,13 @@ img_th = cv2.adaptiveThreshold(img_blur, 255, cv2.ADAPTIVE_THRESH_GAUSSIAN_C, cv
 img_th = cv2.adaptiveThreshold(img_blur, 255, cv2.ADAPTIVE_THRESH_MEAN_C, cv2.THRESH_BINARY_INV, 3, 2)
 ```
 
+<br>
 
+<br>
 
+### 결과
 
-
-[contour 하나의 확률]
+##### [contour 하나의 확률]
 
 ![결과예측](README.assets/결과예측.JPG)
 
@@ -82,7 +88,7 @@ for i in range(len(classes)):
     print('{}: {} %'.format(classes[i], round(output[0][i]*100,4))) # classes 각각의 확률
 ```
 
-
+<br>
 
 
 
@@ -90,15 +96,15 @@ for i in range(len(classes)):
 
 
 
-
+<br>
 
 ![정답표시](README.assets/정답표시.JPG)
 
+<br>
 
+<br>
 
-
-
-### 요약도
+## 요약도
 
 | 순서 |          Train          |                   Test                   |
 | :--: | :---------------------: | :--------------------------------------: |
