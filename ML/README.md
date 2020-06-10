@@ -35,11 +35,9 @@ model.compile(loss='categorical_crossentropy',# mean square error, mean absolute
 
 ### 이미지 변환
 
-<div style='margin:auto;'>
 
-<img src="README.assets/3캡쳐들-1591792634261.JPG">
 
-</div>
+![3캡쳐들](README.assets/3캡쳐들-1591792634261.JPG)
 
 ```python
 img = cv2.imread(image_path) # 이미지를 불러온다.
@@ -51,11 +49,10 @@ img_blur = cv2.GaussianBlur(img_inv, (5, 5), 0)  # Gaussian Image (5,5) 필터�
 
 <br>
 
-<div class='image'>
+
+
 
 ![th와수식인식](README.assets/th와수식인식-1591793144571.JPG)
-
-</div>
 
 ```python
 img_th = cv2.adaptiveThreshold(img_blur, 255, cv2.ADAPTIVE_THRESH_GAUSSIAN_C, cv2.THRESH_BINARY_INV, 5, 2)
@@ -67,11 +64,10 @@ img_th = cv2.adaptiveThreshold(img_blur, 255, cv2.ADAPTIVE_THRESH_GAUSSIAN_C, cv
 
 ##### [GAUSSIAN_C VS MEAN_C]
 
-<div class ='image'>
+
+
 
 ![adaIMG](README.assets/adaIMG.JPG)
-
-</div>
 
 ```python
 img_th = cv2.adaptiveThreshold(img_blur, 255, cv2.ADAPTIVE_THRESH_GAUSSIAN_C, cv2.THRESH_BINARY_INV, 3, 2)
@@ -89,11 +85,10 @@ img_th = cv2.adaptiveThreshold(img_blur, 255, cv2.ADAPTIVE_THRESH_MEAN_C, cv2.TH
 
 ##### [contour 하나의 확률]
 
-<div class='image'>
+
+
 
 ![결과예측](README.assets/결과예측.JPG)
-
-</div>
 
 ```python
 print('predict: "{}" {}%'.format(predict_num, maxPredict)) # 예측 숫자, 가장 높은 확률의 숫자
@@ -104,21 +99,19 @@ for i in range(len(classes)):
 
 <br>
 
-<div class='image'>
+
+
 
 ![예측](README.assets/예측.JPG)
-
-</div>
 
 
 
 <br>
 
-<div class='image'>
+
+
 
 ![정답표시](README.assets/정답표시.JPG)
-
-</div>
 
 <br>
 
@@ -126,7 +119,6 @@ for i in range(len(classes)):
 
 ## 요약도
 
-<div class='image'>
 
 | 순서 |          Train          |                   Test                   |
 | :--: | :---------------------: | :--------------------------------------: |
@@ -148,8 +140,6 @@ for i in range(len(classes)):
 |  16  |                         |       예측된 결과와 수식 결과 비교       |
 |  17  |                         |      맞은 문제 O, 틀린 문제 X 표시       |
 |  18  |                         |                점수 표시                 |
-
-</div>
 
 
 
