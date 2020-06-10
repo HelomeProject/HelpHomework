@@ -35,10 +35,7 @@ model.compile(loss='categorical_crossentropy',# mean square error, mean absolute
 
 ### 이미지 변환
 
-
-![3캡쳐들](README.assets/3캡쳐들-1591792634261.JPG){: .center}
-
-
+<center><img src="README.assets/3캡쳐들-1591792634261.JPG"></center>
 
 ```python
 img = cv2.imread(image_path) # 이미지를 불러온다.
