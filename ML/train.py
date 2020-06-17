@@ -48,10 +48,10 @@ val_gen = image_gen.flow_from_directory(
 
 classes = train_gen.class_indices
 import pickle
-with open('classes_45.pkl', 'wb') as f:
+with open('classes.pkl', 'wb') as f:
     pickle.dump(classes, f)
 
-checkpoint = ModelCheckpoint(filepath='test_452.hdf5', # File name to save the learned
+checkpoint = ModelCheckpoint(filepath='model.hdf5', # File name to save the learned
                              monitor='loss',
                              mode='min',
                              save_best_only=True
