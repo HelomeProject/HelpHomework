@@ -38,5 +38,5 @@ https://www.kaggle.com/xainano/handwrittenmathsymbols
 
 |                   전                    |                  후                   |
 | :-------------------------------------: | :-----------------------------------: |
-| ![beforechange](./img/beforechange.JPG) | ![afterchange](./img/afterchange.jpg) |
+| ![beforechange](./img/beforechange.JPG) | ![afterchange](./img/afterchange.JPG) |
 
