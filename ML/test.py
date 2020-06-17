@@ -82,7 +82,7 @@ def load_and_test(image_path, classes):
     img_blur = cv2.GaussianBlur(img_gray, (5, 5), 0)
 
     img_th = cv2.adaptiveThreshold(img_blur, 255, cv2.ADAPTIVE_THRESH_GAUSSIAN_C, cv2.THRESH_BINARY_INV, 5, 2)
-    images, contours, hierachy= cv2.findContours(img_th.copy(), cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
+    contours, hierachy= cv2.findContours(img_th.copy(), cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
 
     rects = [cv2.boundingRect(each) for each in contours]
     rects_ = [(x,y,w,h) for (x,y,w,h) in rects if (w*h>29)]
@@ -168,7 +168,7 @@ def pre(new_model, img_arr, jud, predict_nums, predict_res, classes):
 
     
 def define_classes():
-    with open('classes_45.pkl', 'rb') as f:
+    with open('classes.pkl', 'rb') as f:
         new_classes = pickle.load(f)
     classes = {}
     for key, value in new_classes.items():
@@ -211,7 +211,7 @@ def ox(res_predict, mid_points, testimage):
 classes = define_classes()
 
 # Load saved train file
-new_model = load_model('train_14.hdf5')
+new_model = load_model('model.hdf5')
 
 # Input file path and image convert
 testimage = input("파일명 입력(XX.jpg): ")
