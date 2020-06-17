@@ -60,6 +60,8 @@ pip install -r requirements.txt
 
 ##### &#9995; 1번 Deep Learning 모델 만들기를 생략하고 싶을 때
 
+https://drive.google.com/file/d/1tQzC7I_xDwOXlpHZiSGoNp8zx6Yon-cs/view?usp=sharing
+링크에서 다운받으면 된다.
 
 
 ## 2.  FE
@@ -176,4 +178,6 @@ python manage.py runserver
 ![숙제](./SampleImg/1.JPG)
 
 #### 홈페이지 결과
+
 ![result](./img/complete.JPG)
+
