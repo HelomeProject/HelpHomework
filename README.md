@@ -7,7 +7,8 @@
 <div align="center">
   
   [![All Contributors](https://img.shields.io/badge/contributor-4-orange?style=flat-square)](#contributors-)
-  
+  <img src="https://img.shields.io/badge/pull--requests-60-brightgreen?style=flat-square" alt="github-profile-readme-generator pull-requests"/>
+
 </div>
 
 ## Contributors ✨
