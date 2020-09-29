@@ -5,9 +5,55 @@
 [2020.05.04 - 2020.06.09] 머신러닝을 이용한 지능형 온라인 과제 관리 시스템
 
 
+## Contributors ✨
+<!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
+[![All Contributors](https://img.shields.io/badge/contributor-4-orange?style=flat-square)](#contributors-)
+<!-- ALL-CONTRIBUTORS-BADGE:END -->
+Thanks goes to these wonderful people:
 
-## 역할
+<!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->
+<!-- prettier-ignore-start -->
+<!-- markdownlint-disable -->
+<table>
+  <tr>
+   <!-- 고태환 -->
+    <td align="center">
+      <a href="https://github.com/sarbikbetal"><img src="https://avatars3.githubusercontent.com/u/41176405?s=460&v=4" width="100px;" alt=""/><br />
+        <sub><b>KoTaeHwan</b></sub>
+      </a>
+      <br />
+      <a href="https://github.com/HelomeProject/HelpHomework/commits?author=GoPro1147" title="Code">💻</a>
+    </td>
+   <!--남선웅-->
+    <td align="center">
+      <a href="https://github.com/NamSeonWoong"><img src="https://avatars0.githubusercontent.com/u/52690478?s=460&u=2e93ad8d1ed92c811f4ff467a06d24ede8c61cc5&v=4" width="100px;" alt=""/><br />
+        <sub><b>NamSeonWoong</b></sub>
+      </a>
+      <br />
+      <a href="https://github.com/HelomeProject/HelpHomework/commits?author=NamSeonWoong" title="Code">💻</a>
+    </td>
+   <!--김하은-->
+   <td align="center">
+      <a href="https://github.com/kHeNoTbB"><img src="https://avatars1.githubusercontent.com/u/30182987?s=460&u=8c9a6f4bb293ddc015d46079315b6da67dc0ed5c&v=4" width="100px;" alt=""/><br />
+        <sub><b>Hailey</b></sub>
+      </a>
+      <br />
+      <a href="https://github.com/HelomeProject/HelpHomework/commits?author=kHeNoTbB" title="Code">💻</a>
+    </td>
+   <!-- 최동호 -->
+   <td align="center">
+      <a href="https://github.com/cdh3261"><img src="https://avatars2.githubusercontent.com/u/52690509?s=460&v=4" width="100px;" alt=""/><br />
+        <sub><b>cdh3261</b></sub>
+      </a>
+      <br />
+      <a href="https://github.com/HelomeProject/HelpHomework/commits?author=cdh3261" title="Code">💻</a>
+    </td>
+  </tr>
+</table>
 
+<!-- markdownlint-enable -->
+<!-- prettier-ignore-end -->
+<!-- ALL-CONTRIBUTORS-LIST:END -->
 | 이름       | 역할  | 담당 업무                                                    |
 | ---------- | ----- | ------------------------------------------------------------ |
 | 고태환(PM) | FE/BE | React.js FE 개발 및 배포, Django BE 개발 및 배포, 프로젝트 관리 및 운영 |
@@ -180,4 +226,6 @@ python manage.py runserver
 #### 홈페이지 결과
 
 ![result](./img/complete.JPG)
+
+
 
