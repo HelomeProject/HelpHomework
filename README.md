@@ -27,7 +27,7 @@ Thanks goes to these wonderful people
     </td>
     <td align="center">
       <a href="https://github.com/NamSeonWoong"><img src="https://avatars0.githubusercontent.com/u/52690478?s=460&u=2e93ad8d1ed92c811f4ff467a06d24ede8c61cc5&v=4" width="100px;" alt=""/></a><br />
-        <a href="https://github.com/HelomeProject/HelpHomework/commits?author=GoPro1147" title="Code">
+        <a href="https://github.com/HelomeProject/HelpHomework/commits?author=NamSeonWoong" title="Code">
           <sub><b>NamSeonWoong</b></sub><br />💻
       </a>
     </td>
