@@ -1,4 +1,5 @@
 <h1 align="center">
+<!--<img src="https://www.ssafy.com/swp/rps/images/drm_ssafy_logo.png"> <br /><br />-->
   머신러닝을 이용한 지능형 온라인 과제 관리 시스템 𝙃𝙤𝙢𝙚𝙇𝙚𝙖𝙧𝙣
   <br />
   ₂₀.₀₅.₀₄ ₋ ₂₀₂₀.₀₆.₀₉
@@ -8,8 +9,10 @@
   
   [![All Contributors](https://img.shields.io/badge/contributor-4-orange?style=flat-square)](#contributors-)
   <img src="https://img.shields.io/badge/pull--requests-60-brightgreen?style=flat-square" alt="github-profile-readme-generator pull-requests"/>
-
+  
 </div>
+
+<br/>
 
 ## Contributors ✨
 Thanks goes to these wonderful people
@@ -57,6 +60,7 @@ Thanks goes to these wonderful people
 | 최동호     | ML    | 머신러닝 알고리즘 (Tensorflow Keras), 수식 이미지 인식(OpenCV), 숫자/기호 데이터 수집 및 변환, 수식 예측 알고리즘 |
 -->
 
+<br/>
 
 ## 주요기능
 
