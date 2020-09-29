@@ -1,17 +1,16 @@
-# HomeLearn
+<h1 align="center">
+  머신러닝을 이용한 지능형 온라인 과제 관리 시스템 𝙃𝙤𝙢𝙚𝙇𝙚𝙖𝙧𝙣
+  ₂₀.₀₅.₀₄ ₋ ₂₀₂₀.₀₆.₀₉
+</h1>
+
 <div align="center">
   
   [![All Contributors](https://img.shields.io/badge/contributor-4-orange?style=flat-square)](#contributors-)
   
 </div>
 
-## 주제
-
-[2020.05.04 - 2020.06.09] 머신러닝을 이용한 지능형 온라인 과제 관리 시스템
-
-
 ## Contributors ✨
-Thanks goes to these wonderful people 
+Thanks goes to these wonderful people
 
 <!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->
 <!-- prettier-ignore-start -->
