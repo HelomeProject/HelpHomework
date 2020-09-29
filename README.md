@@ -6,10 +6,7 @@
 
 
 ## Contributors ✨
-<!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
-[![All Contributors](https://img.shields.io/badge/contributor-4-orange?style=flat-square)](#contributors-)
-<!-- ALL-CONTRIBUTORS-BADGE:END -->
-Thanks goes to these wonderful people:
+Thanks goes to these wonderful people [![All Contributors](https://img.shields.io/badge/contributor-4-orange?style=flat-square)](#contributors-)
 
 <!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->
 <!-- prettier-ignore-start -->
