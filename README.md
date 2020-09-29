@@ -1,4 +1,9 @@
 # HomeLearn
+<div align="center">
+  
+  [![All Contributors](https://img.shields.io/badge/contributor-4-orange?style=flat-square)](#contributors-)
+  
+</div>
 
 ## 주제
 
@@ -6,7 +11,7 @@
 
 
 ## Contributors ✨
-Thanks goes to these wonderful people [![All Contributors](https://img.shields.io/badge/contributor-4-orange?style=flat-square)](#contributors-)
+Thanks goes to these wonderful people 
 
 <!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->
 <!-- prettier-ignore-start -->
