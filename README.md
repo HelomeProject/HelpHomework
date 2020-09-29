@@ -74,12 +74,14 @@ Thanks goes to these wonderful people
 
 ## 🛠️ Getting Start
 
-1. Deep Learning 모델 만들기
+<p>1. Deep Learning 모델 만들기</p>
 
 링크[:bookmark:](https://drive.google.com/file/d/1tQzC7I_xDwOXlpHZiSGoNp8zx6Yon-cs/view?usp=sharing)와 문서[:page_facing_up:](./makedataset.md) 참고
 <!--1번 Deep Learning 모델 만들기를 생략하고 싶을 때 링크에서 다운받으면 됨-->
 
-2. train.py 실행
+<br/>
+
+<p>2. train.py 실행</p>
 
 <!--실행하기 전에 ML 폴더에서 터미널에서 다음 명령어를 타이핑해필요한 파이썬 패키지를 설치해준다.-->
 
@@ -87,12 +89,13 @@ Thanks goes to these wonderful people
 pip install -r requirements.txt
 ```
 
+<br/>
 
-3. model.hdf5, classes.pkl 파일 생성
+<p>3. model.hdf5, classes.pkl 파일 생성</p>
 
 생성된 파일(model.hdf5, classes.pkl) MLSERVER 폴더로 복사이동
 
-
+<br />
 <!--
 ## 2.  FE
 ### 1. axios 요청 시 baseurl 변경
@@ -108,12 +111,14 @@ pip install -r requirements.txt
 -->
    
 
-4. FE서버 실행
+<p>4. FE서버 실행</p>
 
 ```bash
 npm install
 npm start
 ```
+
+<br/>
 
 <!--
 ## 3. BE (Spring Boot)
@@ -123,14 +128,14 @@ npm start
 -->
 
 
-5. BE(Spring) 서버 실행
+<p>5. BE(Spring) 서버 실행</p>
 ```bash
 java -jar BootWeb-~~~ .war
 ```
 
+<br />
 
-
-6. BE ( Django )
+<p>6. BE ( Django )</p>
 ```bash
 pip install -r requirements.txt
 python manage.py runserver
