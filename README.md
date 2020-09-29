@@ -8,8 +8,9 @@
 <div align="center">
   
   [![All Contributors](https://img.shields.io/badge/contributor-4-orange?style=flat-square)](#contributors-)
-  <img src="https://img.shields.io/badge/pull--requests-60-brightgreen?style=flat-square" alt="github-profile-readme-generator pull-requests"/>
-  
+  <img src="https://img.shields.io/github/issues-pr-closed/HelomeProject/HelpHomework?style=flat-square" alt="github-profile-readme-generator pull-requests"/>
+  <img src="https://img.shields.io/github/languages/count/HelomeProject/HelpHomework" alt="languages-count"/>
+
 </div>
 
 <br/>
