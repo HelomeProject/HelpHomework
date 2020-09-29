@@ -129,6 +129,7 @@ npm start
 
 
 <p>5. BE(Spring) 서버 실행</p>
+
 ```bash
 java -jar BootWeb-~~~ .war
 ```
@@ -136,6 +137,7 @@ java -jar BootWeb-~~~ .war
 <br />
 
 <p>6. BE ( Django )</p>
+
 ```bash
 pip install -r requirements.txt
 python manage.py runserver
