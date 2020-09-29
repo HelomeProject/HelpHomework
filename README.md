@@ -18,51 +18,43 @@ Thanks goes to these wonderful people
 <!-- markdownlint-disable -->
 <table>
   <tr>
-   <!-- 고태환 -->
     <td align="center">
-      <a href="https://github.com/sarbikbetal"><img src="https://avatars3.githubusercontent.com/u/41176405?s=460&v=4" width="100px;" alt=""/><br />
-        <sub><b>KoTaeHwan</b></sub>
+      <a href="https://github.com/sarbikbetal"><img src="https://avatars3.githubusercontent.com/u/41176405?s=460&v=4" width="100px;" alt=""/></a><br />
+      <a href="https://github.com/HelomeProject/HelpHomework/commits?author=GoPro1147" title="Code">
+        <sub><b>KoTaeHwan</b></sub><br />💻
       </a>
-      <br />
-      <a href="https://github.com/HelomeProject/HelpHomework/commits?author=GoPro1147" title="Code">💻</a>
     </td>
-   <!--남선웅-->
     <td align="center">
-      <a href="https://github.com/NamSeonWoong"><img src="https://avatars0.githubusercontent.com/u/52690478?s=460&u=2e93ad8d1ed92c811f4ff467a06d24ede8c61cc5&v=4" width="100px;" alt=""/><br />
-        <sub><b>NamSeonWoong</b></sub>
+      <a href="https://github.com/NamSeonWoong"><img src="https://avatars0.githubusercontent.com/u/52690478?s=460&u=2e93ad8d1ed92c811f4ff467a06d24ede8c61cc5&v=4" width="100px;" alt=""/></a><br />
+        <a href="https://github.com/HelomeProject/HelpHomework/commits?author=GoPro1147" title="Code">
+          <sub><b>NamSeonWoong</b></sub><br />💻
       </a>
-      <br />
-      <a href="https://github.com/HelomeProject/HelpHomework/commits?author=NamSeonWoong" title="Code">💻</a>
     </td>
-   <!--김하은-->
    <td align="center">
-      <a href="https://github.com/kHeNoTbB"><img src="https://avatars1.githubusercontent.com/u/30182987?s=460&u=8c9a6f4bb293ddc015d46079315b6da67dc0ed5c&v=4" width="100px;" alt=""/><br />
-        <sub><b>Hailey</b></sub>
-      </a>
-      <br />
-      <a href="https://github.com/HelomeProject/HelpHomework/commits?author=kHeNoTbB" title="Code">💻</a>
+      <a href="https://github.com/kHeNoTbB"><img src="https://avatars1.githubusercontent.com/u/30182987?s=460&u=8c9a6f4bb293ddc015d46079315b6da67dc0ed5c&v=4" width="100px;" alt=""/></a><br />
+     <a href="https://github.com/HelomeProject/HelpHomework/commits?author=kHeNoTbB" title="Code">
+        <sub><b>Hailey</b></sub><br />💻</a>
     </td>
-   <!-- 최동호 -->
    <td align="center">
-      <a href="https://github.com/cdh3261"><img src="https://avatars2.githubusercontent.com/u/52690509?s=460&v=4" width="100px;" alt=""/><br />
-        <sub><b>cdh3261</b></sub>
-      </a>
-      <br />
-      <a href="https://github.com/HelomeProject/HelpHomework/commits?author=cdh3261" title="Code">💻</a>
+      <a href="https://github.com/cdh3261"><img src="https://avatars2.githubusercontent.com/u/52690509?s=460&v=4" width="100px;" alt=""/></a><br />
+      <a href="https://github.com/HelomeProject/HelpHomework/commits?author=cdh3261" title="Code">
+        <sub><b>cdh3261</b></sub><br />💻
+     </a>
     </td>
   </tr>
 </table>
-
 <!-- markdownlint-enable -->
 <!-- prettier-ignore-end -->
 <!-- ALL-CONTRIBUTORS-LIST:END -->
+
+<!--
 | 이름       | 역할  | 담당 업무                                                    |
 | ---------- | ----- | ------------------------------------------------------------ |
 | 고태환(PM) | FE/BE | React.js FE 개발 및 배포, Django BE 개발 및 배포, 프로젝트 관리 및 운영 |
 | 남선웅     | FE    | React.js FE 개발, UI 구현 (Material UI), UCC 제작 및 시연    |
 | 김하은     | BE    | Springboot-MyBatis BE 개발 및 배포, DB 설계 및 구축 (MySQL), AWS Maintainer, Git Maintainer |
 | 최동호     | ML    | 머신러닝 알고리즘 (Tensorflow Keras), 수식 이미지 인식(OpenCV), 숫자/기호 데이터 수집 및 변환, 수식 예측 알고리즘 |
-
+-->
 
 
 ## 주요기능
