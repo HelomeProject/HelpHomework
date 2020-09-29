@@ -74,16 +74,14 @@ Thanks goes to these wonderful people
 
 ## 🛠️ Getting Start
 
-<p>1. Deep Learning 모델 만들기</p>
+<p><b>1. Deep Learning 모델 만들기<b/></p>
 
-링크[:bookmark:](https://drive.google.com/file/d/1tQzC7I_xDwOXlpHZiSGoNp8zx6Yon-cs/view?usp=sharing)와 문서[:page_facing_up:](./makedataset.md) 참고
+[링크 :bookmark:](https://drive.google.com/file/d/1tQzC7I_xDwOXlpHZiSGoNp8zx6Yon-cs/view?usp=sharing)와 [문서 :page_facing_up:](./makedataset.md) 참고
 <!--1번 Deep Learning 모델 만들기를 생략하고 싶을 때 링크에서 다운받으면 됨-->
 
 <br/>
 
-<p>2. train.py 실행</p>
-
-<!--실행하기 전에 ML 폴더에서 터미널에서 다음 명령어를 타이핑해필요한 파이썬 패키지를 설치해준다.-->
+<p><b>2. train.py 실행</b></p>
 
 ```bash
 pip install -r requirements.txt
@@ -91,27 +89,13 @@ pip install -r requirements.txt
 
 <br/>
 
-<p>3. model.hdf5, classes.pkl 파일 생성</p>
+<p><b>3. model.hdf5, classes.pkl 파일 생성</b></p>
 
 생성된 파일(model.hdf5, classes.pkl) MLSERVER 폴더로 복사이동
 
 <br />
-<!--
-## 2.  FE
-### 1. axios 요청 시 baseurl 변경
-  `FRONTEND/hhfe/src/index.js` 내부의 `axios.defaults.baseURL`의 값을 `http://localhost:9090/api/`으로 바꾼다.
-### 2. 다음 파일들의 내부의 `frouturl` 변수 값을 `http://localhost:8000` 으로 바꾼다. (ML SERVER로 보냄)
-    `FRONTEND/hhfe/src/components/mainpage/homework/FileUpload.js`
-    `FRONTEND/hhfe/src/components/mainpage/homework/HomeworkContent.js`
-    `FRONTEND/hhfe/src/components/mainpage/homework/ScoreTable.js`
-    `FRONTEND/hhfe/src/components/mainpage/notification/NoticeInfoTable.js`
-### 3. MLSERVER에 보낼 경로 지정
-`FRONTEND/hhfe/src/components/mainpage/homework/FileUpload.js`의 `onClick` 함수 내부의 axios.post 요청을 `http://localhost:8000/api/v1/calc/`로 바꾼다.
-`FRONTEND/hhfe/src/components/mainpage/notification/NotiAddForm.js` 의 `onClick` 함수 내부의 **두 번째** axios.post 요청을 `http://localhost:8000/api/v1/addnoti/` 로 바꾼다.
--->
-   
 
-<p>4. FE서버 실행</p>
+<p><b>4. FE서버 실행</b></p>
 
 ```bash
 npm install
@@ -120,15 +104,7 @@ npm start
 
 <br/>
 
-<!--
-## 3. BE (Spring Boot)
-### 1. 스프링 서버 빌드
-##### &#10024; [스프링 서버 빌드하는 법](https://lts0606.tistory.com/237)
-위의 링크를 참고하여 스프링 서버를 빌드한다.
--->
-
-
-<p>5. BE(Spring) 서버 실행</p>
+<p><b>5. BE(Spring) 서버 실행</b></p>
 
 ```bash
 java -jar BootWeb-~~~ .war
@@ -136,7 +112,7 @@ java -jar BootWeb-~~~ .war
 
 <br />
 
-<p>6. BE ( Django )</p>
+<p><b>6. BE(Django) 서버 실행</b></p>
 
 ```bash
 pip install -r requirements.txt
@@ -173,7 +149,7 @@ python manage.py runserver
 ![result](./img/complete.JPG)
 -->
 
-
+<br />
 <hr>
 <p align="center">
 𝗗𝗲𝘃𝗲𝗹𝗼𝗽𝗲𝗱 𝘄𝗶𝘁𝗵 ❤️ 𝗶𝗻 𝗦𝗦𝗔𝗙𝗬
